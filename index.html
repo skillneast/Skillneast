@@ -2629,10 +2629,12 @@
             // Offline detection
             function updateOnlineStatus() {
                 const offlineOverlay = document.getElementById('offlineOverlay');
-                if (navigator.onLine) {
-                    offlineOverlay.classList.remove('active');
-                } else {
-                    offlineOverlay.classList.add('active');
+                if (offlineOverlay) { // Check if element exists
+                    if (navigator.onLine) {
+                        offlineOverlay.classList.remove('active');
+                    } else {
+                        offlineOverlay.classList.add('active');
+                    }
                 }
             }
 
@@ -2644,10 +2646,12 @@
             const isLightModeEnabled = localStorage.getItem('lightModeEnabled') === 'true';
             if (isLightModeEnabled) {
                 document.body.classList.add('light-mode');
-                document.getElementById('darkModeToggleSwitch').checked = false;
+                const darkModeToggleSwitch = document.getElementById('darkModeToggleSwitch');
+                if (darkModeToggleSwitch) darkModeToggleSwitch.checked = false; // Check if element exists
             } else {
                 document.body.classList.remove('light-mode');
-                document.getElementById('darkModeToggleSwitch').checked = true;
+                const darkModeToggleSwitch = document.getElementById('darkModeToggleSwitch');
+                if (darkModeToggleSwitch) darkModeToggleSwitch.checked = true; // Check if element exists
             }
 
             // Ensure appLogo rotation works globally
@@ -2669,6 +2673,8 @@
             const quoteTextElement = document.getElementById('quoteText');
             const quoteAuthorElement = document.getElementById('quoteAuthor');
             
+            if (!quoteTextElement || !quoteAuthorElement) return; // Add null check
+
             if (availableQuoteIndices.length === 0) {
                 for (let i = 0; i < quotes.length; i++) {
                     availableQuoteIndices.push(i);
@@ -2694,11 +2700,13 @@
         window.updateCharCount = function() {
             const userNameInput = document.getElementById('userNameInput');
             const currentCharCount = document.getElementById('currentCharCount');
+            if (!userNameInput || !currentCharCount) return; // Add null check
             currentCharCount.textContent = userNameInput.value.length;
         }
 
         window.submitName = function() {
             const userNameInput = document.getElementById('userNameInput');
+            if (!userNameInput) return; // Add null check
             let userName = userNameInput.value.trim();
             const selectedRoleElement = document.querySelector('input[name="userRole"]:checked');
             let userRole = selectedRoleElement ? selectedRoleElement.value : 'Other';
@@ -2713,69 +2721,88 @@
             localStorage.setItem('userRole', userRole);
 
             updateWelcomeSection();
-            window.closeNamePopup(); // Call global function
+            window.closeNamePopup();
         }
 
         function updateWelcomeSection() {
             const userName = localStorage.getItem('userName') || 'Guest';
             const userRole = localStorage.getItem('userRole') || '';
-            document.getElementById('displayedUserName').textContent = userName;
+            const displayedUserName = document.getElementById('displayedUserName');
             const displayedUserRoleElement = document.getElementById('displayedUserRole');
-            if (userRole && userRole !== 'Other') {
-                displayedUserRoleElement.textContent = userRole;
-                displayedUserRoleElement.style.display = 'inline-block';
-            } else {
-                displayedUserRoleElement.textContent = '';
-                displayedUserRoleElement.style.display = 'none';
+            if (displayedUserName) displayedUserName.textContent = userName; // Add null check
+            if (displayedUserRoleElement) { // Add null check
+                if (userRole && userRole !== 'Other') {
+                    displayedUserRoleElement.textContent = userRole;
+                    displayedUserRoleElement.style.display = 'inline-block';
+                } else {
+                    displayedUserRoleElement.textContent = '';
+                    displayedUserRoleElement.style.display = 'none';
+                }
             }
         }
 
         window.closeNamePopup = function() {
-            document.getElementById('namePopupOverlay').classList.remove('active');
+            const namePopupOverlay = document.getElementById('namePopupOverlay');
+            if (namePopupOverlay) namePopupOverlay.classList.remove('active'); // Add null check
         }
 
         // --- View Switching Logic ---
         function hideAllViews() {
-            document.getElementById('home-view').style.display = 'none';
-            document.getElementById('favorites-section-home-card').style.display = 'none';
-            document.querySelector('.telegram-card').style.display = 'none';
-            document.getElementById('new-batches-view').style.display = 'none';
-            document.getElementById('favorites-view').style.display = 'none';
-            document.getElementById('sections-view').style.display = 'none';
-            document.getElementById('lessons-in-sections-view').style.display = 'none';
-            document.getElementById('video-player-view').style.display = 'none';
-            document.getElementById('bundles-coming-soon-view').style.display = 'none';
-            document.getElementById('pdfs-coming-soon-view').style.display = 'none';
-            document.getElementById('about-me-view').style.display = 'none';
-            document.getElementById('how-to-use-app-view').style.display = 'none';
-            document.getElementById('ai-chatbot-coming-soon-view').style.display = 'none';
-            document.querySelectorAll('.partition').forEach(p => p.style.display = 'none');
-            const shareButton = document.querySelector('.share-app-button');
-            if (shareButton) {
-                shareButton.style.display = 'none';
-            }
+            const views = [
+                'home-view', 'favorites-section-home-card', 'new-batches-view',
+                'favorites-view', 'sections-view', 'lessons-in-sections-view',
+                'video-player-view', 'bundles-coming-soon-view', 'pdfs-coming-soon-view',
+                'about-me-view', 'how-to-use-app-view', 'ai-chatbot-coming-soon-view'
+            ];
+            views.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) { // Check if element exists before accessing style
+                    element.style.display = 'none';
+                }
+            });
 
-            document.querySelector('.welcome-banner').style.display = 'none';
-            document.querySelector('.quote-section').style.display = 'none';
+            // Specific element checks for querySelector
+            const telegramCard = document.querySelector('.telegram-card');
+            if (telegramCard) telegramCard.style.display = 'none';
+
+            const partitions = document.querySelectorAll('.partition');
+            partitions.forEach(p => {
+                if (p) p.style.display = 'none'; // Ensure check for each partition
+            });
+            
+            const shareButton = document.querySelector('.share-app-button');
+            if (shareButton) shareButton.style.display = 'none';
+
+            const welcomeBanner = document.querySelector('.welcome-banner');
+            if (welcomeBanner) welcomeBanner.style.display = 'none';
+
+            const quoteSection = document.querySelector('.quote-section');
+            if (quoteSection) quoteSection.style.display = 'none';
         }
 
         window.showHomeView = function() {
             hideAllViews();
-            document.getElementById('home-view').style.display = 'grid';
-            document.getElementById('favorites-section-home-card').style.display = 'flex';
-            document.querySelector('.telegram-card').style.display = 'flex';
-            document.querySelectorAll('.partition').forEach(p => p.style.display = 'block');
+            const homeView = document.getElementById('home-view');
+            const favoritesHomeCard = document.getElementById('favorites-section-home-card');
+            const telegramCard = document.querySelector('.telegram-card');
             const shareButton = document.querySelector('.share-app-button');
-            if (shareButton) {
-                shareButton.style.display = 'flex';
-            }
+            const welcomeBanner = document.querySelector('.welcome-banner');
+            const quoteSection = document.querySelector('.quote-section');
+            const partitions = document.querySelectorAll('.partition');
+
+            if (homeView) homeView.style.display = 'grid';
+            if (favoritesHomeCard) favoritesHomeCard.style.display = 'flex';
+            if (telegramCard) telegramCard.style.display = 'flex';
+            if (shareButton) shareButton.style.display = 'flex';
+            partitions.forEach(p => { if (p) p.style.display = 'block'; }); // Ensure check for each partition
+
             renderFavoritesSectionHomeCard();
             currentView = 'home-view';
-            window.highlightBottomNav('home-nav'); // Call global function
+            window.highlightBottomNav('home-nav');
             window.scrollTo(0, 0);
 
-            document.querySelector('.welcome-banner').style.display = 'flex';
-            document.querySelector('.quote-section').style.display = 'block';
+            if (welcomeBanner) welcomeBanner.style.display = 'flex';
+            if (quoteSection) quoteSection.style.display = 'block';
 
             updateWelcomeSection();
             renderCategories();
@@ -2788,7 +2815,6 @@
                     entry.target.classList.remove('hidden-on-scroll');
                     entry.target.classList.add('visible-on-scroll');
                 } else {
-                    // Only hide if it's explicitly in 'visible-on-scroll' state
                     if (entry.target.classList.contains('visible-on-scroll')) {
                         entry.target.classList.remove('visible-on-scroll');
                         entry.target.classList.add('hidden-on-scroll');
@@ -2804,12 +2830,15 @@
                 renderCategories();
             }, (error) => {
                 console.error("Error fetching categories:", error);
-                document.getElementById('loadingCategoriesMessage').textContent = `Error loading categories: ${error.message}`;
+                const loadingCategoriesMessage = document.getElementById('loadingCategoriesMessage');
+                if (loadingCategoriesMessage) loadingCategoriesMessage.textContent = `Error loading categories: ${error.message}`; // Add null check
             });
         }
 
         function renderCategories() {
             const homeView = document.getElementById('home-view');
+            if (!homeView) return; // Add null check
+
             homeView.innerHTML = '';
             const loadingMessage = document.getElementById('loadingCategoriesMessage');
             if (loadingMessage) loadingMessage.remove();
@@ -2825,6 +2854,7 @@
                 categoryItem.onclick = () => window.showNewBatchesView(catId);
 
                 const firstBatch = category.batches ? Object.values(category.batches)[0] : null;
+                // Changed placeholder service to via.placeholder.com
                 const imageUrl = firstBatch && firstBatch.thumbnail ? firstBatch.thumbnail : 'https://via.placeholder.com/90x90/00ADB5/1A2B3C?text=Category';
                 const isNewCategory = firstBatch && firstBatch.isNew;
 
@@ -2857,25 +2887,28 @@
 
         window.showNewBatchesView = function(categoryId = 'all') {
             hideAllViews();
-            document.getElementById('new-batches-view').style.display = 'block';
+            const newBatchesView = document.getElementById('new-batches-view');
+            if (newBatchesView) newBatchesView.style.display = 'block'; // Add null check
+            
             currentView = 'new-batches-view';
             lastCategoryViewed = categoryId;
             
             const batchesContainer = document.getElementById('batches-container');
-            batchesContainer.innerHTML = '<p class="text-center text-muted" id="loadingBatchesMessage">Loading batches...</p>';
+            if (batchesContainer) batchesContainer.innerHTML = '<p class="text-center text-muted" id="loadingBatchesMessage">Loading batches...</p>'; // Add null check
 
             let batchesToDisplay = [];
             if (categoryId === 'all') {
-                document.getElementById('new-batches-title').textContent = 'All Courses';
+                const newBatchesTitle = document.getElementById('new-batches-title');
+                if (newBatchesTitle) newBatchesTitle.textContent = 'All Courses'; // Add null check
                 Object.values(allCategoriesData).forEach(category => {
                     if (category.batches) {
-                        // Firebase Realtime Database returns objects, so convert to array
                         batchesToDisplay = batchesToDisplay.concat(Object.keys(category.batches).map(key => ({ id: key, ...category.batches[key] })));
                     }
                 });
             } else {
                 const selectedCategory = allCategoriesData[categoryId];
-                document.getElementById('new-batches-title').textContent = selectedCategory ? selectedCategory.name + ' Courses' : 'Courses';
+                const newBatchesTitle = document.getElementById('new-batches-title');
+                if (newBatchesTitle) newBatchesTitle.textContent = selectedCategory ? selectedCategory.name + ' Courses' : 'Courses'; // Add null check
                 if (selectedCategory && selectedCategory.batches) {
                     batchesToDisplay = Object.keys(selectedCategory.batches).map(key => ({ id: key, ...selectedCategory.batches[key] }));
                 }
@@ -2891,6 +2924,8 @@
 
         function displayBatches(batchesToDisplay) {
             const batchesContainer = document.getElementById('batches-container');
+            if (!batchesContainer) return; // Add null check
+
             batchesContainer.innerHTML = '';
 
             if (batchesToDisplay.length === 0) {
@@ -2904,7 +2939,7 @@
                 const isFavorited = favorites.includes(batch.id);
                 const heartIconClass = isFavorited ? 'fas fa-heart' : 'far fa-heart';
 
-                // Use encodeURIComponent for all string parameters passed to openBatchDetailModal
+                // Changed placeholder service to via.placeholder.com
                 batchCard.innerHTML = `
                     <div class="batch-card-header" style="background-color: ${batch.headerColor || 'var(--accent-teal)'};">
                         <span>${batch.title}</span>
@@ -2932,7 +2967,9 @@
         }
 
         window.filterBatches = function() {
-            const searchTerm = document.getElementById('batchSearchInput').value.toLowerCase();
+            const searchTerm = document.getElementById('batchSearchInput');
+            if (!searchTerm) return; // Add null check
+            
             let currentCategoryBatches = [];
 
             if (lastCategoryViewed === 'all') {
@@ -2949,7 +2986,7 @@
             }
 
             const filteredBatches = currentCategoryBatches.filter(batch => 
-                batch.title.toLowerCase().includes(searchTerm)
+                batch.title.toLowerCase().includes(searchTerm.value.toLowerCase())
             );
             displayBatches(filteredBatches);
         }
@@ -2978,22 +3015,28 @@
 
         function renderFavoritesSectionHomeCard() {
             const favoritesCountSpan = document.getElementById('favorites-count');
-            favoritesCountSpan.textContent = `${favorites.length} Batches`;
+            if (favoritesCountSpan) favoritesCountSpan.textContent = `${favorites.length} Batches`; // Add null check
         }
 
         window.showFavoritesView = function() {
             hideAllViews();
-            document.getElementById('favorites-view').style.display = 'block';
+            const favoritesView = document.getElementById('favorites-view');
+            if (favoritesView) favoritesView.style.display = 'block'; // Add null check
+            
             currentView = 'favorites-view';
             window.highlightBottomNav('home-nav');
 
             const favoriteBatchesContainer = document.getElementById('favorite-batches-container');
+            const noFavoritesMessageView = document.getElementById('no-favorites-message-view');
+
+            if (!favoriteBatchesContainer || !noFavoritesMessageView) return; // Add null check
+
             favoriteBatchesContainer.innerHTML = '';
             if (favorites.length === 0) {
-                document.getElementById('no-favorites-message-view').style.display = 'block';
+                noFavoritesMessageView.style.display = 'block';
                 favoriteBatchesContainer.style.display = 'none';
             } else {
-                document.getElementById('no-favorites-message-view').style.display = 'none';
+                noFavoritesMessageView.style.display = 'none';
                 favoriteBatchesContainer.style.display = 'flex';
 
                 favorites.forEach(favId => {
@@ -3057,6 +3100,8 @@
 
             const sectionsContainer = document.getElementById('sections-container');
             const sectionsTitle = document.getElementById('sections-title');
+            if (!sectionsContainer || !sectionsTitle) return; // Add null check
+
             sectionsContainer.innerHTML = '';
 
             if (selectedBatch && selectedBatch.modules && Object.keys(selectedBatch.modules).length > 0) {
@@ -3079,7 +3124,8 @@
                 sectionsContainer.innerHTML = '<p style="text-align: center; color: var(--text-light);">No modules found for this batch.</p>';
             }
 
-            document.getElementById('sections-view').style.display = 'block';
+            const sectionsView = document.getElementById('sections-view');
+            if (sectionsView) sectionsView.style.display = 'block'; // Add null check
             currentView = 'sections-view';
             window.scrollTo(0, 0);
         }
@@ -3096,6 +3142,8 @@
 
             const lessonsContainer = document.getElementById('lessons-in-sections-container');
             const lessonsTitle = document.getElementById('lessons-in-sections-title');
+            if (!lessonsContainer || !lessonsTitle) return; // Add null check
+
             lessonsContainer.innerHTML = '';
 
             if (selectedModule && selectedModule.lectures && Object.keys(selectedModule.lectures).length > 0) {
@@ -3107,7 +3155,7 @@
                    
                     lessonItem.innerHTML = `
                         <div class="lesson-list-item-header">
-                            <img src="https://via.placeholder.com/40x40/000000/ffffff?text=PW" alt="PW Logo" class="pw-logo" draggable="false">
+                            <img src="https://via.placeholder.com/40x40/000000/ffffff?text=PW" alt="PW Logo" class="pw-logo" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/40x40/000000/ffffff?text=PW';">
                             <h3 class="lesson-list-item-title">${lecture.name}</h3>
                         </div>
                     `;
@@ -3119,7 +3167,8 @@
                 lessonsContainer.innerHTML = '<p style="text-align: center; color: var(--text-light);">No lectures found in this module.</p>';
             }
 
-            document.getElementById('lessons-in-sections-view').style.display = 'block';
+            const lessonsInSectionsView = document.getElementById('lessons-in-sections-view');
+            if (lessonsInSectionsView) lessonsInSectionsView.style.display = 'block'; // Add null check
             currentView = 'lessons-in-sections-view';
             window.scrollTo(0, 0);
         }
@@ -3141,12 +3190,15 @@
                 return;
             }
             
-            document.getElementById('player-view-title').textContent = selectedLecture.name;
-            document.getElementById('player-lesson-sub-title').textContent = selectedLecture.name;
+            const playerViewTitle = document.getElementById('player-view-title');
+            if (playerViewTitle) playerViewTitle.textContent = selectedLecture.name; // Add null check
+            
+            const playerLessonSubTitle = document.getElementById('player-lesson-sub-title');
+            if (playerLessonSubTitle) playerLessonSubTitle.textContent = selectedLecture.name; // Add null check
 
 
             const mainVideoPlayer = document.getElementById('main-video-player');
-            if (mainVideoPlayer) {
+            if (mainVideoPlayer) { // Add null check
                 mainVideoPlayer.innerHTML = '';
                 const videoInfo = extractGdriveId(selectedLecture.link);
                 if (videoInfo) {
@@ -3178,7 +3230,7 @@
             }
 
             const lessonsForPlayerBatch = document.getElementById('lessons-for-player-batch');
-            if (lessonsForPlayerBatch) {
+            if (lessonsForPlayerBatch) { // Add null check
                 lessonsForPlayerBatch.innerHTML = '';
                 if (selectedModule && selectedModule.lectures) {
                     Object.entries(selectedModule.lectures).forEach(([otherLectureId, otherLecture]) => {
@@ -3194,7 +3246,8 @@
                 }
             }
 
-            document.getElementById('video-player-view').style.display = 'block';
+            const videoPlayerView = document.getElementById('video-player-view');
+            if (videoPlayerView) videoPlayerView.style.display = 'block'; // Add null check
             currentView = 'video-player-view';
             window.scrollTo(0, 0);
         }
@@ -3250,24 +3303,28 @@
         // --- Bottom Navigation Highlight ---
         window.highlightBottomNav = function(activeId) {
             document.querySelectorAll('.bottom-navbar .nav-item').forEach(item => {
-                item.classList.remove('active');
+                if (item) item.classList.remove('active'); // Add null check
             });
-            document.getElementById(activeId).classList.add('active');
+            const activeItem = document.getElementById(activeId);
+            if (activeItem) activeItem.classList.add('active'); // Add null check
         }
 
         // --- Comments Popup Logic (kept as is for now, not Firebase integrated) ---
         window.showCommentsPopup = function() {
-            document.getElementById('commentsPopupOverlay').classList.add('active');
+            const commentsPopupOverlay = document.getElementById('commentsPopupOverlay');
+            if (commentsPopupOverlay) commentsPopupOverlay.classList.add('active'); // Add null check
             renderComments();
         }
 
         window.closeCommentsPopup = function() {
-            document.getElementById('commentsPopupOverlay').classList.remove('active');
+            const commentsPopupOverlay = document.getElementById('commentsPopupOverlay');
+            if (commentsPopupOverlay) commentsPopupOverlay.classList.remove('active'); // Add null check
         }
 
         let tempComments = [];
         window.postComment = function() {
             const commentInput = document.getElementById('commentInput');
+            if (!commentInput) return; // Add null check
             const commentText = commentInput.value.trim();
             const userName = localStorage.getItem('userName') || 'Guest';
             if (commentText) {
@@ -3286,6 +3343,7 @@
 
         function renderComments() {
             const commentsDisplayArea = document.getElementById('commentsDisplayArea');
+            if (!commentsDisplayArea) return; // Add null check
             commentsDisplayArea.innerHTML = '';
 
             if (tempComments.length === 0) {
@@ -3307,16 +3365,17 @@
         // --- New: Show Coming Soon Views ---
         window.showComingSoonView = function(type) {
             hideAllViews();
+            let targetView = null;
             if (type === 'bundles') {
-                document.getElementById('bundles-coming-soon-view').style.display = 'flex';
-                currentView = 'bundles-coming-soon-view';
+                targetView = document.getElementById('bundles-coming-soon-view');
             } else if (type === 'pdfs') {
-                document.getElementById('pdfs-coming-soon-view').style.display = 'flex';
-                currentView = 'pdfs-coming-soon-view';
+                targetView = document.getElementById('pdfs-coming-soon-view');
             } else if (type === 'ai-chatbot') {
-                document.getElementById('ai-chatbot-coming-soon-view').style.display = 'flex';
-                currentView = 'ai-chatbot-coming-soon-view';
+                targetView = document.getElementById('ai-chatbot-coming-soon-view');
             }
+
+            if (targetView) targetView.style.display = 'flex'; // Add null check
+            currentView = `${type}-coming-soon-view`;
             window.scrollTo(0, 0);
         }
 
@@ -3328,7 +3387,8 @@
         // --- About Me View Logic ---
         window.showAboutMeView = function() {
             hideAllViews();
-            document.getElementById('about-me-view').style.display = 'flex';
+            const aboutMeView = document.getElementById('about-me-view');
+            if (aboutMeView) aboutMeView.style.display = 'flex'; // Add null check
             currentView = 'about-me-view';
             window.highlightBottomNav('about-me-nav');
             window.scrollTo(0, 0);
@@ -3337,20 +3397,25 @@
         // --- New: How to use the App View Logic ---
         window.showHowToUseAppView = function() {
             hideAllViews();
-            document.getElementById('how-to-use-app-view').style.display = 'flex';
+            const howToUseAppView = document.getElementById('how-to-use-app-view');
+            if (howToUseAppView) howToUseAppView.style.display = 'flex'; // Add null check
             currentView = 'how-to-use-app-view';
             window.scrollTo(0, 0);
         }
 
         // --- Slider Menu Functions ---
         window.openSliderMenu = function() {
-            document.getElementById('sliderMenuOverlay').classList.add('active');
-            document.getElementById('sliderMenu').classList.add('active');
+            const sliderMenuOverlay = document.getElementById('sliderMenuOverlay');
+            const sliderMenu = document.getElementById('sliderMenu');
+            if (sliderMenuOverlay) sliderMenuOverlay.classList.add('active'); // Add null check
+            if (sliderMenu) sliderMenu.classList.add('active'); // Add null check
         }
 
         window.closeSliderMenu = function() {
-            document.getElementById('sliderMenuOverlay').classList.remove('active');
-            document.getElementById('sliderMenu').classList.remove('active');
+            const sliderMenuOverlay = document.getElementById('sliderMenuOverlay');
+            const sliderMenu = document.getElementById('sliderMenu');
+            if (sliderMenuOverlay) sliderMenuOverlay.classList.remove('active'); // Add null check
+            if (sliderMenu) sliderMenu.classList.remove('active'); // Add null check
         }
 
         // --- Share App Function ---
@@ -3378,34 +3443,48 @@
             const isLightMode = body.classList.contains('light-mode');
             localStorage.setItem('lightModeEnabled', isLightMode);
             
-            document.getElementById('darkModeToggleSwitch').checked = !isLightMode;
+            const darkModeToggleSwitch = document.getElementById('darkModeToggleSwitch');
+            if (darkModeToggleSwitch) darkModeToggleSwitch.checked = !isLightMode; // Add null check
         }
 
         // --- Batch Detail Modal (New AI Feature) ---
-        window.openBatchDetailModal = async function(titleEncoded, thumbnailEncoded, descriptionEncoded) { // Changed parameters to receive encoded strings
-            const title = decodeURIComponent(titleEncoded); // Decode here
-            const thumbnail = decodeURIComponent(thumbnailEncoded); // Decode here
-            const description = decodeURIComponent(descriptionEncoded); // Decode here
+        window.openBatchDetailModal = async function(titleEncoded, thumbnailEncoded, descriptionEncoded) {
+            const title = decodeURIComponent(titleEncoded);
+            const thumbnail = decodeURIComponent(thumbnailEncoded);
+            const description = decodeURIComponent(descriptionEncoded);
 
-            document.getElementById('modalBatchTitle').textContent = title;
-            document.getElementById('modalBatchImage').src = thumbnail;
-            document.getElementById('modalBatchImage').onerror = function() { this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=Batch+Image'; };
-            document.getElementById('modalBatchDescription').textContent = description;
-            document.getElementById('generatedOverview').textContent = '';
-            document.getElementById('loadingOverview').style.display = 'none';
-            document.getElementById('batchDetailModalOverlay').classList.add('active');
+            const modalBatchTitle = document.getElementById('modalBatchTitle');
+            const modalBatchImage = document.getElementById('modalBatchImage');
+            const modalBatchDescription = document.getElementById('modalBatchDescription');
+            const generatedOverview = document.getElementById('generatedOverview');
+            const loadingOverview = document.getElementById('loadingOverview');
+            const batchDetailModalOverlay = document.getElementById('batchDetailModalOverlay');
+            const generateOverviewBtn = document.getElementById('generateOverviewBtn');
 
-            document.getElementById('generateOverviewBtn').dataset.batchTitle = title;
+            // Add null checks for all elements
+            if (modalBatchTitle) modalBatchTitle.textContent = title;
+            if (modalBatchImage) {
+                modalBatchImage.src = thumbnail;
+                modalBatchImage.onerror = function() { this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=Batch+Image'; };
+            }
+            if (modalBatchDescription) modalBatchDescription.textContent = description;
+            if (generatedOverview) generatedOverview.textContent = '';
+            if (loadingOverview) loadingOverview.style.display = 'none';
+            if (batchDetailModalOverlay) batchDetailModalOverlay.classList.add('active');
+            if (generateOverviewBtn) generateOverviewBtn.dataset.batchTitle = title;
         }
 
         window.closeBatchDetailModal = function() {
-            document.getElementById('batchDetailModalOverlay').classList.remove('active');
+            const batchDetailModalOverlay = document.getElementById('batchDetailModalOverlay');
+            if (batchDetailModalOverlay) batchDetailModalOverlay.classList.remove('active'); // Add null check
         }
 
         document.getElementById('generateOverviewBtn').addEventListener('click', async (event) => {
             const batchTitle = event.target.dataset.batchTitle;
             const overviewDisplay = document.getElementById('generatedOverview');
             const loadingIndicator = document.getElementById('loadingOverview');
+
+            if (!overviewDisplay || !loadingIndicator) return; // Add null check
 
             if (!batchTitle) {
                 overviewDisplay.textContent = 'Batch title not available for overview generation.';
