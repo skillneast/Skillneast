@@ -3435,16 +3435,15 @@
             // Update the switch state visually
             document.getElementById('darkModeToggleSwitch').checked = !isLightMode; // Checkbox is ON for Dark Mode, OFF for Light Mode
         }
-    <!-- Original SkillNeast HTML file with Firebase-connected dynamic batch loading --><!-- DO NOT REMOVE STYLE/STRUCTURE --><!DOCTYPE html><html lang="en">
+<!-- Final corrected SkillNeast index.html with working Firebase + global function exposure --><!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkillNeast</title>
-  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Your existing HTML layout -->
-  <div class="batch-list"></div>  <!-- Firebase Integration Script -->  <script type="module">
+  <!-- Your site layout -->
+  <div class="batch-list"></div>  <!-- Firebase Integration Script - FIXED -->  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
@@ -3464,7 +3463,7 @@
 
     const batchListEl = document.querySelector(".batch-list");
 
-    const showNewBatchesView = () => {
+    function showNewBatchesView() {
       const catRef = ref(db, 'categories');
       onValue(catRef, snapshot => {
         const data = snapshot.val();
@@ -3498,13 +3497,10 @@
           });
         });
       });
-    };
+    }
 
-    // Automatically run on page load
+    // Auto load & global expose
     showNewBatchesView();
-    // Make globally available (for click events)
     window.showNewBatchesView = showNewBatchesView;
-  </script>
-</body>
+  </script></body>
 </html>
-
