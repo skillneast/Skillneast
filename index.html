@@ -827,40 +827,8 @@
             flex-grow: 1;
             transition: color 0.3s ease;
         }
-        .promotional-banner {
-            background-color: #1A1A1A;
-            color: var(--white);
-            border-radius: var(--border-radius-card);
-            padding: 15px 20px;
-            margin-bottom: 25px;
-            box-shadow: var(--shadow-light);
-            font-size: 0.9em;
-            line-height: 1.4;
-            position: relative;
-            overflow: hidden;
-            border-left: 5px solid var(--highlight-gold);
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .promotional-banner .disclaimer {
-            font-size: 0.8em;
-            color: #ccc;
-            margin-bottom: 5px;
-            display: block;
-            transition: color 0.3s ease;
-        }
-        .promotional-banner strong {
-            color: var(--highlight-gold);
-            font-weight: 700;
-            transition: color 0.3s ease;
-        }
-        .promotional-banner .promo-text {
-            font-size: 1.1em;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-        .promotional-banner .promo-text span {
-            color: var(--accent-teal);
-            transition: color 0.3s ease;
+        .promotional-banner { /* Removed all content inside this class in HTML */
+            display: none; /* Ensure it's hidden as per request */
         }
         .favorite-batch-list {
             display: flex;
@@ -1068,27 +1036,27 @@
         }
         .lesson-list-item .lesson-list-item-title {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.3em; /* Main title */
+            font-size: 1.3em;
             font-weight: 700;
             color: var(--text-dark);
-            margin: 0 0 5px 0; /* Space below title */
+            margin: 0 0 5px 0;
             line-height: 1.2;
         }
         .lesson-list-item .lesson-list-item-subtitle {
             font-family: 'Open Sans', sans-serif;
             font-size: 1em;
             color: var(--text-light);
-            margin-bottom: 10px; /* Space below subtitle */
+            margin-bottom: 10px;
         }
         .lesson-list-item .lesson-meta {
             display: flex;
             align-items: center;
-            gap: 15px; /* Space between meta items */
+            gap: 15px;
             font-size: 0.85em;
             color: var(--text-light);
         }
         .lesson-list-item .lesson-meta i {
-            color: var(--accent-teal); /* Icon color */
+            color: var(--accent-teal);
             margin-right: 5px;
         }
         .lesson-list-item .video-icon-overlay {
@@ -1096,8 +1064,8 @@
             right: 20px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 2em; /* Larger video icon */
-            color: var(--error-red); /* Red for video icon */
+            font-size: 2em;
+            color: var(--error-red);
         }
 
 
@@ -1185,37 +1153,7 @@
             transition: color 0.3s ease;
         }
         
-        /* Teacher & Meta info for player view */
-        .player-lesson-meta-info {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-            color: var(--text-light);
-            font-size: 0.9em;
-        }
-        .player-lesson-meta-info div {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .player-lesson-meta-info i {
-            color: var(--accent-teal);
-            font-size: 1.1em;
-        }
-        .player-lesson-meta-info img.teacher-profile {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--highlight-gold);
-        }
-        .player-lesson-meta-info .teacher-name {
-            font-weight: 600;
-            color: var(--highlight-gold);
-        }
+        /* Removed Teacher & Meta info from player view */
 
 
         .player-action-buttons {
@@ -1248,7 +1186,7 @@
             background-color: var(--timeline-btn-bg);
         }
         .player-action-buttons .action-button.comments {
-            background-color: var(--comments-btn-bg);
+            background-color: var(--comments-btn-bg); /* This button is removed via JS but CSS remains */
         }
         .player-action-buttons .action-button.watch-later {
             background-color: var(--watch-later-btn-bg);
@@ -2390,7 +2328,7 @@
     <div class="comments-popup-overlay" id="commentsPopupOverlay">
         <div class="comments-popup">
             <button class="popup-close-button" onclick="window.closeCommentsPopup()">×</button>
-            <h2>SR Comments</h2>
+            <h2 id="commentsHeader">SR Comments</h2>
             <div class="comments-input-area">
                 <textarea id="commentInput" placeholder="Write your comment here..."></textarea>
                 <button onclick="window.postComment()">Post Comment</button>
@@ -2428,17 +2366,15 @@
             <!-- Categories will be loaded here dynamically from Firebase -->
             <p class="text-center text-muted col-span-full" id="loadingCategoriesMessage">Loading categories...</p>
 
-            <!-- Favorites Section (ONLY on Home Page) -->
-            <div class="favorites-section-home-card" onclick="window.showFavoritesView()">
+            <!-- Favorites Section (ONLY on Home Page - moved inside home-view) -->
+            <div class="favorites-section-home-card" onclick="window.showFavoritesView()" id="favorites-section-home-card">
                 <i class="fas fa-heart fav-icon"></i>
                 <h2>My Favorite Batches</h2>
-                <p>View all your saved courses and batches here.</p>
+                <p>Unlock personalized learning paths and quick access to your most cherished courses. Your journey to mastery starts here!</p>
                 <span class="fav-count" id="favorites-count">0 Batches</span>
             </div>
 
-            <div class="partition"></div>
-            <div class="partition"></div>
-            <div class="partition"></div>
+            <!-- Removed partitions -->
 
             <div class="telegram-card" onclick="window.open('YOUR_TELEGRAM_GROUP_LINK', '_blank');">
                 <i class="fab fa-telegram-plane telegram-icon-large"></i>
@@ -2471,11 +2407,7 @@
                 <button class="back-button" onclick="window.showHomeView()"><i class="fas fa-arrow-left"></i></button>
                 <h2>Favourite Batches</h2>
             </div>
-            <div class="promotional-banner">
-                <span class="disclaimer">@study.ratna.pw <i class="fas fa-check-circle"></i> @pw_coupon_ratna</span>
-                <span class="disclaimer">Disclaimer: We know today isn't black friday - but the discounts we're offering are just as incredible!</span>
-                <p class="promo-text">Who said <strong>Black Friday</strong> only happens once a year? Enjoy massive savings just like it's Black Friday today! Our discounts are just as amazing—grab yours before it's gone! <span>🎉</span></p>
-            </div>
+            <!-- Removed promotional-banner -->
             <div class="batch-list" id="favorite-batches-container">
             </div>
             <p id="no-favorites-message-view" class="no-favorites-message-view" style="display: none;">You haven't favorited any batches yet. Click the heart icon on any batch to add it here!</p>
@@ -2511,11 +2443,7 @@
                     </div>
                     <div class="player-metadata">
                         <h3 class="lesson-sub-title" id="player-lesson-sub-title"></h3>
-                        <div class="player-lesson-meta-info">
-                            <div><img src="https://via.placeholder.com/40x40/8e24aa/ffffff?text=TM" alt="Teacher" class="teacher-profile" onerror="this.onerror=null;this.src='https://via.placeholder.com/40x40/8e24aa/ffffff?text=TM';"> <span class="teacher-name">Teacher Name</span></div>
-                            <div><i class="far fa-calendar-alt"></i> <span class="lesson-date">Date</span></div>
-                            <div><i class="far fa-clock"></i> <span class="lesson-duration">Duration</span></div>
-                        </div>
+                        <!-- Removed player-lesson-meta-info div entirely -->
                     </div>
                 </div>
             </div>
@@ -2554,7 +2482,7 @@
                 <h2>About Me</h2>
             </div>
             <div class="about-me-card">
-                <img src="https://via.placeholder.com/120x120/00ADB5/FFFFFF?text=Fahad" alt="Fahad Profile" class="profile-pic" draggable="false">
+                <img src="https://via.placeholder.com/120x120/00ADB5/ffffff?text=Fahad" alt="Fahad Profile" draggable="false">
                 <h3>Hello, I'm Fahad! 👋</h3>
                 <p>I'm 16 years old and currently learning in Class 11 with PCM (Physics, Chemistry, Maths) stream. Skills abhi kuch nahi hain, but har roz kuch naya seekh raha hoon! Learning is my journey. 😊</p>
                 <div class="social-links">
@@ -2636,8 +2564,10 @@
     <script type="module">
         // Firebase configuration (from firebase-client-config.js)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+        import { getDatabase, ref, onValue, push, set, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+        import { getFirestore, collection, query, where, addDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
 
         const firebaseConfig = {
             apiKey: "AIzaSyChwpbFb6M4HtG6zwjg0AXh7Lz9KjnrGZk",
@@ -2650,21 +2580,28 @@
             measurementId: "G-PCH99BDF1S"
         };
         const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+        const rtdb = getDatabase(app); // Renamed for Realtime Database
         const auth = getAuth(app);
+        const firestore = getFirestore(app); // Initialized Firestore
 
         // API Key for Gemini (Canvas will automatically provide the API key)
         const API_KEY = ""; 
+
+        // Current user ID for Firestore operations
+        let currentUserId = null;
+
 
         // Authenticate Firebase (anonymous for public site)
         const authenticateFirebase = async () => {
             try {
                 if (typeof __initial_auth_token !== 'undefined') {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                    console.log("Public site: Signed in with custom token");
+                    const userCredential = await signInWithCustomToken(auth, __initial_auth_token);
+                    currentUserId = userCredential.user.uid;
+                    console.log("Public site: Signed in with custom token. UID:", currentUserId);
                 } else {
-                    await signInAnonymously(auth);
-                    console.log("Public site: Signed in anonymously");
+                    const userCredential = await signInAnonymously(auth);
+                    currentUserId = userCredential.user.uid;
+                    console.log("Public site: Signed in anonymously. UID:", currentUserId);
                 }
             } catch (error) {
                 console.error("Public site Firebase authentication error:", error);
@@ -2737,6 +2674,7 @@
         let currentView = 'home-view';
         let currentBatchId = null;
         let currentSectionIndex = null;
+        window.currentPlayingLectureId = null; // New global to store currently playing lecture ID for comments
         window.lastCategoryViewed = 'all'; // Made global for direct access from HTML
         const surpriseLink = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Example link
 
@@ -2788,8 +2726,15 @@
                 this.classList.remove('active');
             }
 
-            // Event listeners for static elements now handled in renderCategories for their re-addition
-            // And for dynamically added elements handled in their respective display functions.
+            // These are now inside home-view, so observing them after renderCategories()
+            // document.querySelectorAll('.favorites-section-home-card, .telegram-card, .surprise-button').forEach(item => {
+            //     item.addEventListener('touchstart', onTouchStart);
+            //     item.addEventListener('touchend', onTouchEnd);
+            //     item.addEventListener('touchcancel', onTouchEnd);
+            //     item.addEventListener('mousedown', onTouchStart);
+            //     item.addEventListener('mouseup', onTouchEnd);
+            //     item.addEventListener('mouseleave', onTouchEnd);
+            // });
 
             // Offline detection
             function updateOnlineStatus() {
@@ -2951,7 +2896,7 @@
             
             if (homeView) homeView.style.display = 'grid'; /* Use grid as home-view is now a grid container */
 
-            renderFavoritesSectionHomeCard();
+            renderFavoritesSectionHomeCard(); // Ensure favorites are rendered when showing home view
             currentView = 'home-view';
             window.highlightBottomNav('home-nav');
             window.scrollTo(0, 0);
@@ -2979,7 +2924,7 @@
         }, { threshold: 0.1 });
 
         function loadAllCategoriesFromFirebase() {
-            const categoriesRef = ref(db, 'categories');
+            const categoriesRef = ref(rtdb, 'categories'); // Use rtdb for Realtime Database
             onValue(categoriesRef, (snapshot) => {
                 allCategoriesData = snapshot.val() || {};
                 renderCategories();
@@ -2994,34 +2939,26 @@
             const homeView = document.getElementById('home-view');
             if (!homeView) return;
 
-            // Clear only dynamic content, keep static elements within home-view
-            // Find existing static elements and store them
-            const staticElements = Array.from(homeView.children).filter(child => 
-                child.id === 'favorites-section-home-card' ||
-                child.classList.contains('partition') ||
-                child.classList.contains('telegram-card') ||
-                child.classList.contains('share-app-button') ||
-                child.id === 'loadingCategoriesMessage' || /* Keep loading message if it exists */
-                child.classList.contains('surprise-button')
-            );
-            
-            // Clear all content to re-render dynamic categories first
-            homeView.innerHTML = ''; 
+            // Remove only dynamically added category items, keep static elements within home-view
+            Array.from(homeView.querySelectorAll('.course-category-item')).forEach(el => el.remove());
+
+            const loadingMessage = document.getElementById('loadingCategoriesMessage');
+            if (loadingMessage) loadingMessage.remove(); // Remove initial loading message for categories
 
             if (Object.keys(allCategoriesData).length === 0) {
-                homeView.innerHTML = '<p class="text-center text-muted col-span-full">No categories found. Please add courses via the admin panel.</p>';
-                // Append static elements back after clearing dynamic content
-                staticElements.forEach(el => homeView.appendChild(el));
+                homeView.insertAdjacentHTML('afterbegin', '<p class="text-center text-muted col-span-full" id="noCategoriesMessage">No categories found. Please add courses via the admin panel.</p>');
                 return;
+            } else {
+                 if (loadingMessage) loadingMessage.remove(); // Remove loading message if categories found
             }
 
+            // Dynamically add category items
             Object.entries(allCategoriesData).forEach(([catId, category]) => {
                 const categoryItem = document.createElement('div');
                 categoryItem.className = 'course-category-item hidden-on-scroll';
                 categoryItem.onclick = () => window.showNewBatchesView(catId);
 
                 const firstBatch = category.batches ? Object.values(category.batches)[0] : null;
-                // Changed placeholder service to via.placeholder.com
                 const imageUrl = firstBatch && firstBatch.thumbnail ? firstBatch.thumbnail : 'https://via.placeholder.com/90x90/00ADB5/1A2B3C?text=Category';
                 const isNewCategory = firstBatch && firstBatch.isNew;
 
@@ -3034,35 +2971,25 @@
                     </div>
                     ${isNewCategory ? '<span class="new-tag">NEW</span>' : ''}
                 `;
-                homeView.appendChild(categoryItem);
+                homeView.prepend(categoryItem); /* Prepend to show categories first */
                 observer.observe(categoryItem);
             });
 
-            // Append static elements back after dynamic categories
-            staticElements.forEach(el => {
-                // Check if element is already in the DOM (prevents duplicates on re-render)
-                if (!homeView.contains(el)) {
-                    homeView.appendChild(el);
-                    // Re-observe static elements for animation if they were added
-                    if (el.classList.contains('hidden-on-scroll') && !el.classList.contains('visible-on-scroll')) {
-                        observer.observe(el);
-                    }
+            // Re-observe static elements in home-view to ensure they animate correctly if they weren't before
+            document.querySelectorAll('#home-view .favorites-section-home-card, #home-view .telegram-card, #home-view .share-app-button, #home-view .surprise-button').forEach(item => {
+                // Ensure they are initially hidden-on-scroll if they haven't been observed yet
+                if (!item.classList.contains('hidden-on-scroll') && !item.classList.contains('visible-on-scroll')) {
+                    item.classList.add('hidden-on-scroll');
                 }
+                observer.observe(item);
             });
-            // Ensure static elements are displayed correctly if home-view is active
-            if (currentView === 'home-view') {
-                const favoritesHomeCard = document.getElementById('favorites-section-home-card');
-                const telegramCard = document.querySelector('.telegram-card');
-                const shareButton = document.querySelector('.share-app-button');
-                const surpriseButton = document.querySelector('.surprise-button');
-                const partitions = document.querySelectorAll('.partition');
-
-                if (favoritesHomeCard) favoritesHomeCard.style.display = 'flex';
-                if (telegramCard) telegramCard.style.display = 'flex';
-                if (shareButton) shareButton.style.display = 'flex';
-                if (surpriseButton) surpriseButton.style.display = 'flex';
-                partitions.forEach(p => { if (p) p.style.display = 'block'; });
-            }
+            // Also observe partitions if they are being added here, ensure no duplicates
+            document.querySelectorAll('#home-view .partition').forEach(item => {
+                if (!item.classList.contains('hidden-on-scroll') && !item.classList.contains('visible-on-scroll')) {
+                    item.classList.add('hidden-on-scroll');
+                }
+                observer.observe(item);
+            });
         }
 
 
@@ -3125,7 +3052,7 @@
                         <span>${batch.title}</span>
                         <div class="icons">
                             <i class="${heartIconClass}" onclick="event.stopPropagation(); window.toggleFavorite('${batch.id}', this);"></i>
-                            <i class="fas fa-share-alt" onclick="event.stopPropagation(); alert('Share functionality not implemented yet!');"></i>
+                            <i class="fas fa-share-alt share-batch-btn" data-batch-id="${batch.id}" data-batch-title="${encodeURIComponent(batch.title || '')}" data-batch-desc="${encodeURIComponent(batch.description || '')}" onclick="event.stopPropagation();"></i>
                         </div>
                     </div>
                     <div class="batch-card-body">
@@ -3137,10 +3064,19 @@
                         <button class="lets-roar-button" data-batch-id="${batch.id}">LET'S ROAR 🚀🔥</button>
                     </div>
                 `;
-                // Append the card first
                 batchesContainer.appendChild(batchCard);
 
-                // Then attach event listener to the button
+                // Attach event listener for the share button on batches
+                const shareButton = batchCard.querySelector('.share-batch-btn');
+                if (shareButton) {
+                    shareButton.addEventListener('click', (e) => {
+                        const batchTitle = decodeURIComponent(e.target.dataset.batchTitle);
+                        const batchDesc = decodeURIComponent(e.target.dataset.batchDesc);
+                        window.shareBatch(batchTitle, batchDesc);
+                    });
+                }
+                
+                // Attach event listener to the lets-roar button
                 const letsRoarButton = batchCard.querySelector('.lets-roar-button');
                 if (letsRoarButton) {
                     letsRoarButton.addEventListener('click', () => {
@@ -3245,7 +3181,7 @@
                                 <span>${batch.title}</span>
                                 <div class="icons">
                                     <i class="${heartIconClass}" onclick="event.stopPropagation(); window.toggleFavorite('${batch.id}', this);"></i>
-                                    <i class="fas fa-share-alt" onclick="event.stopPropagation(); alert('Share functionality not implemented yet!');"></i>
+                                    <i class="fas fa-share-alt share-batch-btn" data-batch-id="${batch.id}" data-batch-title="${encodeURIComponent(batch.title || '')}" data-batch-desc="${encodeURIComponent(batch.description || '')}" onclick="event.stopPropagation();"></i>
                                 </div>
                             </div>
                             <div class="batch-card-body">
@@ -3349,19 +3285,13 @@
                     lessonItem.className = 'lesson-list-item hidden-on-scroll';
                     lessonItem.onclick = () => window.showVideoPlayerView(categoryId, batchId, moduleId, lectureId);
                    
-                    // Implement UI from Screenshot_20250613-191010.jpg
+                    // Implement UI from Screenshot_20250613-191010.jpg (simplified to remove unnecessary elements)
                     lessonItem.innerHTML = `
                         <div class="lesson-list-item-left">
                             <img src="https://via.placeholder.com/50x50/000000/ffffff?text=PW" alt="PW Logo" class="pw-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/50x50/000000/ffffff?text=PW';">
-                            <span class="teacher-name">Teacher Name</span> <!-- Placeholder -->
                         </div>
                         <div class="lesson-list-item-right">
                             <h3 class="lesson-list-item-title">${lecture.name}</h3>
-                            <p class="lesson-list-item-subtitle">Lec ${lessonIndex + 1}: Subtitle Placeholder</p> <!-- Subtitle Placeholder -->
-                            <div class="lesson-meta">
-                                <div><i class="far fa-calendar-alt"></i> <span class="lesson-date">Date Placeholder</span></div> <!-- Date Placeholder -->
-                                <div><i class="far fa-clock"></i> <span class="lesson-duration">Duration Placeholder</span></div> <!-- Duration Placeholder -->
-                            </div>
                         </div>
                         <div class="video-icon-overlay">
                             <i class="fas fa-video"></i>
@@ -3386,6 +3316,7 @@
             hideAllViews();
             currentBatchId = batchId;
             currentSectionIndex = moduleId;
+            window.currentPlayingLectureId = lectureId; // Set current playing lecture ID
 
             const selectedCategory = allCategoriesData[categoryId];
             const selectedBatch = selectedCategory && selectedCategory.batches ? selectedCategory.batches[batchId] : null;
@@ -3403,18 +3334,6 @@
             
             const playerLessonSubTitle = document.getElementById('player-lesson-sub-title');
             if (playerLessonSubTitle) playerLessonSubTitle.textContent = selectedLecture.name; // Can be improved if subtitle is in Firebase
-
-
-            // Update Player Meta Info
-            const teacherNameEl = document.querySelector('.player-lesson-meta-info .teacher-name');
-            const lessonDateEl = document.querySelector('.player-lesson-meta-info .lesson-date');
-            const lessonDurationEl = document.querySelector('.player-lesson-meta-info .lesson-duration');
-            const teacherProfileImg = document.querySelector('.player-lesson-meta-info .teacher-profile');
-            
-            if (teacherNameEl) teacherNameEl.textContent = "Teacher Name"; // Placeholder
-            if (lessonDateEl) lessonDateEl.textContent = "Date"; // Placeholder
-            if (lessonDurationEl) lessonDurationEl.textContent = "Duration"; // Placeholder
-            if (teacherProfileImg) teacherProfileImg.src = "https://via.placeholder.com/40x40/8e24aa/ffffff?text=TM"; // Placeholder
 
             const mainVideoPlayer = document.getElementById('main-video-player');
             if (mainVideoPlayer) {
@@ -3441,7 +3360,7 @@
                             1. It's a Google Drive video with 'Anyone with the link' access.<br>
                             2. You copy the ID correctly from a URL like:
                             <code>https://drive.google.com/file/d/<b>YOUR_VIDEO_ID</b>/view</code><br>
-                            Then paste the full preview link: <code>https://drive.google.com/file/d/<b>YOUR_VIDEO_ID</b>/preview</code><br>
+                            Then paste the full preview link: <code>https://www.youtube.com/file/d/<b>YOUR_VIDEO_ID</b>/preview</code><br>
                             (YouTube links are also supported for demonstration, e.g., <code>https://www.youtube.com/watch?v=<b>VIDEO_ID</b></code>)
                         </p>
                     `;
@@ -3457,19 +3376,13 @@
                         lessonItem.className = 'lesson-item hidden-on-scroll';
                         lessonItem.onclick = () => window.showVideoPlayerView(categoryId, batchId, moduleId, otherLectureId);
                         
-                        // Re-use the lesson-list-item structure from showLessonsInSectionsView
+                        // Re-use the simplified lesson-list-item structure from showLessonsInSectionsView
                         lessonItem.innerHTML = `
                             <div class="lesson-list-item-left">
                                 <img src="https://via.placeholder.com/50x50/000000/ffffff?text=PW" alt="PW Logo" class="pw-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/50x50/000000/ffffff?text=PW';">
-                                <span class="teacher-name">Teacher Name</span>
                             </div>
                             <div class="lesson-list-item-right">
                                 <h3 class="lesson-list-item-title">${otherLecture.name}</h3>
-                                <p class="lesson-list-item-subtitle">Lec X: Subtitle Placeholder</p>
-                                <div class="lesson-meta">
-                                    <div><i class="far fa-calendar-alt"></i> <span class="lesson-date">Date Placeholder</span></div>
-                                    <div><i class="far fa-clock"></i> <span class="lesson-duration">Duration Placeholder</span></div>
-                                </div>
                             </div>
                             <div class="video-icon-overlay">
                                 <i class="fas fa-video"></i>
@@ -3504,7 +3417,6 @@
                     return;
                 }
             } 
-            // Removed direct navigation to favorites-view as it's only on homepage now
             window.showNewBatchesView(window.lastCategoryViewed); // Go back to the last viewed category
         }
 
@@ -3543,57 +3455,118 @@
             if (activeItem) activeItem.classList.add('active');
         }
 
-        // --- Comments Popup Logic (kept as is for now, not Firebase integrated) ---
+        // --- Comments Popup Logic (using Firestore) ---
         window.showCommentsPopup = function() {
             const commentsPopupOverlay = document.getElementById('commentsPopupOverlay');
-            if (commentsPopupOverlay) commentsPopupOverlay.classList.add('active');
-            renderComments();
+            const commentsHeader = document.getElementById('commentsHeader');
+            if (!commentsPopupOverlay || !commentsHeader) return;
+
+            commentsPopupOverlay.classList.add('active');
+            const playerViewTitle = document.getElementById('player-view-title');
+            if (playerViewTitle) {
+                commentsHeader.textContent = `Comments for ${playerViewTitle.textContent}`;
+            } else {
+                commentsHeader.textContent = `SR Comments`;
+            }
+            renderComments(window.currentPlayingLectureId); // Render comments for the current lecture
         }
 
         window.closeCommentsPopup = function() {
             const commentsPopupOverlay = document.getElementById('commentsPopupOverlay');
             if (commentsPopupOverlay) commentsPopupOverlay.classList.remove('active');
+            // Unsubscribe from Firestore listener when closing popup
+            if (window.unsubscribeComments) {
+                window.unsubscribeComments();
+                window.unsubscribeComments = null;
+            }
         }
 
-        let tempComments = [];
-        window.postComment = function() {
+        // Firestore listener for comments
+        window.unsubscribeComments = null; // Made global to manage subscription
+
+        async function renderComments(lectureId) {
+            const commentsDisplayArea = document.getElementById('commentsDisplayArea');
+            if (!commentsDisplayArea) return;
+
+            commentsDisplayArea.innerHTML = '<p class="no-comments-message">Loading comments...</p>'; // Show loading message
+
+            // Unsubscribe from previous listener if active
+            if (window.unsubscribeComments) {
+                window.unsubscribeComments();
+            }
+
+            // Correctly access __app_id within the module scope
+            const currentAppId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+            if (!lectureId) {
+                commentsDisplayArea.innerHTML = '<p class="no-comments-message">No lecture selected for comments.</p>';
+                return;
+            }
+
+            // Reference to Firestore collection
+            const commentsCollectionRef = collection(firestore, `artifacts/${currentAppId}/public/comments/${lectureId}/userComments`);
+            const q = query(commentsCollectionRef); 
+
+            window.unsubscribeComments = onSnapshot(q, (snapshot) => { // Assign to global
+                commentsDisplayArea.innerHTML = ''; // Clear existing comments
+                if (snapshot.empty) {
+                    commentsDisplayArea.innerHTML = '<p class="no-comments-message">No comments yet. Be the first to comment!</p>';
+                } else {
+                    snapshot.forEach(doc => {
+                        const comment = doc.data();
+                        const commentItem = document.createElement('div');
+                        commentItem.className = 'comment-item';
+                        const timestamp = comment.timestamp && comment.timestamp.seconds ? new Date(comment.timestamp.seconds * 1000).toLocaleTimeString() : 'Unknown Time';
+                        commentItem.innerHTML = `
+                            <strong>${comment.userDisplayName || 'Anonymous'}</strong> <span>(${timestamp})</span><br>
+                            ${comment.commentText}
+                        `;
+                        commentsDisplayArea.appendChild(commentItem);
+                    });
+                }
+                commentsDisplayArea.scrollTop = commentsDisplayArea.scrollHeight; // Scroll to bottom
+            }, (error) => {
+                console.error("Error fetching comments:", error);
+                commentsDisplayArea.innerHTML = `<p class="no-comments-message" style="color:red;">Error loading comments: ${error.message}</p>`;
+            });
+        }
+
+        window.postComment = async function() {
             const commentInput = document.getElementById('commentInput');
             if (!commentInput) return;
             const commentText = commentInput.value.trim();
             const userName = localStorage.getItem('userName') || 'Guest';
-            if (commentText) {
-                const newComment = {
-                    user: userName,
-                    text: commentText,
-                    timestamp: new Date().toLocaleTimeString()
-                };
-                tempComments.push(newComment);
-                commentInput.value = '';
-                renderComments();
-            } else {
+            
+            if (!commentText) {
                 alert('Please write something before posting!');
+                return;
             }
-        }
 
-        function renderComments() {
-            const commentsDisplayArea = document.getElementById('commentsDisplayArea');
-            if (!commentsDisplayArea) return;
-            commentsDisplayArea.innerHTML = '';
+            if (!window.currentPlayingLectureId) {
+                alert('Cannot post comment: No lecture selected.');
+                return;
+            }
+            if (!currentUserId) {
+                 alert('Cannot post comment: User not authenticated.');
+                 return;
+            }
 
-            if (tempComments.length === 0) {
-                commentsDisplayArea.innerHTML = '<p class="no-comments-message">No comments yet. Be the first to comment!</p>';
-            } else {
-                tempComments.forEach(comment => {
-                    const commentItem = document.createElement('div');
-                    commentItem.className = 'comment-item';
-                    commentItem.innerHTML = `
-                        <strong>${comment.user}</strong> <span>(${comment.timestamp})</span><br>
-                        ${comment.text}
-                    `;
-                    commentsDisplayArea.appendChild(commentItem);
+            const currentAppId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+
+            try {
+                await addDoc(collection(firestore, `artifacts/${currentAppId}/public/comments/${window.currentPlayingLectureId}/userComments`), {
+                    userDisplayName: userName,
+                    userId: currentUserId,
+                    commentText: commentText,
+                    timestamp: serverTimestamp() // Use Firestore server timestamp
                 });
+                commentInput.value = ''; // Clear input after posting
+                console.log("Comment posted successfully!");
+            } catch (error) {
+                console.error("Error posting comment:", error);
+                alert(`Failed to post comment: ${error.message}`);
             }
-            commentsDisplayArea.scrollTop = commentsDisplayArea.scrollHeight;
         }
 
         // --- New: Show Coming Soon Views ---
@@ -3652,20 +3625,21 @@
             if (sliderMenu) sliderMenu.classList.remove('active');
         }
 
-        // --- Share App Function ---
-        window.shareApp = function() {
+        // --- Share App Function (for specific batches) ---
+        window.shareBatch = function(title, description) {
             if (navigator.share) {
                 navigator.share({
-                    title: 'SkillNeast - Master New Skills! 🚀',
-                    text: 'Join SkillNeast to learn and grow with amazing courses and a vibrant community. Download the app now! ✨',
-                    url: window.location.href
+                    title: `Check out this course: ${title} on SkillNeast! 🚀`,
+                    text: `${description}\n\nLearn more at SkillNeast!`,
+                    url: window.location.href // Shares the current app URL, as deep linking for batches is complex
                 }).then(() => {
                     console.log('Thanks for sharing!');
                 }).catch((error) => {
                     console.error('Error sharing:', error);
+                    alert(`Share feature not fully supported or allowed on this device/browser. You can copy the link and share:\n\nTitle: ${title}\nDescription: ${description}\nLink: ${window.location.href}`);
                 });
             } else {
-                alert("Share feature not supported on this browser. You can copy the link and share: " + window.location.href);
+                alert(`Share feature not supported on this browser. You can copy the link and share:\n\nTitle: ${title}\nDescription: ${description}\nLink: ${window.location.href}`);
             }
         }
 
@@ -3680,78 +3654,6 @@
             const darkModeToggleSwitch = document.getElementById('darkModeToggleSwitch');
             if (darkModeToggleSwitch) darkModeToggleSwitch.checked = !isLightMode;
         }
-
-        // This modal is now unused in the main flow, but kept in case you want to use it for other purposes
-        window.openBatchDetailModal = async function(title, thumbnail, description) { 
-            const modalBatchTitle = document.getElementById('modalBatchTitle');
-            const modalBatchImage = document.getElementById('modalBatchImage');
-            const modalBatchDescription = document.getElementById('modalBatchDescription');
-            const generatedOverview = document.getElementById('generatedOverview');
-            const loadingOverview = document.getElementById('loadingOverview');
-            const batchDetailModalOverlay = document.getElementById('batchDetailModalOverlay');
-            const generateOverviewBtn = document.getElementById('generateOverviewBtn');
-
-            if (modalBatchTitle) modalBatchTitle.textContent = title;
-            if (modalBatchImage) {
-                modalBatchImage.src = thumbnail;
-                modalBatchImage.onerror = function() { this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=Batch+Image'; };
-            }
-            if (modalBatchDescription) modalBatchDescription.textContent = description;
-            if (generatedOverview) generatedOverview.textContent = '';
-            if (loadingOverview) loadingOverview.style.display = 'none';
-            if (batchDetailModalOverlay) batchDetailModalOverlay.classList.add('active');
-            if (generateOverviewBtn) generateOverviewBtn.dataset.batchTitle = title;
-        }
-
-        window.closeBatchDetailModal = function() {
-            const batchDetailModalOverlay = document.getElementById('batchDetailModalOverlay');
-            if (batchDetailModalOverlay) batchDetailModalOverlay.classList.remove('active');
-        }
-
-        document.getElementById('generateOverviewBtn').addEventListener('click', async (event) => {
-            const batchTitle = event.target.dataset.batchTitle;
-            const overviewDisplay = document.getElementById('generatedOverview');
-            const loadingIndicator = document.getElementById('loadingOverview');
-
-            if (!overviewDisplay || !loadingIndicator) return;
-
-            if (!batchTitle) {
-                overviewDisplay.textContent = 'Batch title not available for overview generation.';
-                return;
-            }
-
-            loadingIndicator.style.display = 'flex';
-            overviewDisplay.textContent = '';
-
-            try {
-                const prompt = `Generate a very brief (1-2 sentences), engaging, and marketing-friendly overview for a course batch titled "${batchTitle}". Highlight its key benefit or what a student will gain.`;
-                const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
-                const payload = { contents: chatHistory };
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const result = await response.json();
-
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const text = result.candidates[0].content.parts[0].text;
-                    overviewDisplay.textContent = text;
-                } else {
-                    overviewDisplay.textContent = "Could not generate overview. Please try again.";
-                    console.error("Gemini API response:", result);
-                }
-            } catch (error) {
-                overviewDisplay.textContent = `Error generating overview: ${error.message}`;
-                console.error("Gemini API call error:", error);
-            } finally {
-                loadingIndicator.style.display = 'none';
-            }
-        });
     </script>
 </body>
 </html>
