@@ -888,40 +888,63 @@
             flex-direction: column;
             gap: 15px;
         }
+        /* New styles for module item to match screenshot 200107.jpg */
         .section-item {
-            background-color: #333333;
+            background: linear-gradient(135deg, rgba(0, 173, 181, 0.1), rgba(0, 173, 181, 0.05)); /* Subtle gradient */
             border-radius: var(--border-radius-card);
             box-shadow: var(--shadow-light);
-            padding: 20px;
+            padding: 20px; /* Increased padding */
             display: flex;
-            align-items: center;
+            flex-direction: column; /* Changed to column for multiple lines of text */
             justify-content: space-between;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
-            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+            border: 1px solid rgba(0, 173, 181, 0.2); /* Accent border */
+            position: relative;
+            overflow: hidden;
+        }
+        .section-item::before { /* Left accent bar */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--accent-teal);
+            border-top-left-radius: inherit;
+            border-bottom-left-radius: inherit;
         }
         .section-item:hover {
             transform: translateY(-3px);
             box-shadow: var(--shadow-medium);
         }
-        .section-item .section-icon {
-            font-size: 1.8em;
-            color: var(--accent-teal);
-            margin-right: 15px;
-            transition: color 0.3s ease;
-        }
         .section-item .section-name {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.2em;
-            font-weight: 600;
+            font-size: 1.4em; /* Larger font for main title */
+            font-weight: 700;
             color: var(--text-dark);
-            margin: 0;
+            margin-bottom: 5px; /* Space between title and counts */
+            padding-left: 10px; /* Space for the left bar */
+            text-align: left; /* Align text left */
             flex-grow: 1;
-            transition: color 0.3s ease;
+        }
+        .section-item .section-counts {
+            font-size: 0.9em;
+            color: var(--text-light);
+            padding-left: 10px; /* Align with title */
+            text-align: left;
+        }
+        .section-item .section-counts span {
+            font-weight: 600;
+            color: var(--accent-teal);
         }
         .section-item .section-arrow {
-            font-size: 1.2em;
-            color: var(--text-light);
+            position: absolute; /* Position arrow to the right */
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em; /* Larger arrow */
+            color: var(--accent-teal);
             transition: color 0.3s ease;
         }
 
@@ -961,44 +984,85 @@
             flex-direction: column;
             gap: 15px;
         }
+        /* New styles for lesson item to match screenshot 191010.jpg */
         .lesson-list-item {
-            background-color: #333333;
+            background: linear-gradient(135deg, #2A2A2A, #222222); /* Darker background, matching quote section for consistency */
             border-radius: var(--border-radius-card);
             box-shadow: var(--shadow-light);
-            padding: 15px;
+            padding: 20px; /* Increased padding */
             display: flex;
-            flex-direction: column;
+            flex-direction: row; /* Changed to row for layout */
+            align-items: center; /* Vertically center content */
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
             border: 1px solid var(--border-color);
+            position: relative; /* For positioning video icon */
         }
         .lesson-list-item:hover {
             transform: translateY(-3px);
             box-shadow: var(--shadow-medium);
         }
-        .lesson-list-item-header {
+        .lesson-list-item-left {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            margin-bottom: 10px;
+            margin-right: 20px; /* Space between left and right content */
+            flex-shrink: 0; /* Don't shrink logo/teacher area */
         }
         .lesson-list-item .pw-logo {
-            width: 35px;
-            height: 35px;
+            width: 50px; /* Larger logo */
+            height: 50px; /* Larger logo */
             border-radius: 50%;
-            margin-right: 12px;
             object-fit: cover;
-            border: 1px solid #555;
-            transition: border-color 0.3s ease;
+            border: 2px solid var(--accent-teal); /* Highlight logo */
+            margin-bottom: 8px; /* Space below logo */
+        }
+        .lesson-list-item .teacher-name {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.8em;
+            color: var(--text-light);
+            text-align: center;
+        }
+        .lesson-list-item-right {
+            flex-grow: 1; /* Allows text content to take remaining space */
+            display: flex;
+            flex-direction: column;
+            text-align: left;
         }
         .lesson-list-item .lesson-list-item-title {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.1em;
-            font-weight: 600;
+            font-size: 1.3em; /* Main title */
+            font-weight: 700;
             color: var(--text-dark);
-            margin: 0;
-            line-height: 1.4;
-            transition: color 0.3s ease;
+            margin: 0 0 5px 0; /* Space below title */
+            line-height: 1.2;
         }
+        .lesson-list-item .lesson-list-item-subtitle {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1em;
+            color: var(--text-light);
+            margin-bottom: 10px; /* Space below subtitle */
+        }
+        .lesson-list-item .lesson-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Space between meta items */
+            font-size: 0.85em;
+            color: var(--text-light);
+        }
+        .lesson-list-item .lesson-meta i {
+            color: var(--accent-teal); /* Icon color */
+            margin-right: 5px;
+        }
+        .lesson-list-item .video-icon-overlay {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2em; /* Larger video icon */
+            color: var(--error-red); /* Red for video icon */
+        }
+
 
         #video-player-view {
             display: none;
@@ -1084,6 +1148,38 @@
             transition: color 0.3s ease;
         }
         
+        /* Teacher & Meta info for player view */
+        .player-lesson-meta-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        .player-lesson-meta-info div {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .player-lesson-meta-info i {
+            color: var(--accent-teal);
+            font-size: 1.1em;
+        }
+        .player-lesson-meta-info img.teacher-profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--highlight-gold);
+        }
+        .player-lesson-meta-info .teacher-name {
+            font-weight: 600;
+            color: var(--highlight-gold);
+        }
+
 
         .player-action-buttons {
             display: flex;
@@ -1126,6 +1222,7 @@
             padding: 0 20px;
             margin-top: 20px;
         }
+        /* Player view lesson item is same as general lesson list item now */
         .lesson-item {
             background-color: #333333;
             border-radius: var(--border-radius-card);
@@ -2074,18 +2171,18 @@
             transform: translateX(20px);
         }
 
-        /* Modal for Batch Details */
+        /* Modal for Batch Details (AI Overview, now removed from general flow) */
         .batch-detail-modal-overlay {
+            display: none; /* Hide by default, only shown via specific function calls if needed */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.85);
-            display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 2500; /* Higher than other popups */
+            z-index: 2500;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -2093,6 +2190,7 @@
         .batch-detail-modal-overlay.active {
             opacity: 1;
             visibility: visible;
+            display: flex; /* Show when active */
         }
         .batch-detail-modal-content {
             background-color: var(--player-section-bg);
@@ -2221,7 +2319,7 @@
         </div>
     </div>
 
-    <!-- Batch Details Modal (New Feature) -->
+    <!-- This modal is now unused in the main flow, but kept in case you want to use it for other purposes -->
     <div class="batch-detail-modal-overlay" id="batchDetailModalOverlay">
         <div class="batch-detail-modal-content">
             <button class="close-button" onclick="window.closeBatchDetailModal()">×</button>
@@ -2345,6 +2443,11 @@
                     </div>
                     <div class="player-metadata">
                         <h3 class="lesson-sub-title" id="player-lesson-sub-title"></h3>
+                        <div class="player-lesson-meta-info">
+                            <div><img src="https://via.placeholder.com/40x40/8e24aa/ffffff?text=TM" alt="Teacher" class="teacher-profile" onerror="this.onerror=null;this.src='https://via.placeholder.com/40x40/8e24aa/ffffff?text=TM';"> <span class="teacher-name">Teacher Name</span></div>
+                            <div><i class="far fa-calendar-alt"></i> <span class="lesson-date">Date</span></div>
+                            <div><i class="far fa-clock"></i> <span class="lesson-duration">Duration</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2831,13 +2934,13 @@
             }, (error) => {
                 console.error("Error fetching categories:", error);
                 const loadingCategoriesMessage = document.getElementById('loadingCategoriesMessage');
-                if (loadingCategoriesMessage) loadingCategoriesMessage.textContent = `Error loading categories: ${error.message}`; // Add null check
+                if (loadingCategoriesMessage) loadingCategoriesMessage.textContent = `Error loading categories: ${error.message}`;
             });
         }
 
         function renderCategories() {
             const homeView = document.getElementById('home-view');
-            if (!homeView) return; // Add null check
+            if (!homeView) return;
 
             homeView.innerHTML = '';
             const loadingMessage = document.getElementById('loadingCategoriesMessage');
@@ -2888,18 +2991,18 @@
         window.showNewBatchesView = function(categoryId = 'all') {
             hideAllViews();
             const newBatchesView = document.getElementById('new-batches-view');
-            if (newBatchesView) newBatchesView.style.display = 'block'; // Add null check
+            if (newBatchesView) newBatchesView.style.display = 'block';
             
             currentView = 'new-batches-view';
             lastCategoryViewed = categoryId;
             
             const batchesContainer = document.getElementById('batches-container');
-            if (batchesContainer) batchesContainer.innerHTML = '<p class="text-center text-muted" id="loadingBatchesMessage">Loading batches...</p>'; // Add null check
+            if (batchesContainer) batchesContainer.innerHTML = '<p class="text-center text-muted" id="loadingBatchesMessage">Loading batches...</p>';
 
             let batchesToDisplay = [];
             if (categoryId === 'all') {
                 const newBatchesTitle = document.getElementById('new-batches-title');
-                if (newBatchesTitle) newBatchesTitle.textContent = 'All Courses'; // Add null check
+                if (newBatchesTitle) newBatchesTitle.textContent = 'All Courses';
                 Object.values(allCategoriesData).forEach(category => {
                     if (category.batches) {
                         batchesToDisplay = batchesToDisplay.concat(Object.keys(category.batches).map(key => ({ id: key, ...category.batches[key] })));
@@ -2908,7 +3011,7 @@
             } else {
                 const selectedCategory = allCategoriesData[categoryId];
                 const newBatchesTitle = document.getElementById('new-batches-title');
-                if (newBatchesTitle) newBatchesTitle.textContent = selectedCategory ? selectedCategory.name + ' Courses' : 'Courses'; // Add null check
+                if (newBatchesTitle) newBatchesTitle.textContent = selectedCategory ? selectedCategory.name + ' Courses' : 'Courses';
                 if (selectedCategory && selectedCategory.batches) {
                     batchesToDisplay = Object.keys(selectedCategory.batches).map(key => ({ id: key, ...selectedCategory.batches[key] }));
                 }
@@ -2924,7 +3027,7 @@
 
         function displayBatches(batchesToDisplay) {
             const batchesContainer = document.getElementById('batches-container');
-            if (!batchesContainer) return; // Add null check
+            if (!batchesContainer) return;
 
             batchesContainer.innerHTML = '';
 
@@ -2939,7 +3042,6 @@
                 const isFavorited = favorites.includes(batch.id);
                 const heartIconClass = isFavorited ? 'fas fa-heart' : 'far fa-heart';
 
-                // Changed placeholder service to via.placeholder.com
                 batchCard.innerHTML = `
                     <div class="batch-card-header" style="background-color: ${batch.headerColor || 'var(--accent-teal)'};">
                         <span>${batch.title}</span>
@@ -2953,22 +3055,28 @@
                             <img src="${batch.thumbnail}" alt="${batch.title}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=Batch+Image';">
                         </div>
                         <div class="batch-title">${batch.title}</div>
-                        <p class="batch-description">${batch.description || 'No detailed description available. Click "View Details" for an AI overview!'}</p>
-                        <button class="lets-roar-button" onclick="window.openBatchDetailModal(
-                            '${encodeURIComponent(batch.title || '')}', 
-                            '${encodeURIComponent(batch.thumbnail || '')}', 
-                            '${encodeURIComponent(batch.description || '')}'
-                        )">View Details <i class="fas fa-info-circle"></i></button>
+                        <p class="batch-description">${batch.description || 'No detailed description available.'}</p>
+                        <button class="lets-roar-button" data-batch-id="${batch.id}">LET'S ROAR 🚀🔥</button>
                     </div>
                 `;
+                // Append the card first
                 batchesContainer.appendChild(batchCard);
+
+                // Then attach event listener to the button
+                const letsRoarButton = batchCard.querySelector('.lets-roar-button');
+                if (letsRoarButton) {
+                    letsRoarButton.addEventListener('click', () => {
+                        const clickedBatchId = letsRoarButton.dataset.batchId;
+                        window.showSectionsView(clickedBatchId); // Navigate to sections view
+                    });
+                }
                 observer.observe(batchCard);
             });
         }
 
         window.filterBatches = function() {
             const searchTerm = document.getElementById('batchSearchInput');
-            if (!searchTerm) return; // Add null check
+            if (!searchTerm) return;
             
             let currentCategoryBatches = [];
 
@@ -3015,13 +3123,13 @@
 
         function renderFavoritesSectionHomeCard() {
             const favoritesCountSpan = document.getElementById('favorites-count');
-            if (favoritesCountSpan) favoritesCountSpan.textContent = `${favorites.length} Batches`; // Add null check
+            if (favoritesCountSpan) favoritesCountSpan.textContent = `${favorites.length} Batches`;
         }
 
         window.showFavoritesView = function() {
             hideAllViews();
             const favoritesView = document.getElementById('favorites-view');
-            if (favoritesView) favoritesView.style.display = 'block'; // Add null check
+            if (favoritesView) favoritesView.style.display = 'block';
             
             currentView = 'favorites-view';
             window.highlightBottomNav('home-nav');
@@ -3029,7 +3137,7 @@
             const favoriteBatchesContainer = document.getElementById('favorite-batches-container');
             const noFavoritesMessageView = document.getElementById('no-favorites-message-view');
 
-            if (!favoriteBatchesContainer || !noFavoritesMessageView) return; // Add null check
+            if (!favoriteBatchesContainer || !noFavoritesMessageView) return;
 
             favoriteBatchesContainer.innerHTML = '';
             if (favorites.length === 0) {
@@ -3067,15 +3175,18 @@
                                     <img src="${batch.thumbnail}" alt="${batch.title}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=Batch+Image';">
                                 </div>
                                 <div class="batch-title">${batch.title}</div>
-                                <p class="batch-description">${batch.description || 'No detailed description available. Click "View Details" for an AI overview!'}</p>
-                                <button class="lets-roar-button" onclick="window.openBatchDetailModal(
-                                    '${encodeURIComponent(batch.title || '')}', 
-                                    '${encodeURIComponent(batch.thumbnail || '')}', 
-                                    '${encodeURIComponent(batch.description || '')}'
-                                )">View Details <i class="fas fa-info-circle"></i></button>
+                                <p class="batch-description">${batch.description || 'No detailed description available.'}</p>
+                                <button class="lets-roar-button" data-batch-id="${batch.id}">LET'S ROAR 🚀🔥</button>
                             </div>
                         `;
                         favoriteBatchesContainer.appendChild(favBatchCard);
+                        const letsRoarButton = favBatchCard.querySelector('.lets-roar-button');
+                        if (letsRoarButton) {
+                            letsRoarButton.addEventListener('click', () => {
+                                const clickedBatchId = letsRoarButton.dataset.batchId;
+                                window.showSectionsView(clickedBatchId); // Navigate to sections view
+                            });
+                        }
                         observer.observe(favBatchCard);
                     }
                 });
@@ -3100,20 +3211,27 @@
 
             const sectionsContainer = document.getElementById('sections-container');
             const sectionsTitle = document.getElementById('sections-title');
-            if (!sectionsContainer || !sectionsTitle) return; // Add null check
+            if (!sectionsContainer || !sectionsTitle) return;
 
             sectionsContainer.innerHTML = '';
 
             if (selectedBatch && selectedBatch.modules && Object.keys(selectedBatch.modules).length > 0) {
                 sectionsTitle.textContent = selectedBatch.title + ' Modules';
                 Object.entries(selectedBatch.modules).forEach(([moduleId, module], index) => {
+                    // Count lectures within this module
+                    const lectureCount = module.lectures ? Object.keys(module.lectures).length : 0;
                     const sectionItem = document.createElement('div');
                     sectionItem.className = 'section-item hidden-on-scroll';
                     sectionItem.onclick = () => window.showLessonsInSectionsView(currentCategoryId, batchId, moduleId);
     
+                    // Updated HTML structure for module item to match screenshot 200107.jpg
                     sectionItem.innerHTML = `
-                        <i class="fas fa-folder section-icon"></i>
                         <span class="section-name">${module.name}</span>
+                        <div class="section-counts">
+                            <span>${lectureCount} Videos</span>,
+                            <span>0 Notes</span>, <!-- Placeholder for Notes Count -->
+                            <span>0 Exercises</span> <!-- Placeholder for Exercises Count -->
+                        </div>
                         <i class="fas fa-chevron-right section-arrow"></i>
                     `;
                     sectionsContainer.appendChild(sectionItem);
@@ -3125,7 +3243,7 @@
             }
 
             const sectionsView = document.getElementById('sections-view');
-            if (sectionsView) sectionsView.style.display = 'block'; // Add null check
+            if (sectionsView) sectionsView.style.display = 'block';
             currentView = 'sections-view';
             window.scrollTo(0, 0);
         }
@@ -3142,7 +3260,7 @@
 
             const lessonsContainer = document.getElementById('lessons-in-sections-container');
             const lessonsTitle = document.getElementById('lessons-in-sections-title');
-            if (!lessonsContainer || !lessonsTitle) return; // Add null check
+            if (!lessonsContainer || !lessonsTitle) return;
 
             lessonsContainer.innerHTML = '';
 
@@ -3153,10 +3271,22 @@
                     lessonItem.className = 'lesson-list-item hidden-on-scroll';
                     lessonItem.onclick = () => window.showVideoPlayerView(categoryId, batchId, moduleId, lectureId);
                    
+                    // Implement UI from Screenshot_20250613-191010.jpg
                     lessonItem.innerHTML = `
-                        <div class="lesson-list-item-header">
-                            <img src="https://via.placeholder.com/40x40/000000/ffffff?text=PW" alt="PW Logo" class="pw-logo" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/40x40/000000/ffffff?text=PW';">
+                        <div class="lesson-list-item-left">
+                            <img src="https://via.placeholder.com/50x50/000000/ffffff?text=PW" alt="PW Logo" class="pw-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/50x50/000000/ffffff?text=PW';">
+                            <span class="teacher-name">Teacher Name</span> <!-- Placeholder -->
+                        </div>
+                        <div class="lesson-list-item-right">
                             <h3 class="lesson-list-item-title">${lecture.name}</h3>
+                            <p class="lesson-list-item-subtitle">Lec ${lessonIndex + 1}: Subtitle Placeholder</p> <!-- Subtitle Placeholder -->
+                            <div class="lesson-meta">
+                                <div><i class="far fa-calendar-alt"></i> <span class="lesson-date">Date Placeholder</span></div> <!-- Date Placeholder -->
+                                <div><i class="far fa-clock"></i> <span class="lesson-duration">Duration Placeholder</span></div> <!-- Duration Placeholder -->
+                            </div>
+                        </div>
+                        <div class="video-icon-overlay">
+                            <i class="fas fa-video"></i>
                         </div>
                     `;
                     lessonsContainer.appendChild(lessonItem);
@@ -3168,7 +3298,7 @@
             }
 
             const lessonsInSectionsView = document.getElementById('lessons-in-sections-view');
-            if (lessonsInSectionsView) lessonsInSectionsView.style.display = 'block'; // Add null check
+            if (lessonsInSectionsView) lessonsInSectionsView.style.display = 'block';
             currentView = 'lessons-in-sections-view';
             window.scrollTo(0, 0);
         }
@@ -3185,20 +3315,31 @@
             const selectedLecture = selectedModule && selectedModule.lectures ? selectedModule.lectures[lectureId] : null;
 
             if (!selectedCategory || !selectedBatch || !selectedModule || !selectedLecture) {
-                alert('Lesson details not found! Please check the data structure or Firebase data.'); // Improved alert message
+                alert('Lesson details not found! Please check the data structure or Firebase data.');
                 window.goBackFromPlayerView();
                 return;
             }
             
             const playerViewTitle = document.getElementById('player-view-title');
-            if (playerViewTitle) playerViewTitle.textContent = selectedLecture.name; // Add null check
+            if (playerViewTitle) playerViewTitle.textContent = selectedLecture.name;
             
             const playerLessonSubTitle = document.getElementById('player-lesson-sub-title');
-            if (playerLessonSubTitle) playerLessonSubTitle.textContent = selectedLecture.name; // Add null check
+            if (playerLessonSubTitle) playerLessonSubTitle.textContent = selectedLecture.name; // Can be improved if subtitle is in Firebase
 
+
+            // Update Player Meta Info
+            const teacherNameEl = document.querySelector('.player-lesson-meta-info .teacher-name');
+            const lessonDateEl = document.querySelector('.player-lesson-meta-info .lesson-date');
+            const lessonDurationEl = document.querySelector('.player-lesson-meta-info .lesson-duration');
+            const teacherProfileImg = document.querySelector('.player-lesson-meta-info .teacher-profile');
+            
+            if (teacherNameEl) teacherNameEl.textContent = "Teacher Name"; // Placeholder
+            if (lessonDateEl) lessonDateEl.textContent = "Date"; // Placeholder
+            if (lessonDurationEl) lessonDurationEl.textContent = "Duration"; // Placeholder
+            if (teacherProfileImg) teacherProfileImg.src = "https://via.placeholder.com/40x40/8e24aa/ffffff?text=TM"; // Placeholder
 
             const mainVideoPlayer = document.getElementById('main-video-player');
-            if (mainVideoPlayer) { // Add null check
+            if (mainVideoPlayer) {
                 mainVideoPlayer.innerHTML = '';
                 const videoInfo = extractGdriveId(selectedLecture.link);
                 if (videoInfo) {
@@ -3230,14 +3371,32 @@
             }
 
             const lessonsForPlayerBatch = document.getElementById('lessons-for-player-batch');
-            if (lessonsForPlayerBatch) { // Add null check
+            if (lessonsForPlayerBatch) {
                 lessonsForPlayerBatch.innerHTML = '';
                 if (selectedModule && selectedModule.lectures) {
                     Object.entries(selectedModule.lectures).forEach(([otherLectureId, otherLecture]) => {
                         const lessonItem = document.createElement('li');
                         lessonItem.className = 'lesson-item hidden-on-scroll';
                         lessonItem.onclick = () => window.showVideoPlayerView(categoryId, batchId, moduleId, otherLectureId);
-                        lessonItem.innerHTML = `<h3>${otherLecture.name}</h3>`;
+                        
+                        // Re-use the lesson-list-item structure from showLessonsInSectionsView
+                        lessonItem.innerHTML = `
+                            <div class="lesson-list-item-left">
+                                <img src="https://via.placeholder.com/50x50/000000/ffffff?text=PW" alt="PW Logo" class="pw-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/50x50/000000/ffffff?text=PW';">
+                                <span class="teacher-name">Teacher Name</span>
+                            </div>
+                            <div class="lesson-list-item-right">
+                                <h3 class="lesson-list-item-title">${otherLecture.name}</h3>
+                                <p class="lesson-list-item-subtitle">Lec X: Subtitle Placeholder</p>
+                                <div class="lesson-meta">
+                                    <div><i class="far fa-calendar-alt"></i> <span class="lesson-date">Date Placeholder</span></div>
+                                    <div><i class="far fa-clock"></i> <span class="lesson-duration">Duration Placeholder</span></div>
+                                </div>
+                            </div>
+                            <div class="video-icon-overlay">
+                                <i class="fas fa-video"></i>
+                            </div>
+                        `;
                         lessonsForPlayerBatch.appendChild(lessonItem);
                         observer.observe(lessonItem);
                     });
@@ -3247,7 +3406,7 @@
             }
 
             const videoPlayerView = document.getElementById('video-player-view');
-            if (videoPlayerView) videoPlayerView.style.display = 'block'; // Add null check
+            if (videoPlayerView) videoPlayerView.style.display = 'block';
             currentView = 'video-player-view';
             window.scrollTo(0, 0);
         }
@@ -3303,28 +3462,28 @@
         // --- Bottom Navigation Highlight ---
         window.highlightBottomNav = function(activeId) {
             document.querySelectorAll('.bottom-navbar .nav-item').forEach(item => {
-                if (item) item.classList.remove('active'); // Add null check
+                if (item) item.classList.remove('active');
             });
             const activeItem = document.getElementById(activeId);
-            if (activeItem) activeItem.classList.add('active'); // Add null check
+            if (activeItem) activeItem.classList.add('active');
         }
 
         // --- Comments Popup Logic (kept as is for now, not Firebase integrated) ---
         window.showCommentsPopup = function() {
             const commentsPopupOverlay = document.getElementById('commentsPopupOverlay');
-            if (commentsPopupOverlay) commentsPopupOverlay.classList.add('active'); // Add null check
+            if (commentsPopupOverlay) commentsPopupOverlay.classList.add('active');
             renderComments();
         }
 
         window.closeCommentsPopup = function() {
             const commentsPopupOverlay = document.getElementById('commentsPopupOverlay');
-            if (commentsPopupOverlay) commentsPopupOverlay.classList.remove('active'); // Add null check
+            if (commentsPopupOverlay) commentsPopupOverlay.classList.remove('active');
         }
 
         let tempComments = [];
         window.postComment = function() {
             const commentInput = document.getElementById('commentInput');
-            if (!commentInput) return; // Add null check
+            if (!commentInput) return;
             const commentText = commentInput.value.trim();
             const userName = localStorage.getItem('userName') || 'Guest';
             if (commentText) {
@@ -3343,7 +3502,7 @@
 
         function renderComments() {
             const commentsDisplayArea = document.getElementById('commentsDisplayArea');
-            if (!commentsDisplayArea) return; // Add null check
+            if (!commentsDisplayArea) return;
             commentsDisplayArea.innerHTML = '';
 
             if (tempComments.length === 0) {
@@ -3374,7 +3533,7 @@
                 targetView = document.getElementById('ai-chatbot-coming-soon-view');
             }
 
-            if (targetView) targetView.style.display = 'flex'; // Add null check
+            if (targetView) targetView.style.display = 'flex';
             currentView = `${type}-coming-soon-view`;
             window.scrollTo(0, 0);
         }
@@ -3388,7 +3547,7 @@
         window.showAboutMeView = function() {
             hideAllViews();
             const aboutMeView = document.getElementById('about-me-view');
-            if (aboutMeView) aboutMeView.style.display = 'flex'; // Add null check
+            if (aboutMeView) aboutMeView.style.display = 'flex';
             currentView = 'about-me-view';
             window.highlightBottomNav('about-me-nav');
             window.scrollTo(0, 0);
@@ -3398,7 +3557,7 @@
         window.showHowToUseAppView = function() {
             hideAllViews();
             const howToUseAppView = document.getElementById('how-to-use-app-view');
-            if (howToUseAppView) howToUseAppView.style.display = 'flex'; // Add null check
+            if (howToUseAppView) howToUseAppView.style.display = 'flex';
             currentView = 'how-to-use-app-view';
             window.scrollTo(0, 0);
         }
@@ -3407,15 +3566,15 @@
         window.openSliderMenu = function() {
             const sliderMenuOverlay = document.getElementById('sliderMenuOverlay');
             const sliderMenu = document.getElementById('sliderMenu');
-            if (sliderMenuOverlay) sliderMenuOverlay.classList.add('active'); // Add null check
-            if (sliderMenu) sliderMenu.classList.add('active'); // Add null check
+            if (sliderMenuOverlay) sliderMenuOverlay.classList.add('active');
+            if (sliderMenu) sliderMenu.classList.add('active');
         }
 
         window.closeSliderMenu = function() {
             const sliderMenuOverlay = document.getElementById('sliderMenuOverlay');
             const sliderMenu = document.getElementById('sliderMenu');
-            if (sliderMenuOverlay) sliderMenuOverlay.classList.remove('active'); // Add null check
-            if (sliderMenu) sliderMenu.classList.remove('active'); // Add null check
+            if (sliderMenuOverlay) sliderMenuOverlay.classList.remove('active');
+            if (sliderMenu) sliderMenu.classList.remove('active');
         }
 
         // --- Share App Function ---
@@ -3444,15 +3603,11 @@
             localStorage.setItem('lightModeEnabled', isLightMode);
             
             const darkModeToggleSwitch = document.getElementById('darkModeToggleSwitch');
-            if (darkModeToggleSwitch) darkModeToggleSwitch.checked = !isLightMode; // Add null check
+            if (darkModeToggleSwitch) darkModeToggleSwitch.checked = !isLightMode;
         }
 
-        // --- Batch Detail Modal (New AI Feature) ---
-        window.openBatchDetailModal = async function(titleEncoded, thumbnailEncoded, descriptionEncoded) {
-            const title = decodeURIComponent(titleEncoded);
-            const thumbnail = decodeURIComponent(thumbnailEncoded);
-            const description = decodeURIComponent(descriptionEncoded);
-
+        // This modal is now unused in the main flow, but kept in case you want to use it for other purposes
+        window.openBatchDetailModal = async function(title, thumbnail, description) { 
             const modalBatchTitle = document.getElementById('modalBatchTitle');
             const modalBatchImage = document.getElementById('modalBatchImage');
             const modalBatchDescription = document.getElementById('modalBatchDescription');
@@ -3461,7 +3616,6 @@
             const batchDetailModalOverlay = document.getElementById('batchDetailModalOverlay');
             const generateOverviewBtn = document.getElementById('generateOverviewBtn');
 
-            // Add null checks for all elements
             if (modalBatchTitle) modalBatchTitle.textContent = title;
             if (modalBatchImage) {
                 modalBatchImage.src = thumbnail;
@@ -3476,7 +3630,7 @@
 
         window.closeBatchDetailModal = function() {
             const batchDetailModalOverlay = document.getElementById('batchDetailModalOverlay');
-            if (batchDetailModalOverlay) batchDetailModalOverlay.classList.remove('active'); // Add null check
+            if (batchDetailModalOverlay) batchDetailModalOverlay.classList.remove('active');
         }
 
         document.getElementById('generateOverviewBtn').addEventListener('click', async (event) => {
@@ -3484,7 +3638,7 @@
             const overviewDisplay = document.getElementById('generatedOverview');
             const loadingIndicator = document.getElementById('loadingOverview');
 
-            if (!overviewDisplay || !loadingIndicator) return; // Add null check
+            if (!overviewDisplay || !loadingIndicator) return;
 
             if (!batchTitle) {
                 overviewDisplay.textContent = 'Batch title not available for overview generation.';
