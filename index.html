@@ -1,0 +1,3440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillNeast - Master New Skills</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;600;700&family=Comfortaa:wght@700&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            /* Premium Colors (Dark Theme Defaults) */
+            --primary-dark: #1A2B3C; /*cite: 1*/
+            --accent-teal: #00ADB5; /*cite: 2*/
+            --secondary-light: #2c2c2c; /* Changed to dark for black theme*/
+            --text-dark: #f0f0f0; /*cite: 2*/
+            --text-light: #b0b0b0; /* Changed to lighter for black theme*/
+            --highlight-gold: #FFD700; /*cite: 4*/
+            --success-green: #4CAF50; /*cite: 5*/
+            --error-red: #EF5350; /*cite: 5*/
+            --white: #ffffff; /*cite: 5*/
+            --border-color: rgba(255, 255, 255, 0.08); /* Subtle border color for dark theme*/
+            --cyan-glow-color: rgba(0, 173, 181, 0.5); /* For the quote section glow */
+            --dark-bg-gradient-start: #000000;
+            --dark-bg-gradient-end: #1A1A1A;
+
+
+            /* Image-specific colors for lesson-item and player view */
+            --player-bg-color: #1A2B3C; /* Darker for player view background in black theme*/
+            --player-section-bg: #222222; /* Background for player card in black theme*/
+            --player-meta-bg: #282828; /* Background for metadata in player card in black theme*/
+            --timeline-btn-bg: #4CAF50; /*cite: 9*/
+            --comments-btn-bg: #007bff; /*cite: 10*/
+            --watch-later-btn-bg: #6c757d; /*cite: 10*/
+
+            /* Shadows & Radii */
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.2); /* Adjusted for dark theme*/
+            --shadow-medium: 0 10px 30px rgba(0, 0, 0, 0.35); /* Adjusted for dark theme*/
+            --shadow-popup: 0 15px 40px rgba(0, 0, 0, 0.5); /* Adjusted for dark theme*/
+            --border-radius-main: 25px; /*cite: 13, 14*/
+            --border-radius-card: 15px; /*cite: 14*/
+            --border-radius-input: 10px; /*cite: 14*/
+            --border-radius-button: 30px; /*cite: 14*/
+
+            /* Slider Menu Variables */
+            --slider-bg: #1A1A1A;
+            --slider-item-hover: #2c2c2c;
+            --slider-text-color: var(--text-dark);
+            --slider-icon-color: var(--accent-teal);
+            --slider-border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Light Mode Variables */
+        body.light-mode {
+            --primary-dark: #F0F0F0;
+            --accent-teal: #007B80; /* A darker teal for contrast */
+            --secondary-light: #F8F8F8; /* Light background */
+            --text-dark: #333333; /* Dark text */
+            --text-light: #555555; /* Slightly lighter dark text */
+            --highlight-gold: #DAA520; /* Darker gold */
+            --success-green: #388E3C;
+            --error-red: #D32F2F;
+            --white: #000000; /* Black for 'white' in light theme where applicable */
+            --border-color: rgba(0, 0, 0, 0.1);
+
+            --player-bg-color: #DDDDDD;
+            --player-section-bg: #FFFFFF;
+            --player-meta-bg: #EAEAEA;
+
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 10px 30px rgba(0, 0, 0, 0.2);
+            --shadow-popup: 0 15px 40px rgba(0, 0, 0, 0.3);
+            
+            --dark-bg-gradient-start: #FFFFFF;
+            --dark-bg-gradient-end: #F0F0F0;
+
+            /* Light mode specific for slider */
+            --slider-bg: #FFFFFF;
+            --slider-item-hover: #E0E0E0;
+            --slider-text-color: #333333;
+            --slider-icon-color: #007B80;
+            --slider-border-color: rgba(0, 0, 0, 0.1);
+        }
+
+
+        body {
+            font-family: 'Open Sans', sans-serif; /*cite: 15*/
+            margin: 0; /*cite: 15*/
+            padding: 0; /*cite: 15*/
+            background-color: var(--secondary-light); /* Black theme background*/
+            color: var(--text-dark); /* Light text on dark background*/
+            line-height: 1.8; /*cite: 16, 17*/
+            -webkit-font-smoothing: antialiased; /*cite: 17*/
+            -moz-osx-font-smoothing: grayscale; /*cite: 17*/
+            overflow-x: hidden; /*cite: 17*/
+            padding-bottom: 90px; /*cite: 17*/
+
+            -webkit-user-select: none; /*cite: 17*/
+            -moz-user-select: none; /*cite: 17*/
+            -ms-user-select: none; /*cite: 17*/
+            user-select: none; /*cite: 17, 18*/
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for theme change */
+        }
+
+        img {
+            pointer-events: none; /*cite: 19*/
+            -webkit-user-drag: none; /*cite: 19*/
+            user-drag: none; /*cite: 19*/
+        }
+
+        .container {
+            width: 90%; /*cite: 20*/
+            max-width: 1200px; /*cite: 20*/
+            margin: auto; /*cite: 20*/
+            padding: 0 15px; /*cite: 20*/
+        }
+
+        .top-navbar {
+            display: flex; /*cite: 21*/
+            justify-content: space-between; /*cite: 21*/
+            align-items: center; /*cite: 21*/
+            padding: 18px 25px; /*cite: 21*/
+            background: linear-gradient(to right, var(--dark-bg-gradient-start), var(--dark-bg-gradient-end)); /* Darker gradient for black theme*/
+            box-shadow: var(--shadow-medium); /*cite: 23*/
+            position: sticky; /*cite: 23*/
+            top: 0; /*cite: 23*/
+            z-index: 1000; /*cite: 23*/
+            border-bottom-left-radius: var(--border-radius-main); /*cite: 23*/
+            border-bottom-right-radius: var(--border-radius-main); /*cite: 24*/
+            transition: background 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+        }
+        .top-navbar .menu-icon, .top-navbar .telegram-icon {
+            font-size: 1.8em; /*cite: 25*/
+            color: var(--white); /*cite: 25*/
+            background-color: rgba(255, 255, 255, 0.1); /*cite: 25*/
+            border-radius: 50%; /*cite: 25*/
+            width: 48px; /*cite: 25*/
+            height: 48px; /*cite: 25*/
+            display: flex; /*cite: 25*/
+            align-items: center; /*cite: 25*/
+            justify-content: center; /*cite: 26*/
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /*cite: 26*/
+            cursor: pointer; /*cite: 26*/
+            transition: background-color 0.2s ease, transform 0.2s ease, color 0.3s ease; /*cite: 27*/
+        }
+        .top-navbar .menu-icon:hover, .top-navbar .telegram-icon:hover {
+            background-color: rgba(255, 255, 255, 0.2); /*cite: 28*/
+            transform: scale(1.05); /*cite: 28*/
+        }
+        .top-navbar .app-logo {
+            display: flex; /*cite: 29*/
+            align-items: center; /*cite: 29*/
+            padding: 10px 22px; /*cite: 29*/
+            background-color: var(--white); /*cite: 29*/
+            border-radius: var(--border-radius-button); /*cite: 29*/
+            box-shadow: var(--shadow-light); /*cite: 29*/
+            cursor: pointer; /*cite: 30*/
+            transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+        }
+        .top-navbar .app-logo:hover {
+            background-color: var(--secondary-light); /*cite: 31*/
+        }
+        
+        .top-navbar .app-logo img#skillNeastLogo {
+            height: 38px; /*cite: 32*/
+            margin-right: 10px; /*cite: 32*/
+        }
+        .top-navbar .app-logo.rotating #skillNeastLogo {
+            animation: rotate360 1s linear forwards; /*cite: 33*/
+        }
+        @keyframes rotate360 {
+            from { transform: rotate(0deg); /*cite: 34*/ }
+            to { transform: rotate(360deg); /*cite: 35*/ }
+        }
+        .top-navbar .app-logo span {
+            font-family: 'Poppins', sans-serif; /* Premium bold font*/
+            font-weight: 800; /* Extra bold*/
+            font-size: 1.7em; /*cite: 37*/
+            letter-spacing: 1.5px; /* Slightly increased spacing*/
+            background: linear-gradient(90deg, #FF6F61, #FFD700, #4CAF50, #00ADB5, #3F51B5, #9C27B0); /* Keep rainbow*/
+            -webkit-background-clip: text; /*cite: 39*/
+            color: transparent; /*cite: 40*/
+            display: inline-block; /*cite: 40*/
+            animation: rainbowText 5s linear infinite; /*cite: 40*/
+            background-size: 200% 100%; /*cite: 41*/
+        }
+
+        @keyframes rainbowText {
+            0% { background-position: 0% 50%; /*cite: 42*/ }
+            100% { background-position: 100% 50%; /*cite: 43*/ }
+        }
+
+        /* --- Main Content Area --- */
+        .main-content {
+            padding: 30px 20px; /*cite: 44*/
+            min-height: calc(100vh - 180px); /*cite: 44*/
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+        }
+
+        /* --- Welcome Banner --- */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary-dark), #2F4156); /* Darker gradient for welcome banner*/
+            color: var(--text-dark); /*cite: 46*/
+            padding: 28px; /*cite: 46*/
+            border-radius: var(--border-radius-main); /*cite: 46*/
+            box-shadow: var(--shadow-light); /*cite: 46*/
+            display: flex; /*cite: 46*/
+            align-items: center; /*cite: 46*/
+            justify-content: space-between; /*cite: 46*/
+            margin-bottom: 25px; /*cite: 47*/
+            border: 1px solid rgba(0, 173, 181, 0.1); /*cite: 47*/
+            position: relative; /* Needed for absolute positioning of role-sticker */
+            transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; /* Smooth transition */
+        }
+        .welcome-banner .greeting {
+            font-family: 'Montserrat', sans-serif; /*cite: 48*/
+            font-size: 1.7em; /*cite: 48*/
+            font-weight: 700; /*cite: 48*/
+            display: flex; /*cite: 48*/
+            align-items: center; /*cite: 48*/
+            color: var(--text-dark); /* Light text for greeting*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .welcome-banner .greeting i {
+            margin-right: 15px; /*cite: 50*/
+            color: var(--error-red); /*cite: 50*/
+            font-size: 1.3em; /*cite: 50*/
+        }
+        .welcome-banner .fire-icon {
+            font-size: 2.2em; /*cite: 51*/
+            color: #FF5722; /*cite: 51*/
+            animation: pulse 1s infinite alternate; /*cite: 51*/
+        }
+        /* New: Role Sticker */
+        .role-sticker {
+            position: absolute; /* Position sticker in corner */
+            top: 10px; /* Adjust as needed */
+            right: 10px; /* Adjust as needed */
+            background-color: var(--accent-teal);
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7em; /* Smaller font size */
+            font-weight: 600;
+            padding: 4px 10px; /* Smaller padding */
+            border-radius: 12px; /* More rounded */
+            box-shadow: var(--shadow-light);
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+        }
+
+        /* --- Quote Section (Updated for Premium Look with Cyan Glow) --- */
+        .quote-section {
+            background: linear-gradient(135deg, #2A2A2A, #222222); /* Lighter, subtle gradient*/
+            padding: 30px; /* Slightly more padding*/
+            border-radius: var(--border-radius-main); /*cite: 54*/
+            box-shadow: 0 0 15px var(--cyan-glow-color), /* Cyan glow */
+                        0 10px 30px rgba(0, 0, 0, 0.35); /* Existing shadow*/
+            text-align: center; /*cite: 55*/
+            margin-bottom: 30px; /*cite: 56*/
+            border: 2px solid var(--accent-teal); /* Accent border*/
+            position: relative; /*cite: 57*/
+            overflow: hidden; /* To contain pseudo-elements*/
+            transition: box-shadow 0.3s ease-in-out, background 0.3s ease, border-color 0.3s ease; /* Smooth transition for glow and theme change*/
+        }
+        .quote-section::before {
+            content: '“'; /* Opening quote mark*/
+            position: absolute; /*cite: 59*/
+            top: 10px; /*cite: 59*/
+            left: 20px; /*cite: 59*/
+            font-family: serif; /*cite: 59*/
+            font-size: 5em; /*cite: 59*/
+            color: rgba(255, 255, 255, 0.08); /* Very subtle, dark background*/
+            z-index: 0; /*cite: 59*/
+            line-height: 0.5; /*cite: 59*/
+        }
+        .quote-section::after {
+            content: '”'; /* Closing quote mark*/
+            position: absolute; /*cite: 60*/
+            bottom: -20px; /*cite: 61*/
+            right: 20px; /*cite: 61*/
+            font-family: serif; /*cite: 61*/
+            font-size: 5em; /*cite: 61*/
+            color: rgba(255, 255, 255, 0.08); /* Very subtle, dark background*/
+            z-index: 0; /*cite: 63*/
+            line-height: 0.5; /*cite: 63*/
+        }
+        .quote-section .quote-text {
+            font-family: 'Open Sans', sans-serif; /*cite: 64*/
+            font-style: italic; /*cite: 64*/
+            font-size: 1.25em; /* Slightly larger text*/
+            margin-bottom: 18px; /* More space*/
+            color: var(--text-dark); /* Light text on dark background*/
+            position: relative; /* Above pseudo-elements*/
+            z-index: 1; /*cite: 68*/
+            animation: quoteSlideIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; /* Smooth cubic-bezier*/
+            padding: 0 10px; /* To prevent quotes from touching the large quote marks*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        @keyframes quoteSlideIn {
+            from { opacity: 0; /*cite: 70*/ transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); /*cite: 71*/ }
+        }
+        .quote-section .quote-author {
+            font-weight: 700; /* Bolder author*/
+            color: var(--highlight-gold); /* Gold for author name*/
+            font-size: 1.1em; /*cite: 74*/
+            position: relative; /* Above pseudo-elements*/
+            z-index: 1; /*cite: 75*/
+            animation: quoteAuthorFadeIn 1s ease-out forwards; /* Separate animation for author*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        @keyframes quoteAuthorFadeIn {
+            from { opacity: 0; /*cite: 76*/ transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); /*cite: 77*/ }
+        }
+        .quote-section .quote-emoji {
+            font-size: 1.3em; /* Slightly larger emoji*/
+            margin-left: 10px; /*cite: 78*/
+            display: inline-block; /*cite: 79*/
+            z-index: 1; /* Above pseudo-elements*/
+            animation: emojiPopAndGlow 0.6s ease-out forwards, floatUpDown 2s infinite ease-in-out; /* New pop and glow animation, plus float */
+        }
+        @keyframes emojiPopAndGlow {
+            0% { transform: scale(0); /*cite: 81*/ opacity: 0; text-shadow: none; }
+            50% { transform: scale(1.3); /*cite: 82*/ opacity: 1; text-shadow: 0 0 8px var(--cyan-glow-color); } /* Pop & glow */
+            100% { transform: scale(1); /*cite: 83*/ opacity: 1; text-shadow: none; } /* Settle down */
+        }
+        @keyframes floatUpDown {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* --- Home View (Initial grid of course categories/batches) --- */
+        #home-view {
+            display: grid; /*cite: 84*/
+            grid-template-columns: repeat(2, 1fr); /*cite: 84*/
+            gap: 20px; /*cite: 84*/
+            padding: 0px; /*cite: 84*/
+        }
+        
+        /* Removed AI Chatbot Card on Home Page */
+
+
+        .course-category-item {
+            background-color: #333333; /* Darker background for categories*/
+            border-radius: 18px; /*cite: 86*/
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /*cite: 86*/
+            padding: 0; /* Changed to 0 for full-image-card effect*/
+            text-align: center; /*cite: 88*/
+            cursor: pointer; /*cite: 88*/
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.3s ease; /*cite: 88*/
+            position: relative; /* For absolute positioning of children*/
+            display: flex; /*cite: 90*/
+            flex-direction: column; /*cite: 90*/
+            justify-content: flex-end; /* Align content to bottom*/
+            align-items: stretch; /*cite: 91*/
+            min-height: 180px; /* Ensure a consistent height for all cards*/
+            border: 1px solid var(--border-color); /*cite: 91*/
+            overflow: hidden; /* Hide overflowing image parts*/
+        }
+        .course-category-item:hover {
+            transform: translateY(-5px); /*cite: 93*/
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /*cite: 93*/
+            border-color: var(--accent-teal); /*cite: 94*/
+        }
+        .course-category-item:active { /* Tap effect for mobile*/
+            transform: scale(0.98); /*cite: 95*/
+        }
+        /* New: Long press effect */
+        .course-category-item.long-press {
+            transform: scale(0.95) !important; /*cite: 96*/
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important; /*cite: 96*/
+            transition-duration: 0.1s; /* Faster transition for long press*/
+        }
+
+        /* Image container and image within course category item */
+        .course-category-item .image-container {
+            position: absolute; /*cite: 98*/
+            top: 0; /*cite: 98*/
+            left: 0; /*cite: 98*/
+            width: 100%; /*cite: 98*/
+            height: 100%; /*cite: 98*/
+            border-radius: inherit; /*cite: 98*/
+            overflow: hidden; /*cite: 98*/
+            z-index: 1; /* Place image behind content-overlay*/
+        }
+        .course-category-item .image-container img {
+            width: 100%; /*cite: 100*/
+            height: 100%; /*cite: 100*/
+            object-fit: contain; /* Changed to 'contain' to show full image without cropping*/
+            object-position: center; /* Center the image within its container*/
+            padding: 10px; /* Add padding to shrink the image slightly within the card if needed*/
+            box-sizing: border-box; /* Include padding in the element's total width and height*/
+        }
+        /* Content overlay for text */
+        .course-category-item .content-overlay {
+            position: relative; /* Position above image*/
+            z-index: 2; /* Ensure text is above image*/
+            background: rgba(0, 0, 0, 0.4); /* Semi-transparent background for readability*/
+            color: var(--white); /*cite: 107*/
+            padding: 10px 15px; /* Padding for the text*/
+            text-align: center; /*cite: 108*/
+            box-sizing: border-box; /*cite: 108*/
+            width: 100%; /* Ensure overlay covers full width*/
+            margin-top: auto; /* Push content to the bottom of the card*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .course-category-item .content-overlay .category-name {
+            font-family: 'Montserrat', sans-serif; /*cite: 110*/
+            font-weight: 600; /*cite: 110*/
+            font-size: 1.2em; /*cite: 110*/
+            line-height: 1.2; /*cite: 110*/
+            margin-bottom: 0; /*cite: 110*/
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8); /* Text shadow for readability*/
+        }
+        .course-category-item .new-tag {
+            position: absolute; /*cite: 112*/
+            top: 10px; /*cite: 112*/
+            right: 10px; /*cite: 112*/
+            background-color: #FFC107; /*cite: 112*/
+            color: var(--white); /*cite: 112*/
+            font-size: 0.7em; /*cite: 112*/
+            font-weight: 700; /*cite: 112*/
+            padding: 4px 8px; /*cite: 112*/
+            border-radius: 5px; /*cite: 112*/
+            text-transform: uppercase; /*cite: 113*/
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /*cite: 113*/
+            z-index: 3; /* Ensure tag is on top*/
+        }
+
+        /* Today's Surprise Button */
+        .surprise-button {
+            grid-column: 1 / -1; /* Span across both columns*/
+            background: linear-gradient(90deg, #FF6F61, #FF5722); /* Warm gradient*/
+            color: var(--white); /*cite: 116*/
+            padding: 20px; /*cite: 117*/
+            border-radius: var(--border-radius-main); /*cite: 117*/
+            box-shadow: var(--shadow-medium); /*cite: 117*/
+            text-align: center; /*cite: 117*/
+            font-family: 'Montserrat', sans-serif; /*cite: 117*/
+            font-size: 1.3em; /*cite: 117*/
+            font-weight: 700; /*cite: 118*/
+            cursor: pointer; /*cite: 118*/
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease; /*cite: 118*/
+            display: flex; /*cite: 118*/
+            align-items: center; /*cite: 118*/
+            justify-content: center; /*cite: 118*/
+            gap: 15px; /*cite: 119*/
+            margin-top: 20px; /* Space from above elements*/
+            border: 1px solid rgba(255, 255, 255, 0.15); /*cite: 120*/
+        }
+        .surprise-button:hover {
+            transform: translateY(-5px); /*cite: 121*/
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4); /*cite: 121*/
+            background: linear-gradient(90deg, #FF5722, #FF6F61); /* Reverse gradient on hover*/
+        }
+        .surprise-button:active {
+            transform: scale(0.98); /*cite: 123*/
+        }
+        .surprise-button i {
+            font-size: 1.5em; /*cite: 124*/
+            animation: bounce 1s infinite alternate; /*cite: 124*/
+        }
+
+        @media (max-width: 600px) {
+            #home-view {
+                grid-template-columns: 1fr; /*cite: 125*/
+            }
+            /* Removed AI Chatbot Card Responsive styles */
+            .surprise-button {
+                font-size: 1.1em; /*cite: 126*/
+                padding: 15px; /*cite: 126*/
+                gap: 10px; /*cite: 126*/
+                margin-top: 15px; /*cite: 126*/
+            }
+            .surprise-button i {
+                font-size: 1.3em; /*cite: 127*/
+            }
+            .course-category-item {
+                min-height: 160px; /* Adjust height for smaller screens*/
+            }
+            .course-category-item .image-container img { padding: 5px; /* Adjust padding for smaller screens if needed*/ }
+            .course-category-item .content-overlay { padding: 10px; /* Smaller padding for text on mobile*/ }
+            .course-category-item .category-name { font-size: 0.95em; /*cite: 131]*/ }
+
+            .quote-section {
+                padding: 20px; /*cite: 132*/
+            }
+            .quote-section .quote-text {
+                font-size: 1.1em; /*cite: 133*/
+            }
+            .quote-section .quote-author {
+                font-size: 0.95em; /*cite: 134*/
+            }
+        }
+
+
+        /* --- Favorites Section on Home View (Card for click-through) --- */
+        .favorites-section-home-card {
+            background-color: #333333; /* Darker background*/
+            border-radius: var(--border-radius-main); /*cite: 135*/
+            box-shadow: var(--shadow-light); /*cite: 136]*/
+            padding: 25px; /*cite: 136*/
+            margin-top: 30px; /*cite: 136*/
+            margin-bottom: 20px; /*cite: 136*/
+            display: flex; /*cite: 136*/
+            flex-direction: column; /*cite: 137*/
+            align-items: center; /*cite: 137*/
+            text-align: center; /*cite: 137*/
+            cursor: pointer; /*cite: 137*/
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease; /*cite: 137*/
+            border: 1px solid var(--border-color); /*cite: 138*/
+        }
+        .favorites-section-home-card:hover {
+            transform: translateY(-5px); /*cite: 139*/
+            box-shadow: var(--shadow-medium); /*cite: 139*/
+        }
+        /* Added tap/long press effect for favorites card */
+        .favorites-section-home-card:active {
+            transform: scale(0.98); /*cite: 140*/
+        }
+        .favorites-section-home-card.long-press {
+            transform: scale(0.95) !important; /*cite: 141*/
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important; /*cite: 141*/
+            transition-duration: 0.1s; /*cite: 142*/
+        }
+        .favorites-section-home-card h2 {
+            font-family: 'Montserrat', sans-serif; /*cite: 143*/
+            font-size: 1.8em; /*cite: 143*/
+            font-weight: 700; /*cite: 143*/
+            color: var(--text-dark); /* Light text*/
+            margin-top: 0; /*cite: 144*/
+            margin-bottom: 15px; /*cite: 144*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .favorites-section-home-card .fav-icon {
+            font-size: 3em; /*cite: 145*/
+            color: var(--error-red); /*cite: 145*/
+            margin-bottom: 10px; /*cite: 145*/
+        }
+        .favorites-section-home-card p {
+            font-size: 1em; /*cite: 146*/
+            color: var(--text-light); /*cite: 146*/
+            margin-bottom: 10px; /*cite: 146*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .favorites-section-home-card .fav-count {
+            font-family: 'Montserrat', sans-serif; /*cite: 147*/
+            font-size: 1.2em; /*cite: 147*/
+            font-weight: 700; /*cite: 147*/
+            color: var(--accent-teal); /*cite: 147*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+
+        /* Telegram Card */
+        .telegram-card {
+            background-color: #333333; /* Dark background*/
+            border-radius: var(--border-radius-card); /*cite: 148*/
+            box-shadow: var(--shadow-light); /*cite: 149*/
+            padding: 20px; /*cite: 149*/
+            text-align: center; /*cite: 149*/
+            cursor: pointer; /*cite: 149*/
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.3s ease; /*cite: 149*/
+            position: relative; /*cite: 149*/
+            display: flex; /*cite: 150*/
+            flex-direction: column; /*cite: 150*/
+            align-items: center; /*cite: 150*/
+            justify-content: center; /*cite: 150*/
+            min-height: 150px; /*cite: 151*/
+            border: 1px solid var(--border-color); /*cite: 151*/
+            margin-top: 20px; /* Space from other elements*/
+            color: var(--text-dark); /* Light text*/
+        }
+        .telegram-card:hover {
+            transform: translateY(-5px); /*cite: 153*/
+            box-shadow: var(--shadow-medium); /*cite: 153*/
+            border-color: #0088cc; /* Telegram blue on hover*/
+        }
+        /* Added tap/long press effect for telegram card */
+        .telegram-card:active {
+            transform: scale(0.98); /*cite: 154*/
+        }
+        .telegram-card.long-press {
+            transform: scale(0.95) !important; /*cite: 155*/
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important; /*cite: 155*/
+            transition-duration: 0.1s; /*cite: 156*/
+        }
+        .telegram-card .telegram-icon-large {
+            font-size: 3em; /*cite: 157*/
+            color: #0088cc; /* Telegram blue*/
+            margin-bottom: 10px; /*cite: 158*/
+        }
+        .telegram-card .telegram-text {
+            font-family: 'Montserrat', sans-serif; /*cite: 159*/
+            font-weight: 700; /*cite: 159*/
+            font-size: 1.2em; /*cite: 159*/
+            color: var(--text-dark); /*cite: 159*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+
+
+        /* --- New Batches View (All courses/batches displayed here) --- */
+        #new-batches-view {
+            display: none; /*cite: 160*/
+            padding: 0px; /*cite: 160*/
+        }
+        #new-batches-view .section-header {
+            display: flex; /*cite: 161*/
+            align-items: center; /*cite: 161*/
+            margin-bottom: 25px; /*cite: 161*/
+        }
+        #new-batches-view .back-button {
+            background-color: transparent; /*cite: 162*/
+            border: none; /*cite: 162*/
+            font-size: 2em; /*cite: 162*/
+            color: var(--text-dark); /*cite: 162*/
+            cursor: pointer; /*cite: 162*/
+            margin-right: 18px; /*cite: 163*/
+            transition: color 0.2s ease, transform 0.2s ease; /*cite: 163*/
+        }
+        #new-batches-view .back-button:hover {
+            color: var(--accent-teal); /*cite: 164*/
+            transform: translateX(-5px); /*cite: 164*/
+        }
+        #new-batches-view h2 {
+            font-family: 'Montserrat', sans-serif; /*cite: 165*/
+            font-size: 2.2em; /*cite: 165*/
+            font-weight: 700; /*cite: 165*/
+            color: var(--text-dark); /* Light text*/
+            margin: 0; /*cite: 166*/
+            flex-grow: 1; /*cite: 166*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .search-bar-container {
+            display: flex; /*cite: 167*/
+            align-items: center; /*cite: 167*/
+            background-color: #222222; /* Darker background for search bar*/
+            border-radius: var(--border-radius-main); /*cite: 168*/
+            box-shadow: var(--shadow-light); /*cite: 168*/
+            padding: 8px 15px; /*cite: 168*/
+            margin-bottom: 25px; /*cite: 168*/
+            border: 1px solid var(--border-color); /*cite: 169*/
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+        }
+        .search-bar-container input {
+            flex-grow: 1; /*cite: 170*/
+            border: none; /*cite: 170*/
+            outline: none; /*cite: 170*/
+            padding: 8px 10px; /*cite: 170*/
+            font-size: 1em; /*cite: 170*/
+            font-family: 'Open Sans', sans-serif; /*cite: 171*/
+            color: var(--text-dark); /* Light text*/
+            background-color: transparent; /*cite: 172*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .search-bar-container .search-icon {
+            font-size: 1.2em; /*cite: 173*/
+            color: var(--text-light); /*cite: 173*/
+            margin-right: 10px; /*cite: 173*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .search-bar-container .search-button {
+            background-color: var(--accent-teal); /*cite: 174*/
+            color: var(--white); /*cite: 174*/
+            border: none; /*cite: 174*/
+            border-radius: var(--border-radius-button); /*cite: 174*/
+            padding: 10px 20px; /*cite: 174*/
+            font-size: 0.9em; /*cite: 174*/
+            font-weight: 600; /*cite: 175*/
+            cursor: pointer; /*cite: 175*/
+            transition: background-color 0.2s ease; /*cite: 175*/
+        }
+        .search-bar-container .search-button:hover {
+            background-color: #00939b; /*cite: 176*/
+        }
+
+        .batch-list {
+            display: flex; /*cite: 177*/
+            flex-direction: column; /*cite: 177*/
+            gap: 20px; /*cite: 177*/
+        }
+        .batch-card {
+            background-color: #333333; /* Darker background for batch cards*/
+            border-radius: var(--border-radius-card); /*cite: 179*/
+            box-shadow: var(--shadow-light); /*cite: 179*/
+            overflow: hidden; /*cite: 179*/
+            border: 1px solid #444444; /* Darker border*/
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease; /*cite: 180*/
+        }
+        .batch-card:hover {
+            transform: translateY(-5px); /*cite: 181*/
+            box-shadow: var(--shadow-medium); /*cite: 181*/
+        }
+        /* Added tap/long press effect for batch card */
+        .batch-card:active {
+            transform: scale(0.98); /*cite: 182*/
+        }
+        .batch-card.long-press {
+            transform: scale(0.95) !important; /*cite: 183*/
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important; /*cite: 183*/
+            transition-duration: 0.1s; /*cite: 184*/
+        }
+        .batch-card-header {
+            position: relative; /*cite: 185*/
+            background-color: var(--accent-teal); /*cite: 185*/
+            padding: 15px 20px; /*cite: 185*/
+            display: flex; /*cite: 185*/
+            justify-content: space-between; /*cite: 185*/
+            align-items: center; /*cite: 185*/
+            color: var(--white); /*cite: 185*/
+            font-family: 'Montserrat', sans-serif; /*cite: 186*/
+            font-size: 1.1em; /*cite: 186*/
+            font-weight: 600; /*cite: 186*/
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+        }
+        .batch-card-header .icons {
+            font-size: 1.2em; /*cite: 187*/
+        }
+        .batch-card-header .icons i {
+            margin-left: 15px; /*cite: 188*/
+            cursor: pointer; /*cite: 188*/
+            transition: color 0.2s ease, transform 0.2s ease; /*cite: 188*/
+        }
+        .batch-card-header .icons i.fas.fa-heart {
+            color: var(--error-red); /*cite: 189*/
+            transform: scale(1.1); /*cite: 189*/
+        }
+        .batch-card-header .icons i:hover {
+            transform: scale(1.2); /*cite: 190*/
+        }
+
+        .batch-card-body {
+            padding: 20px; /*cite: 191*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .batch-card-body .batch-image-container {
+            width: calc(100% + 40px); /*cite: 192*/
+            height: 220px; /* Adjusted size*/
+            margin: -20px -20px 15px -20px; /*cite: 193*/
+            border-radius: 0; /*cite: 193*/
+            overflow: hidden; /*cite: 193*/
+            position: relative; /*cite: 193*/
+        }
+        .batch-card-body .batch-image-container img {
+            width: 100%; /*cite: 194*/
+            height: 100%; /*cite: 194*/
+            object-fit: cover; /*cite: 194*/
+        }
+        .batch-card-body .batch-title {
+            font-family: 'Montserrat', sans-serif; /*cite: 195*/
+            font-size: 1.6em; /*cite: 195*/
+            font-weight: 700; /*cite: 195*/
+            color: var(--text-dark); /* Light text*/
+            margin-top: 0; /*cite: 196*/
+            margin-bottom: 10px; /*cite: 196*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .batch-card-body .lets-roar-button {
+            background-color: var(--primary-dark); /*cite: 197*/
+            color: var(--white); /*cite: 197*/
+            padding: 15px 25px; /*cite: 197*/
+            border-radius: var(--border-radius-button); /*cite: 197*/
+            text-align: center; /*cite: 197*/
+            font-family: 'Montserrat', sans-serif; /*cite: 197*/
+            font-size: 1.1em; /*cite: 198*/
+            font-weight: 700; /*cite: 198*/
+            cursor: pointer; /*cite: 198*/
+            transition: background-color 0.2s ease, transform 0.2s ease, color 0.3s ease; /*cite: 198*/
+            display: flex; /*cite: 198*/
+            align-items: center; /*cite: 198*/
+            justify-content: center; /*cite: 199*/
+            gap: 10px; /*cite: 199*/
+            box-shadow: var(--shadow-light); /*cite: 199*/
+            margin-top: 15px; /*cite: 199*/
+        }
+        .batch-card-body .lets-roar-button:hover {
+            background-color: #2F4156; /*cite: 200*/
+            transform: translateY(-2px); /*cite: 200*/
+        }
+        .batch-card-body .lets-roar-button i {
+            font-size: 1.2em; /*cite: 201*/
+        }
+
+
+        /* --- Favourite Batches View (New section) --- */
+        #favorites-view {
+            display: none; /*cite: 202*/
+            padding: 0px; /*cite: 202*/
+        }
+        #favorites-view .section-header {
+            display: flex; /*cite: 203*/
+            align-items: center; /*cite: 203*/
+            margin-bottom: 25px; /*cite: 203*/
+        }
+        #favorites-view .back-button {
+            background-color: transparent; /*cite: 204*/
+            border: none; /*cite: 204*/
+            font-size: 2em; /*cite: 204*/
+            color: var(--text-dark); /*cite: 204*/
+            cursor: pointer; /*cite: 204*/
+            margin-right: 18px; /*cite: 205*/
+            transition: color 0.2s ease, transform 0.2s ease; /*cite: 205*/
+        }
+        #favorites-view .back-button:hover {
+            color: var(--accent-teal); /*cite: 206*/
+            transform: translateX(-5px); /*cite: 206*/
+        }
+        #favorites-view h2 {
+            font-family: 'Montserrat', sans-serif; /*cite: 207*/
+            font-size: 2.2em; /*cite: 207*/
+            font-weight: 700; /*cite: 207*/
+            color: var(--text-dark); /* Light text*/
+            margin: 0; /*cite: 208*/
+            flex-grow: 1; /*cite: 208*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .promotional-banner {
+            background-color: #1A1A1A; /* Darker background*/
+            color: var(--white); /*cite: 209*/
+            border-radius: var(--border-radius-card); /*cite: 210*/
+            padding: 15px 20px; /*cite: 210*/
+            margin-bottom: 25px; /*cite: 210*/
+            box-shadow: var(--shadow-light); /*cite: 210*/
+            font-size: 0.9em; /*cite: 210*/
+            line-height: 1.4; /*cite: 210*/
+            position: relative; /*cite: 211*/
+            overflow: hidden; /*cite: 211*/
+            border-left: 5px solid var(--highlight-gold); /*cite: 211*/
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+        }
+        .promotional-banner .disclaimer {
+            font-size: 0.8em; /*cite: 212*/
+            color: #ccc; /*cite: 212*/
+            margin-bottom: 5px; /*cite: 212*/
+            display: block; /*cite: 212*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .promotional-banner strong {
+            color: var(--highlight-gold); /*cite: 213*/
+            font-weight: 700; /*cite: 213*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .promotional-banner .promo-text {
+            font-size: 1.1em; /*cite: 214*/
+            font-weight: 600; /*cite: 214*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .promotional-banner .promo-text span {
+            color: var(--accent-teal); /*cite: 215*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .favorite-batch-list {
+            display: flex; /*cite: 216*/
+            flex-direction: column; /*cite: 216*/
+            gap: 20px; /*cite: 216*/
+        }
+        .no-favorites-message-view {
+            font-size: 1.2em; /*cite: 217*/
+            color: var(--text-light); /*cite: 217*/
+            text-align: center; /*cite: 217*/
+            padding: 40px 20px; /*cite: 217*/
+            background-color: #333333; /* Darker background*/
+            border-radius: var(--border-radius-card); /*cite: 218*/
+            box-shadow: var(--shadow-light); /*cite: 218*/
+            margin-top: 20px; /*cite: 218*/
+            border: 1px solid var(--border-color); /*cite: 218*/
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+        }
+
+        /* Partition styles */
+        .partition {
+            height: 2px;
+            background: linear-gradient(to right, rgba(0, 173, 181, 0), var(--accent-teal), rgba(0, 173, 181, 0));
+            margin: 20px 0;
+            border-radius: 5px;
+            opacity: 0.7;
+            transition: background 0.3s ease, opacity 0.3s ease; /* Smooth transition */
+        }
+
+
+        /* --- Sections View (Folders within a batch) --- */
+        #sections-view {
+            display: none; /*cite: 219*/
+            padding: 0px; /*cite: 219*/
+        }
+        #sections-view .section-header {
+            display: flex; /*cite: 220*/
+            align-items: center; /*cite: 220*/
+            margin-bottom: 25px; /*cite: 220*/
+        }
+        #sections-view .back-button {
+            background-color: transparent; /*cite: 221*/
+            border: none; /*cite: 221*/
+            font-size: 2em; /*cite: 221*/
+            color: var(--text-dark); /*cite: 221*/
+            cursor: pointer; /*cite: 221*/
+            margin-right: 18px; /*cite: 222*/
+            transition: color 0.2s ease, transform 0.2s ease; /*cite: 222*/
+        }
+        #sections-view .back-button:hover {
+            color: var(--accent-teal); /*cite: 223*/
+            transform: translateX(-5px); /*cite: 223*/
+        }
+        #sections-view h2 {
+            font-family: 'Montserrat', sans-serif; /*cite: 224*/
+            font-size: 2.2em; /*cite: 224*/
+            font-weight: 700; /*cite: 224*/
+            color: var(--text-dark); /* Light text*/
+            margin: 0; /*cite: 225*/
+            flex-grow: 1; /*cite: 225*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .sections-container {
+            display: flex; /*cite: 226*/
+            flex-direction: column; /*cite: 226*/
+            gap: 15px; /*cite: 226*/
+        }
+        .section-item {
+            background-color: #333333; /* Darker background*/
+            border-radius: var(--border-radius-card); /*cite: 227*/
+            box-shadow: var(--shadow-light); /*cite: 228*/
+            padding: 20px; /*cite: 228*/
+            display: flex; /*cite: 228*/
+            align-items: center; /*cite: 228*/
+            justify-content: space-between; /*cite: 228*/
+            cursor: pointer; /*cite: 228*/
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease; /*cite: 229*/
+            border: 1px solid var(--border-color); /*cite: 229*/
+        }
+        .section-item:hover {
+            transform: translateY(-3px); /*cite: 230*/
+            box-shadow: var(--shadow-medium); /*cite: 230*/
+        }
+        .section-item .section-icon {
+            font-size: 1.8em; /*cite: 231*/
+            color: var(--accent-teal); /*cite: 231*/
+            margin-right: 15px; /*cite: 231*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .section-item .section-name {
+            font-family: 'Montserrat', sans-serif; /*cite: 232*/
+            font-size: 1.2em; /*cite: 232*/
+            font-weight: 600; /*cite: 232*/
+            color: var(--text-dark); /* Light text*/
+            flex-grow: 1; /*cite: 233*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .section-item .section-arrow {
+            font-size: 1.2em; /*cite: 234*/
+            color: var(--text-light); /*cite: 234*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+
+        /* --- Lessons in Sections View --- */
+        #lessons-in-sections-view {
+            display: none; /*cite: 235*/
+            padding: 0px; /*cite: 235*/
+        }
+        #lessons-in-sections-view .section-header {
+            display: flex; /*cite: 236*/
+            align-items: center; /*cite: 236*/
+            margin-bottom: 25px; /*cite: 236*/
+        }
+        #lessons-in-sections-view .back-button {
+            background-color: transparent; /*cite: 237*/
+            border: none; /*cite: 237*/
+            font-size: 2em; /*cite: 237*/
+            color: var(--text-dark); /*cite: 237*/
+            cursor: pointer; /*cite: 237*/
+            margin-right: 18px; /*cite: 238*/
+            transition: color 0.2s ease, transform 0.2s ease; /*cite: 238*/
+        }
+        #lessons-in-sections-view .back-button:hover {
+            color: var(--accent-teal); /*cite: 239*/
+            transform: translateX(-5px); /*cite: 239*/
+        }
+        #lessons-in-sections-view h2 {
+            font-family: 'Montserrat', sans-serif; /*cite: 240*/
+            font-size: 2.2em; /*cite: 240*/
+            font-weight: 700; /*cite: 240*/
+            color: var(--text-dark); /* Light text*/
+            margin: 0; /*cite: 241*/
+            flex-grow: 1; /*cite: 241*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .lesson-list-container {
+            display: flex; /*cite: 242*/
+            flex-direction: column; /*cite: 242*/
+            gap: 15px; /*cite: 242*/
+        }
+        .lesson-list-item {
+            background-color: #333333; /* Darker background*/
+            border-radius: var(--border-radius-card); /*cite: 243*/
+            box-shadow: var(--shadow-light); /*cite: 244*/
+            padding: 15px; /*cite: 244*/
+            display: flex; /*cite: 244*/
+            flex-direction: column; /*cite: 244*/
+            cursor: pointer; /*cite: 244*/
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease; /*cite: 244*/
+            border: 1px solid var(--border-color); /*cite: 245*/
+        }
+        .lesson-list-item:hover {
+            transform: translateY(-3px); /*cite: 246*/
+            box-shadow: var(--shadow-medium); /*cite: 246*/
+        }
+        .lesson-list-item-header {
+            display: flex; /*cite: 247*/
+            align-items: center; /*cite: 247*/
+            margin-bottom: 10px; /*cite: 247*/
+        }
+        .lesson-list-item .pw-logo {
+            width: 35px; /*cite: 248*/
+            height: 35px; /*cite: 248*/
+            border-radius: 50%; /*cite: 248*/
+            margin-right: 12px; /*cite: 248*/
+            object-fit: cover; /*cite: 248*/
+            border: 1px solid #555; /* Darker border*/
+            transition: border-color 0.3s ease; /* Smooth transition */
+        }
+        .lesson-list-item .lesson-list-item-title {
+            font-family: 'Montserrat', sans-serif; /*cite: 250*/
+            font-size: 1.1em; /*cite: 250*/
+            font-weight: 600; /*cite: 250*/
+            color: var(--text-dark); /* Light text*/
+            margin: 0; /*cite: 251*/
+            line-height: 1.4; /*cite: 251*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+
+
+        /* --- Video Player View (For individual lessons) --- */
+        #video-player-view {
+            display: none; /*cite: 252*/
+            padding: 0px; /*cite: 252*/
+            background-color: var(--player-bg-color); /*cite: 252*/
+            min-height: calc(100vh - 90px); /*cite: 252*/
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+        #video-player-view .section-header {
+            display: flex; /*cite: 253*/
+            align-items: center; /*cite: 253*/
+            margin-bottom: 0px; /*cite: 253*/
+            padding: 15px 20px; /*cite: 253*/
+            background-color: var(--player-bg-color); /*cite: 253*/
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+        #video-player-view .back-button {
+            background-color: transparent; /*cite: 254*/
+            border: none; /*cite: 254*/
+            font-size: 2em; /*cite: 254*/
+            color: var(--text-dark); /*cite: 254*/
+            cursor: pointer; /*cite: 254*/
+            margin-right: 18px; /*cite: 255*/
+            transition: color 0.2s ease, transform 0.2s ease; /*cite: 255*/
+        }
+        #video-player-view .back-button:hover {
+            color: var(--accent-teal); /*cite: 256*/
+            transform: translateX(-5px); /*cite: 256*/
+        }
+        #video-player-view h2 {
+            font-family: 'Montserrat', sans-serif; /*cite: 257*/
+            font-size: 2.2em; /*cite: 257*/
+            font-weight: 700; /*cite: 257*/
+            color: var(--text-dark); /*cite: 257*/
+            margin: 0; /*cite: 258*/
+            flex-grow: 1; /*cite: 258*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+
+        .player-card-container {
+            padding: 0px 20px 20px 20px; /*cite: 259*/
+        }
+
+        .player-card {
+            background-color: var(--player-section-bg); /*cite: 260*/
+            border-radius: var(--border-radius-card); /*cite: 260*/
+            box-shadow: var(--shadow-light); /*cite: 260*/
+            overflow: hidden; /*cite: 260*/
+            border: 1px solid var(--border-color); /*cite: 261*/
+            margin-bottom: 20px; /*cite: 261*/
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+        }
+
+        .main-video-player {
+            position: relative; /*cite: 262*/
+            padding-top: 56.25%; /*cite: 262*/
+            background-color: #000; /*cite: 262*/
+            display: block; /*cite: 262*/
+        }
+        .main-video-player iframe {
+            position: absolute; /*cite: 263*/
+            top: 0; /*cite: 263*/
+            left: 0; /*cite: 263*/
+            width: 100%; /*cite: 263*/
+            height: 100%; /*cite: 263*/
+            border: none; /*cite: 264*/
+        }
+
+        .player-metadata {
+            padding: 20px; /*cite: 265*/
+            background-color: var(--player-meta-bg); /*cite: 265*/
+            border-top: 1px solid var(--border-color); /*cite: 265*/
+            transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition */
+        }
+        .player-metadata .lesson-sub-title {
+            font-family: 'Montserrat', sans-serif; /*cite: 266*/
+            font-size: 1.8em; /*cite: 266*/
+            font-weight: 600; /*cite: 266*/
+            color: var(--text-dark); /*cite: 266*/
+            margin-top: 0; /*cite: 267*/
+            margin-bottom: 10px; /*cite: 267*/
+            text-align: center; /*cite: 267*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        
+
+        .player-action-buttons {
+            display: flex; /*cite: 268*/
+            gap: 10px; /*cite: 268*/
+            padding: 0 20px 20px 20px; /*cite: 268*/
+        }
+        .player-action-buttons .action-button {
+            flex: 1; /*cite: 269*/
+            background-color: var(--button-primary); /*cite: 269*/
+            color: var(--white); /*cite: 269*/
+            border: none; /*cite: 269*/
+            border-radius: var(--border-radius-button); /*cite: 269*/
+            padding: 12px 10px; /*cite: 269*/
+            font-family: 'Montserrat', sans-serif; /*cite: 270*/
+            font-size: 0.9em; /*cite: 270*/
+            font-weight: 600; /*cite: 270*/
+            cursor: pointer; /*cite: 270*/
+            display: flex; /*cite: 270*/
+            align-items: center; /*cite: 270*/
+            justify-content: center; /*cite: 271*/
+            gap: 8px; /*cite: 271*/
+            box-shadow: var(--shadow-light); /*cite: 271*/
+            transition: background-color 0.2s ease, transform 0.2s ease, color 0.3s ease; /*cite: 271*/
+        }
+        .player-action-buttons .action-button:hover {
+            transform: translateY(-2px); /*cite: 272*/
+        }
+        .player-action-buttons .action-button.timeline {
+            background-color: var(--timeline-btn-bg); /*cite: 273*/
+        }
+        .player-action-buttons .action-button.comments {
+            background-color: var(--comments-btn-bg); /*cite: 274*/
+        }
+        .player-action-buttons .action-button.watch-later {
+            background-color: var(--watch-later-btn-bg); /*cite: 275*/
+        }
+
+        /* --- Lesson List below player --- */
+        .lesson-list {
+            list-style: none; /*cite: 276*/
+            padding: 0 20px; /*cite: 276*/
+            margin-top: 20px; /*cite: 276*/
+        }
+        .lesson-item {
+            background-color: #333333; /* Darker background*/
+            border-radius: var(--border-radius-card); /*cite: 277*/
+            box-shadow: var(--shadow-light); /*cite: 278*/
+            padding: 20px; /*cite: 278*/
+            margin-bottom: 15px; /*cite: 278*/
+            border: 1px solid var(--border-color); /*cite: 279*/
+            cursor: pointer; /*cite: 279*/
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease; /*cite: 279*/
+        }
+        .lesson-item:hover {
+            transform: translateY(-3px); /*cite: 280*/
+            box-shadow: var(--shadow-medium); /*cite: 280*/
+        }
+        .lesson-item h3 {
+            font-family: 'Montserrat', sans-serif; /*cite: 281*/
+            font-size: 1.3em; /*cite: 281*/
+            color: var(--text-dark); /* Light text*/
+            margin-top: 0; /*cite: 282*/
+            margin-bottom: 0; /*cite: 282*/ 
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+
+        /* --- Bottom Navigation Bar --- */
+        .bottom-navbar {
+            position: fixed; /*cite: 283*/
+            bottom: 0; /*cite: 283*/
+            left: 0; /*cite: 283*/
+            width: 100%; /*cite: 283*/
+            background-color: #1A1A1A; /* Darker background*/
+            box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.3); /*cite: 284*/
+            display: flex; /*cite: 284*/
+            justify-content: space-around; /*cite: 284*/
+            padding: 15px 0; /*cite: 284*/
+            border-top-left-radius: var(--border-radius-main); /*cite: 284*/
+            border-top-right-radius: var(--border-radius-main); /*cite: 285*/
+            z-index: 1000; /*cite: 285*/
+            transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+        }
+        .nav-item {
+            text-align: center; /*cite: 286*/
+            color: var(--text-light); /*cite: 286*/
+            font-size: 0.9em; /*cite: 286*/
+            text-decoration: none; /*cite: 286*/
+            display: flex; /*cite: 286*/
+            flex-direction: column; /*cite: 287*/
+            align-items: center; /*cite: 287*/
+            padding: 5px; /*cite: 287*/
+            transition: color 0.2s ease, transform 0.2s ease; /*cite: 287*/
+        }
+        .nav-item i {
+            font-size: 1.8em; /*cite: 288*/
+            margin-bottom: 8px; /*cite: 288*/
+            transition: color 0.2s ease; /* Smooth transition */
+        }
+        .nav-item.active {
+            color: var(--accent-teal); /*cite: 289*/
+            font-weight: 700; /*cite: 289*/
+        }
+        .nav-item.active i {
+            color: var(--accent-teal); /*cite: 290*/
+        }
+        .nav-item:hover {
+            color: var(--accent-teal); /*cite: 291*/
+        }
+        .nav-item:active {
+            transform: scale(0.95); /*cite: 292*/
+        }
+
+        /* --- Popup Styles --- */
+        .popup-overlay {
+            position: fixed; /*cite: 293*/
+            top: 0; /*cite: 293*/
+            left: 0; /*cite: 293*/
+            width: 100%; /*cite: 293*/
+            height: 100%; /*cite: 293*/
+            background-color: rgba(0, 0, 0, 0.85); /*cite: 322*/
+            display: flex; /*cite: 294*/
+            justify-content: center; /*cite: 295*/
+            align-items: center; /*cite: 295*/
+            z-index: 2000; /*cite: 295*/
+            opacity: 0; /*cite: 296*/
+            visibility: hidden; /*cite: 296*/
+            transition: opacity 0.3s ease, visibility 0.3s ease; /*cite: 296]*/
+        }
+        .popup-overlay.active {
+            opacity: 1; /*cite: 297*/
+            visibility: visible; /*cite: 297*/
+        }
+        .name-popup {
+            background-color: #222222; /* Darker background*/
+            padding: 40px; /*cite: 298*/
+            border-radius: var(--border-radius-main); /*cite: 299*/
+            box-shadow: var(--shadow-popup); /*cite: 299*/
+            text-align: center; /*cite: 299*/
+            width: 90%; /*cite: 299*/
+            max-width: 420px; /*cite: 299*/
+            /* Removed translateY(20px) to make it appear higher by default */
+            opacity: 0; /*cite: 300*/
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; /*cite: 300*/
+            position: relative; /*cite: 300*/
+            border: 1px solid rgba(255, 255, 255, 0.05); /*cite: 301*/
+        }
+        .popup-overlay.active .name-popup {
+            transform: translateY(-50px); /* Move slightly up when active to be more visible */
+            opacity: 1; /*cite: 302*/
+        }
+        .name-popup h2 {
+            font-family: 'Montserrat', sans-serif; /*cite: 303*/
+            font-size: 2em; /*cite: 303*/
+            color: var(--text-dark); /* Light text*/
+            margin-bottom: 25px; /*cite: 304*/
+            font-weight: 700; /*cite: 304*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .name-popup p {
+            font-size: 1.1em; /*cite: 305*/
+            color: var(--text-light); /*cite: 305*/
+            margin-bottom: 30px; /*cite: 305*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .name-popup .input-container {
+            border: 2px solid var(--border-color); /*cite: 306*/
+            border-radius: var(--border-radius-input); /*cite: 306*/
+            padding: 12px 18px; /*cite: 306*/
+            margin-bottom: 25px; /*cite: 306*/
+            position: relative; /*cite: 307*/
+            background-color: #383838; /* Darker input background*/
+            transition: border-color 0.2s ease, background-color 0.3s ease; /*cite: 308*/
+        }
+        .name-popup .input-container:focus-within {
+            border-color: var(--accent-teal); /*cite: 309*/
+        }
+        .name-popup input[type="text"] {
+            width: 100%; /*cite: 310*/
+            padding: 10px 0; /*cite: 310*/
+            padding-top: 20px; /*cite: 310*/
+            border: none; /*cite: 310*/
+            background: transparent; /*cite: 311*/
+            font-family: 'Open Sans', sans-serif; /*cite: 311*/
+            font-size: 1.2em; /*cite: 311*/
+            color: var(--text-dark); /* Light text*/
+            outline: none; /*cite: 312*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+         .name-popup input[type="text"]:focus + label,
+         .name-popup input[type="text"]:not(:placeholder-shown) + label {
+            top: 5px; /*cite: 313*/
+            font-size: 0.7em; /*cite: 313*/
+            color: var(--accent-teal); /*cite: 313*/
+        }
+        .name-popup .char-count {
+            font-size: 0.85em; /*cite: 314*/
+            color: var(--text-light); /*cite: 314*/
+            text-align: right; /*cite: 314*/
+            margin-top: -15px; /*cite: 314*/
+            margin-bottom: 25px; /*cite: 314*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .name-popup .role-selection {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .name-popup .role-option {
+            display: flex;
+            align-items: center;
+            background-color: #444;
+            padding: 8px 15px;
+            border-radius: var(--border-radius-button);
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.3s ease; /* Added color transition */
+            font-size: 0.9em;
+            color: var(--text-light);
+        }
+        .name-popup .role-option:hover {
+            background-color: #555;
+        }
+        .name-popup input[type="radio"] {
+            margin-right: 8px;
+            accent-color: var(--accent-teal); /* Highlight radio button */
+        }
+        .name-popup button {
+            background-color: var(--accent-teal); /*cite: 315*/
+            color: white; /*cite: 315*/
+            padding: 15px 35px; /*cite: 315*/
+            border: none; /*cite: 315*/
+            border-radius: var(--border-radius-button); /*cite: 316*/
+            font-family: 'Montserrat', sans-serif; /*cite: 316*/
+            font-size: 1.2em; /*cite: 316*/
+            font-weight: 700; /*cite: 316*/
+            cursor: pointer; /*cite: 316*/
+            transition: background-color 0.2s ease, transform 0.2s ease, color 0.3s ease; /*cite: 316*/
+            box-shadow: var(--shadow-light); /*cite: 316*/
+        }
+        .name-popup button:hover {
+            background-color: #00939b; /*cite: 317*/
+            transform: translateY(-3px); /*cite: 317*/
+        }
+        .popup-close-button {
+            position: absolute; /*cite: 318*/
+            top: 15px; /*cite: 318*/
+            right: 15px; /*cite: 318*/
+            background: none; /*cite: 318*/
+            border: none; /*cite: 318*/
+            font-size: 2em; /*cite: 318*/
+            color: var(--text-light); /*cite: 319*/
+            cursor: pointer; /*cite: 319*/
+            transition: color 0.2s ease; /*cite: 319*/
+        }
+        .popup-close-button:hover {
+            color: var(--text-dark); /*cite: 320*/
+        }
+
+        /* --- Comments Popup --- */
+        .comments-popup-overlay {
+            position: fixed; /*cite: 321*/
+            top: 0; /*cite: 321*/
+            left: 0; /*cite: 321*/
+            width: 100%; /*cite: 321*/
+            height: 100%; /*cite: 321*/
+            background-color: rgba(0, 0, 0, 0.85); /*cite: 322*/
+            display: flex; /*cite: 322*/
+            justify-content: center; /*cite: 322*/
+            align-items: center; /*cite: 322*/
+            z-index: 2000; /*cite: 322*/
+            opacity: 0; /*cite: 323*/
+            visibility: hidden; /*cite: 323*/
+            transition: opacity 0.3s ease, visibility 0.3s ease; /*cite: 323]*/
+        }
+        .comments-popup-overlay.active {
+            opacity: 1; /*cite: 324*/
+            visibility: visible; /*cite: 324*/
+        }
+        .comments-popup {
+            background-color: #222222; /* Darker background*/
+            padding: 25px; /*cite: 325*/
+            border-radius: var(--border-radius-main); /*cite: 326*/
+            box-shadow: var(--shadow-popup); /*cite: 326*/
+            width: 90%; /*cite: 326*/
+            max-width: 500px; /*cite: 326*/
+            transform: translateY(20px); /*cite: 327*/
+            opacity: 0; /*cite: 327*/
+            transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; /*cite: 327*/
+            position: relative; /* Ensure child elements are positioned relative to this */
+            display: flex; /*cite: 327*/
+            flex-direction: column; /*cite: 327*/
+            max-height: 80vh; /*cite: 327*/
+        }
+        .comments-popup-overlay.active .comments-popup {
+            transform: translateY(0); /*cite: 328*/
+            opacity: 1; /*cite: 328*/
+        }
+        .comments-popup h2 {
+            font-family: 'Montserrat', sans-serif; /*cite: 329*/
+            font-size: 1.8em; /*cite: 329*/
+            color: var(--text-dark); /* Light text*/
+            margin-top: 0; /*cite: 330*/
+            margin-bottom: 20px; /*cite: 330*/
+            text-align: center; /*cite: 330*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .comments-input-area {
+            display: flex; /*cite: 331*/
+            flex-direction: column; /*cite: 331*/
+            gap: 10px; /*cite: 331*/
+            margin-bottom: 20px; /*cite: 331*/
+        }
+        .comments-input-area textarea {
+            width: 100%; /*cite: 332*/
+            padding: 10px; /*cite: 332*/
+            border: 1px solid var(--border-color); /*cite: 332*/
+            border-radius: var(--border-radius-input); /*cite: 332*/
+            font-family: 'Open Sans', sans-serif; /*cite: 333*/
+            font-size: 1em; /*cite: 333*/
+            min-height: 80px; /*cite: 333*/
+            resize: vertical; /*cite: 333*/
+            outline: none; /*cite: 333*/
+            transition: border-color 0.2s ease, background-color 0.3s ease, color 0.3s ease; /*cite: 333*/
+            background-color: #383838; /* Darker textarea background*/
+            color: var(--text-dark); /* Light text*/
+        }
+        .comments-input-area textarea:focus {
+            border-color: var(--comments-btn-bg); /*cite: 335*/
+        }
+        .comments-input-area button {
+            background-color: var(--comments-btn-bg); /*cite: 336*/
+            color: var(--white); /*cite: 336*/
+            border: none; /*cite: 336*/
+            border-radius: var(--border-radius-button); /*cite: 336*/
+            padding: 10px 15px; /*cite: 337*/
+            font-size: 1em; /*cite: 337*/
+            cursor: pointer; /*cite: 337*/
+            transition: background-color 0.2s ease, color 0.3s ease; /*cite: 337*/
+        }
+        .comments-input-area button:hover {
+            background-color: #0056b3; /*cite: 338*/
+        }
+        .comments-display-area {
+            flex-grow: 1; /*cite: 339*/
+            overflow-y: auto; /*cite: 339*/
+            padding-right: 10px; /*cite: 339*/
+            margin-bottom: 10px; /*cite: 339*/
+        }
+        .comment-item {
+            background-color: #383838; /* Darker comment item background*/
+            border-radius: var(--border-radius-input); /*cite: 341*/
+            padding: 10px; /*cite: 341*/
+            margin-bottom: 10px; /*cite: 341*/
+            font-size: 0.9em; /*cite: 341*/
+            border: 1px solid #555; /*cite: 342*/
+            color: var(--text-dark); /* Light text*/
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+        }
+        .comment-item strong {
+            color: var(--primary-dark); /*cite: 343*/
+            margin-right: 5px; /*cite: 343*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .no-comments-message {
+            text-align: center; /*cite: 344*/
+            color: var(--text-light); /*cite: 344*/
+            font-style: italic; /*cite: 344*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+
+        /* --- Coming Soon Section Styles --- */
+        .coming-soon-section {
+            display: none; /*cite: 345*/
+            text-align: center; /*cite: 345*/
+            padding: 50px 20px; /*cite: 346*/
+            background-color: #333333; /* Darker background*/
+            border-radius: var(--border-radius-main); /*cite: 346*/
+            box-shadow: var(--shadow-medium); /*cite: 346*/
+            margin-top: 30px; /*cite: 346*/
+            flex-direction: column; /*cite: 346*/
+            align-items: center; /*cite: 347*/
+            justify-content: center; /*cite: 347*/
+            min-height: 300px; /*cite: 347*/
+            border: 1px solid var(--border-color); /*cite: 347*/
+            color: var(--text-dark); /* Light text*/
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+        }
+        .coming-soon-section h2 {
+            font-family: 'Montserrat', sans-serif; /*cite: 348*/
+            font-size: 2.5em; /*cite: 348*/
+            font-weight: 700; /*cite: 348*/
+            color: var(--text-dark); /*cite: 348*/
+            margin-bottom: 20px; /*cite: 348*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .coming-soon-section p {
+            font-size: 1.3em; /*cite: 349*/
+            color: var(--text-light); /*cite: 349*/
+            margin-bottom: 30px; /*cite: 349*/
+            line-height: 1.5; /*cite: 349*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .coming-soon-section .emoji {
+            font-size: 3em; /*cite: 350*/
+            margin-top: 20px; /*cite: 350*/
+            animation: bounce 1s infinite alternate; /*cite: 350*/
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); /*cite: 351*/ }
+            100% { transform: translateY(-10px); /*cite: 352*/ }
+        }
+
+
+        /* --- Animations --- */
+        @keyframes pulse {
+            0% { transform: scale(1); /*cite: 353*/ }
+            50% { transform: scale(1.08); /*cite: 354*/ }
+            100% { transform: scale(1); /*cite: 355*/ }
+        }
+
+        /* New: Page entry animation */
+        @keyframes fadeInSlideUp { /* Changed from fadeInScaleUp for a different feel*/
+            from {
+                opacity: 0; /*cite: 356*/
+                transform: translateY(20px); /*cite: 356*/
+            }
+            to {
+                opacity: 1; /*cite: 357*/
+                transform: translateY(0); /*cite: 357*/
+            }
+        }
+        body.animate-in {
+            animation: fadeInSlideUp 0.8s ease-out forwards; /* Applied new animation*/
+        }
+
+        /* New: Popup animation */
+        @keyframes popupEnter {
+            from {
+                opacity: 0; /*cite: 359*/
+                transform: scale(0.8) translateY(50px); /*cite: 359*/
+            }
+            to {
+                opacity: 1; /*cite: 360*/
+                transform: scale(1) translateY(0); /*cite: 360*/
+            }
+        }
+        .popup-overlay.active .name-popup {
+            animation: popupEnter 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; /*cite: 361]*/
+        }
+
+        /* Scrolling animation for content blocks */
+        .hidden-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .visible-on-scroll {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        /* New: Offline overlay styles */
+        .offline-overlay {
+            position: fixed; /*cite: 362*/
+            top: 0; /*cite: 362*/
+            left: 0; /*cite: 362*/
+            width: 100%; /*cite: 362*/
+            height: 100%; /*cite: 362*/
+            background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent overlay*/
+            display: flex; /*cite: 363*/
+            flex-direction: column; /*cite: 364*/
+            justify-content: center; /*cite: 364*/
+            align-items: center; /*cite: 364*/
+            z-index: 3000; /* Higher than other popups*/
+            color: white; /*cite: 365*/
+            font-size: 1.5em; /*cite: 365*/
+            text-align: center; /*cite: 365*/
+            opacity: 0; /*cite: 366*/
+            visibility: hidden; /*cite: 366*/
+            transition: opacity 0.3s ease, visibility 0.3s ease; /*cite: 366]*/
+        }
+        .offline-overlay.active {
+            opacity: 1; /*cite: 367*/
+            visibility: visible; /*cite: 367*/
+        }
+        .offline-overlay i {
+            font-size: 3em; /*cite: 368*/
+            margin-bottom: 20px; /*cite: 368*/
+            color: #FFC107; /* Orange/amber color for alert*/
+        }
+        .offline-overlay p {
+            margin: 0; /*cite: 369*/
+            padding: 0 20px; /*cite: 369*/
+        }
+        .offline-overlay .reload-button {
+            background-color: var(--accent-teal); /*cite: 370*/
+            color: var(--white); /*cite: 370*/
+            border: none; /*cite: 370*/
+            border-radius: var(--border-radius-button); /*cite: 370*/
+            padding: 10px 20px; /*cite: 371*/
+            margin-top: 20px; /*cite: 371*/
+            cursor: pointer; /*cite: 371*/
+            font-family: 'Montserrat', sans-serif; /*cite: 371*/
+            font-weight: 600; /*cite: 371*/
+            transition: background-color 0.2s ease; /*cite: 371]*/
+        }
+        .offline-overlay .reload-button:hover {
+            background-color: #00939b; /*cite: 372*/
+        }
+
+        /* Removed Chatbot Full Section Styles */
+
+
+        /* About Me Section Styles */
+        #about-me-view {
+            display: none; /* Hidden by default*/
+            flex-direction: column; /*cite: 374*/
+            padding: 20px; /*cite: 374*/
+            min-height: calc(100vh - 90px); /*cite: 374*/
+            background-color: var(--secondary-light); /*cite: 374*/
+            align-items: center; /*cite: 375*/
+            text-align: center; /*cite: 375]*/
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+        }
+        #about-me-view .section-header {
+            display: flex; /*cite: 376*/
+            align-items: center; /*cite: 376*/
+            width: 100%; /*cite: 376*/
+            margin-bottom: 25px; /*cite: 376*/
+        }
+        #about-me-view .back-button {
+            background-color: transparent; /*cite: 377*/
+            border: none; /*cite: 377*/
+            font-size: 2em; /*cite: 377*/
+            color: var(--text-dark); /*cite: 377*/
+            cursor: pointer; /*cite: 377*/
+            margin-right: 18px; /*cite: 378*/
+            transition: color 0.2s ease, transform 0.2s ease; /*cite: 378]*/
+        }
+        #about-me-view .back-button:hover {
+            color: var(--accent-teal); /*cite: 379*/
+            transform: translateX(-5px); /*cite: 379*/
+        }
+        #about-me-view h2 {
+            font-family: 'Montserrat', sans-serif; /*cite: 380*/
+            font-size: 2.2em; /*cite: 380*/
+            font-weight: 700; /*cite: 380*/
+            color: var(--text-dark); /*cite: 380*/
+            margin: 0; /*cite: 381*/
+            flex-grow: 1; /*cite: 381*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .about-me-card {
+            background-color: #333333; /*cite: 382*/
+            border-radius: var(--border-radius-main); /*cite: 382*/
+            box-shadow: var(--shadow-medium); /*cite: 382*/
+            padding: 30px; /*cite: 382*/
+            width: 100%; /*cite: 382*/
+            max-width: 500px; /*cite: 382*/
+            margin-top: 20px; /*cite: 383*/
+            border: 1px solid var(--border-color); /*cite: 383]*/
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+        }
+        .about-me-card .profile-pic {
+            width: 120px; /*cite: 384*/
+            height: 120px; /*cite: 384*/
+            border-radius: 50%; /*cite: 384*/
+            object-fit: cover; /*cite: 384*/
+            margin-bottom: 20px; /*cite: 384*/
+            border: 4px solid var(--accent-teal); /*cite: 385*/
+            box-shadow: 0 0 15px rgba(0,0,0,0.5); /*cite: 385]*/
+        }
+        .about-me-card h3 {
+            font-family: 'Montserrat', sans-serif; /*cite: 386*/
+            font-size: 1.8em; /*cite: 386*/
+            font-weight: 700; /*cite: 386*/
+            color: var(--text-dark); /*cite: 386*/
+            margin-bottom: 10px; /*cite: 386*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .about-me-card p {
+            font-size: 1.1em; /*cite: 387*/
+            color: var(--text-light); /*cite: 387*/
+            margin-bottom: 25px; /*cite: 387*/
+            line-height: 1.6; /*cite: 387*/
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .social-links {
+            display: flex; /*cite: 388*/
+            justify-content: center; /*cite: 388*/
+            gap: 25px; /*cite: 388*/
+            margin-top: 20px; /*cite: 388*/
+        }
+        .social-link {
+            font-size: 2.5em; /*cite: 389*/
+            color: var(--text-light); /*cite: 389*/
+            transition: color 0.2s ease, transform 0.2s ease; /*cite: 389]*/
+        }
+        .social-link:hover {
+            transform: translateY(-5px); /*cite: 390*/
+        }
+        .social-link.telegram:hover { color: #0088cc; /*cite: 391*/ }
+        .social-link.instagram:hover { 
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); /*cite: 392*/
+            -webkit-background-clip: text; /*cite: 392*/
+            -webkit-text-fill-color: transparent; /*cite: 392*/
+        }
+        .social-link.youtube:hover { color: #FF0000; /*cite: 393*/ }
+
+
+        /* --- New How to use the App View --- */
+        #how-to-use-app-view {
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+            min-height: calc(100vh - 90px);
+            background-color: var(--secondary-light);
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+        }
+        #how-to-use-app-view .section-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+        #how-to-use-app-view .back-button {
+            background-color: transparent;
+            border: none;
+            font-size: 2em;
+            color: var(--text-dark);
+            cursor: pointer;
+            margin-right: 18px;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        #how-to-use-app-view .back-button:hover {
+            color: var(--accent-teal);
+            transform: translateX(-5px);
+        }
+        #how-to-use-app-view h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 0;
+            flex-grow: 1;
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        #how-to-use-app-view .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background-color: #000;
+            border-radius: var(--border-radius-card);
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-medium);
+        }
+        #how-to-use-app-view .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        #how-to-use-app-view p {
+            font-size: 1.1em;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-top: 0;
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        
+        /* New Share Button Styles */
+        .share-app-button {
+            background-color: #007bff; /* Blue color */
+            color: var(--white);
+            padding: 15px 25px;
+            border-radius: var(--border-radius-button);
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease, color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: var(--shadow-medium);
+            margin-top: 30px; /* Space from elements above */
+            margin-bottom: 30px; /* Space from bottom navbar */
+        }
+
+        .share-app-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: translateY(-3px);
+        }
+
+        .share-app-button i {
+            font-size: 1.5em;
+        }
+
+        /* Responsive Adjustments (unchanged) */
+        @media (max-width: 768px) {
+            .top-navbar { padding: 12px 15px; /*cite: 394*/ }
+            .top-navbar .app-logo span { font-size: 1.3em; /*cite: 395*/ }
+            .welcome-banner { padding: 20px; /*cite: 396*/ }
+            .welcome-banner .greeting { font-size: 1.4em; /*cite: 397*/ }
+            .welcome-banner .fire-icon { font-size: 1.8em; /*cite: 398*/ }
+            .quote-section { padding: 20px; /*cite: 399*/ }
+            .quote-section .quote-text { font-size: 0.95em; /*cite: 400*/ }
+            #home-view { gap: 20px; /*cite: 401*/ }
+            .course-category-item { min-height: 160px; /*cite: 402*/ }
+            .course-category-item .image-container img { padding: 5px; /*cite: 403*/ }
+            .course-category-item .content-overlay { padding: 10px; /*cite: 404*/ }
+            .course-category-item .category-name { font-size: 0.95em; /*cite: 405*/ }
+
+            .favorites-section-home-card { padding: 20px; margin-top: 20px; /*cite: 406*/ }
+            .favorites-section-home-card h2 { font-size: 1.6em; /*cite: 407*/ }
+            .favorites-section-home-card .fav-icon { font-size: 2.5em; /*cite: 408*/ }
+            .favorites-section-home-card p { font-size: 0.9em; /*cite: 409*/ }
+            .favorites-section-home-card .fav-count { font-size: 1.1em; /*cite: 410*/ }
+
+            #new-batches-view .section-header h2 { font-size: 1.8em; /*cite: 411*/ }
+            .search-bar-container { padding: 5px 10px; /*cite: 412*/ }
+            .search-bar-container input { padding: 6px 8px; /*cite: 413*/ }
+            .search-bar-container .search-button { padding: 8px 15px; font-size: 0.8em; /*cite: 414*/ }
+            .batch-card-body .batch-title { font-size: 1.4em; /*cite: 415*/ }
+            .batch-card-body .lets-roar-button { padding: 12px 20px; font-size: 1em; /*cite: 416*/ }
+            .batch-card-body .batch-image-container {
+                height: 160px; /*cite: 417*/
+            }
+
+            #favorites-view .section-header h2 { font-size: 1.8em; /*cite: 418*/ }
+            .promotional-banner { padding: 12px 15px; font-size: 0.8em; /*cite: 419*/ }
+            .promotional-banner .promo-text { font-size: 1em; /*cite: 420*/ }
+
+
+            #video-player-view .section-header h2 { font-size: 1.8em; /*cite: 421*/ }
+            .player-card-container { padding: 0 15px 15px 15px; /*cite: 422*/ }
+            .player-card { margin-bottom: 15px; /*cite: 423*/ }
+            .player-metadata { padding: 15px; /*cite: 424*/ }
+            .player-metadata .lesson-sub-title { font-size: 1.5em; text-align: center; /*cite: 425*/ }
+            .player-action-buttons { flex-wrap: wrap; justify-content: center; /*cite: 426*/
+            padding: 0 15px 15px 15px; }
+            .player-action-buttons .action-button { flex: unset; /*cite: 427*/
+            width: 48%; margin-bottom: 10px; padding: 10px 8px; font-size: 0.8em; }
+            .player-action-buttons .action-button i { margin-right: 5px; /*cite: 428*/ }
+
+
+            .bottom-navbar { padding: 12px 0; /*cite: 429*/ }
+            .nav-item { font-size: 0.8em; /*cite: 430*/ }
+            .nav-item i { font-size: 1.6em; /*cite: 431*/ }
+
+            .name-popup { padding: 30px; /*cite: 432*/ }
+            .name-popup h2 { font-size: 1.6em; /*cite: 433*/ }
+            .name-popup p { font-size: 1em; /*cite: 434*/
+            margin-bottom: 20px;}
+            .name-popup input { font-size: 1.1em; padding-top: 15px; /*cite: 435*/ }
+            .name-popup label { top: 6px; font-size: 0.8em; /*cite: 436*/ }
+            .name-popup button { font-size: 1.05em; padding: 12px 25px; /*cite: 437*/ }
+
+            /* Comments Popup Responsive */
+            .comments-popup { max-width: 95%; /*cite: 438*/
+            padding: 20px; }
+            .comments-popup h2 { font-size: 1.5em; /*cite: 439*/ }
+
+            /* Coming Soon Responsive */
+            .coming-soon-section h2 { font-size: 2em; /*cite: 440*/ }
+            .coming-soon-section p { font-size: 1.1em; /*cite: 441*/ }
+            .coming-soon-section .emoji { font-size: 2.5em; /*cite: 442*/ }
+
+            /* About Me Responsive */
+            #about-me-view {
+                padding: 15px; /*cite: 443*/
+            }
+            .about-me-card {
+                padding: 25px; /*cite: 444*/
+            }
+            .about-me-card .profile-pic {
+                width: 100px; /*cite: 445*/
+                height: 100px; /*cite: 445*/
+            }
+            .about-me-card h3 {
+                font-size: 1.5em; /*cite: 446*/
+            }
+            .about-me-card p {
+                font-size: 1em; /*cite: 447*/
+            }
+            .social-link {
+                font-size: 2em; /*cite: 448*/
+            }
+            
+            /* How to use the app responsive */
+            #how-to-use-app-view h2 { font-size: 1.8em; }
+            #how-to-use-app-view p { font-size: 0.95em; }
+        }
+
+        /* --- Slider Menu Styles --- */
+        .slider-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1500;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .slider-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .slider-menu {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Further reduced width */
+            width: 250px; /* Explicit width */
+            height: 100%;
+            background-color: var(--slider-bg);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1600;
+            transition: left 0.3s ease-in-out, background-color 0.3s ease; /* Added transition for background */
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
+            box-sizing: border-box; /* Include padding in width */
+            overflow-y: auto; /* Enable scrolling for long content */
+            padding-bottom: 20px; /* Add padding to bottom */
+        }
+
+        .slider-menu.active {
+            left: 0;
+        }
+
+        .slider-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--slider-border-color);
+            margin-bottom: 10px;
+            font-family: 'Comfortaa', sans-serif; /* Premium Font for header */
+            transition: border-color 0.3s ease; /* Smooth transition */
+        }
+
+        .slider-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+            border: 2px solid var(--accent-teal); /* Add border for premium look */
+            box-shadow: 0 0 8px rgba(0, 173, 181, 0.3); /* Subtle glow */
+        }
+
+        .slider-header h3 {
+            font-family: 'Montserrat', sans-serif; /* Or 'Comfortaa' for distinct feel */
+            font-size: 1.5em; /* Slightly larger */
+            font-weight: 700;
+            color: var(--accent-teal);
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Text shadow for depth */
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+
+        .slider-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--slider-text-color);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif; /* Premium Font for items */
+            font-size: 1.05em; /* Slightly adjusted size */
+            transition: background-color 0.2s ease, transform 0.2s ease, color 0.3s ease; /* Added color transition */
+            position: relative; /* For subtle highlight effect */
+            overflow: hidden; /* For smooth hover effect */
+        }
+
+        .slider-menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 173, 181, 0.1), transparent); /* Subtle shine */
+            transition: left 0.3s ease-out;
+        }
+
+        .slider-menu-item:hover::before {
+            left: 0;
+        }
+
+        .slider-menu-item:hover {
+            background-color: var(--slider-item-hover);
+            transform: translateX(5px); /* Slight slide effect */
+        }
+
+        .slider-menu-item i {
+            font-size: 1.6em; /* Slightly larger icons */
+            margin-right: 15px;
+            color: var(--slider-icon-color);
+            transition: color 0.2s ease; /* Smooth icon color transition */
+        }
+
+        .slider-menu-item:hover i {
+            color: var(--highlight-gold); /* Change icon color on hover */
+        }
+
+        .slider-menu-item .item-text {
+            flex-grow: 1;
+            font-weight: 500; /* Medium bold */
+        }
+
+        .slider-menu-item .coming-soon-tag {
+            background-color: #FFC107;
+            color: #333;
+            font-size: 0.7em;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 10px;
+            margin-left: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .slider-footer {
+            margin-top: auto; /* Pushes footer to the bottom */
+            padding: 15px 20px;
+            text-align: center;
+            border-top: 1px solid var(--slider-border-color);
+            font-size: 0.85em;
+            color: var(--text-light);
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.5;
+            transition: border-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+        }
+
+        .slider-footer .version {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+            font-size: 0.9em;
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        
+        /* New: Dark Mode toggle in slider */
+        .dark-mode-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            color: var(--slider-text-color);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.05em;
+            cursor: pointer;
+            border-top: 1px solid var(--slider-border-color); /* Separator */
+            margin-top: 10px; /* Space after last item */
+            transition: color 0.3s ease, border-color 0.3s ease; /* Smooth transition */
+        }
+        .dark-mode-toggle i {
+            font-size: 1.6em;
+            margin-right: 15px;
+            color: var(--slider-icon-color);
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 45px;
+            height: 25px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider-round {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #555;
+            transition: .4s;
+            border-radius: 25px;
+        }
+        .slider-round:before {
+            position: absolute;
+            content: "";
+            height: 19px;
+            width: 19px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider-round {
+            background-color: var(--accent-teal);
+        }
+        input:checked + .slider-round:before {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="offline-overlay" id="offlineOverlay">
+        <i class="fas fa-wifi"></i>
+        <p>You are offline. Please check your internet connection.</p>
+        <button class="reload-button" onclick="location.reload()">Retry Connection</button>
+    </div>
+
+    <div class="popup-overlay" id="namePopupOverlay">
+        <div class="name-popup">
+            <button class="popup-close-button" onclick="closeNamePopup()">×</button>
+            <h2>Welcome to SkillNeast!</h2>
+            <p>Please tell us your name and what you do to personalize your experience.</p>
+            <div class="input-container">
+                <input type="text" id="userNameInput" placeholder=" " maxlength="15" onkeyup="updateCharCount()">
+                <label for="userNameInput">Enter Your Name</label>
+            </div>
+            <div class="char-count"><span id="currentCharCount">0</span>/15</div>
+            <div class="role-selection">
+                <label class="role-option">
+                    <input type="radio" name="userRole" value="Editor"> Editor ✂️
+                </label>
+                <label class="role-option">
+                    <input type="radio" name="userRole" value="Programmer"> Programmer 💻
+                </label>
+                <label class="role-option">
+                    <input type="radio" name="userRole" value="Content Creator"> Content Creator 🎬
+                </label>
+                <label class="role-option">
+                    <input type="radio" name="userRole" value="Music Artist"> Music Artist 🎶
+                </label>
+                <label class="role-option">
+                    <input type="radio" name="userRole" value="Other" checked> Other ✨
+                </label>
+            </div>
+            <button onclick="submitName()">START LEARNING</button>
+        </div>
+    </div>
+
+    <div class="comments-popup-overlay" id="commentsPopupOverlay">
+        <div class="comments-popup">
+            <button class="popup-close-button" onclick="closeCommentsPopup()">×</button>
+            <h2>SR Comments</h2>
+            <div class="comments-input-area">
+                <textarea id="commentInput" placeholder="Write your comment here..."></textarea>
+                <button onclick="postComment()">Post Comment</button>
+            </div>
+            <div class="comments-display-area" id="commentsDisplayArea">
+                <p class="no-comments-message">No comments yet. Be the first to comment!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slider-menu-overlay" id="sliderMenuOverlay" onclick="closeSliderMenu()"></div>
+    <div class="slider-menu" id="sliderMenu">
+        <div class="slider-header">
+            <img src="image.png" alt="SkillNeast Logo">
+            <h3>SkillNeast</h3>
+        </div>
+        
+        <a href="#" class="slider-menu-item" onclick="showComingSoonView('ai-chatbot'); closeSliderMenu();">
+            <i class="fas fa-robot"></i> <span class="item-text">Neast Bro (AI Chatbot)</span> <span class="coming-soon-tag">Coming Soon</span>
+        </a>
+        <a href="#" class="slider-menu-item" onclick="showAboutMeView(); closeSliderMenu();">
+            <i class="fas fa-user-circle"></i> <span class="item-text">About Me</span>
+        </a>
+        <a href="#" class="slider-menu-item" onclick="showFavoritesView(); closeSliderMenu();">
+            <i class="fas fa-heart"></i> <span class="item-text">Favorite Batches</span>
+        </a>
+        <a href="YOUR_TELEGRAM_CHANNEL_LINK" target="_blank" class="slider-menu-item">
+            <i class="fab fa-telegram-plane"></i> <span class="item-text">Join Telegram Channel</span>
+        </a>
+        <a href="YOUR_TELEGRAM_GROUP_LINK" target="_blank" class="slider-menu-item">
+            <i class="fab fa-telegram-plane"></i> <span class="item-text">Join Telegram Group</span>
+        </a>
+        <a href="#" class="slider-menu-item" onclick="alert('Request Courses functionality coming soon!'); closeSliderMenu();">
+            <i class="fas fa-hand-paper"></i> <span class="item-text">Request Courses</span>
+        </a>
+        <a href="#" class="slider-menu-item" onclick="showHowToUseAppView(); closeSliderMenu();">
+            <i class="fas fa-question-circle"></i> <span class="item-text">How to use the App</span>
+        </a>
+        <a href="#" class="slider-menu-item" onclick="shareApp(); closeSliderMenu();">
+            <i class="fas fa-share-alt"></i> <span class="item-text">Share with your Friends</span>
+        </a>
+
+        <div class="dark-mode-toggle" onclick="toggleDarkMode()">
+            <i class="fas fa-moon"></i> <span>Dark Mode</span>
+            <label class="switch">
+                <input type="checkbox" id="darkModeToggleSwitch">
+                <span class="slider-round"></span>
+            </label>
+        </div>
+        
+        <div class="slider-footer">
+            <div class="version">App Version: v1.0.0 (G.O.A.T)</div>
+            Made with ❤️ in INDIA 🇮🇳
+        </div>
+    </div>
+
+    <div class="top-navbar">
+        <div class="menu-icon" onclick="openSliderMenu()"><i class="fas fa-bars"></i></div>
+        <div class="app-logo" id="appLogo">
+            <img src="image.png" alt="SkillNeast Logo" draggable="false" id="skillNeastLogo">
+            <span>SKILLNEAST</span>
+        </div>
+        <div class="telegram-icon" onclick="window.open('YOUR_TELEGRAM_GROUP_LINK', '_blank');"><i class="fab fa-telegram-plane"></i></div>
+    </div>
+
+    <div class="main-content">
+
+        <div class="welcome-banner">
+            <span class="greeting"><i class="fas fa-heart"></i> Welcome <span id="displayedUserName">Guest</span></span>
+            <span class="fire-icon"><i class="fas fa-fire"></i></span>
+            <span class="role-sticker" id="displayedUserRole" style="display: none;"></span> </div>
+
+        <div class="quote-section">
+            <p class="quote-text" id="quoteText"></p>
+            <p class="quote-author" id="quoteAuthor"></p>
+        </div>
+
+        <div id="home-view">
+            <div class="course-category-item" onclick="showNewBatchesView('editing')">
+                <div class="image-container">
+                    <img src="editing.png" alt="Editing Courses" draggable="false">
+                </div>
+                <div class="content-overlay">
+                    <span class="category-name">Editing Courses</span>
+                </div>
+            </div>
+
+            <div class="course-category-item" onclick="showNewBatchesView('personal')">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/90x90/00ADB5/1A2B3C?text=PD" alt="Personal Development" draggable="false">
+                </div>
+                <div class="content-overlay">
+                    <span class="category-name">Personal Development</span>
+                </div>
+            </div>
+
+            <div class="course-category-item" onclick="showNewBatchesView('content')">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/90x90/6A7B8C/EEEEEE?text=CC" alt="Content Creation" draggable="false">
+                </div>
+                <div class="content-overlay">
+                    <span class="category-name">Content Creation</span>
+                </div>
+                <span class="new-tag">NEW</span>
+            </div>
+
+            <div class="course-category-item" onclick="showNewBatchesView('programming')">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/90x90/222831/FFD700?text=CB" alt="Programming (Coder Bhai)" draggable="false">
+                </div>
+                <div class="content-overlay">
+                    <span class="category-name">Programming (Coder Bhai)</span>
+                </div>
+                <span class="new-tag">NEW</span>
+            </div>
+
+            <div class="course-category-item" onclick="showNewBatchesView('learning_ways')">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/90x90/FFD700/1A2B3C?text=LW" alt="Learning Ways" draggable="false">
+                </div>
+                <div class="content-overlay">
+                    <span class="category-name">Learning Ways</span>
+                </div>
+            </div>
+            
+            <div class="course-category-item" onclick="showNewBatchesView('other_courses')">
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/90x90/4CAF50/FFFFFF?text=OC" alt="Other Courses" draggable="false">
+                </div>
+                <div class="content-overlay">
+                    <span class="category-name">Other Courses</span>
+                </div>
+            </div>
+            
+            <div class="surprise-button" onclick="openSurpriseLink()">
+                <i class="fas fa-gift"></i> Today's Surprise! <i class="fas fa-arrow-right"></i>
+            </div>
+
+        </div>
+
+        <div id="favorites-section-home-card" class="favorites-section-home-card" onclick="showFavoritesView()">
+            <i class="fas fa-heart fav-icon"></i>
+            <h2>My Favorite Batches</h2>
+            <p>View all your saved courses and batches here.</p>
+            <span class="fav-count" id="favorites-count">0 Batches</span>
+        </div>
+
+        <div class="partition"></div>
+        <div class="partition"></div>
+        <div class="partition"></div>
+
+        <div class="telegram-card" onclick="window.open('YOUR_TELEGRAM_GROUP_LINK', '_blank');">
+            <i class="fab fa-telegram-plane telegram-icon-large"></i>
+            <span class="telegram-text">Join Our Telegram Community!</span>
+        </div>
+
+
+        <div id="new-batches-view" style="display: none;">
+            <div class="section-header">
+                <button class="back-button" onclick="showHomeView()"><i class="fas fa-arrow-left"></i></button>
+                <h2 id="new-batches-title">New Batches</h2>
+            </div>
+            <div class="search-bar-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="batchSearchInput" placeholder="Search by batch name" onkeyup="filterBatches()">
+                <button class="search-button" onclick="filterBatches()">Search</button>
+            </div>
+            <div class="batch-list" id="batches-container">
+            </div>
+        </div>
+
+        <div id="favorites-view" style="display: none;">
+            <div class="section-header">
+                <button class="back-button" onclick="showHomeView()"><i class="fas fa-arrow-left"></i></button>
+                <h2>Favourite Batches</h2>
+            </div>
+            <div class="promotional-banner">
+                <span class="disclaimer">@study.ratna.pw <i class="fas fa-check-circle"></i> @pw_coupon_ratna</span>
+                <span classclaimer>Disclaimer: We know today isn't black friday - but the discounts we're offering are just as incredible!</span>
+                <p class="promo-text">Who said <strong>Black Friday</strong> only happens once a year? Enjoy massive savings just like it's Black Friday today! Our discounts are just as amazing—grab yours before it's gone! <span>🎉</span></p>
+            </div>
+            <div class="batch-list" id="favorite-batches-container">
+            </div>
+            <p id="no-favorites-message-view" class="no-favorites-message-view" style="display: none;">You haven't favorited any batches yet. Click the heart icon on any batch to add it here!</p>
+        </div>
+
+        <div id="sections-view" style="display: none;">
+            <div class="section-header">
+                <button class="back-button" onclick="showNewBatchesView(lastCategoryViewed)"><i class="fas fa-arrow-left"></i></button>
+                <h2 id="sections-title"></h2>
+            </div>
+            <div class="sections-container" id="sections-container">
+            </div>
+        </div>
+
+        <div id="lessons-in-sections-view" style="display: none;">
+            <div class="section-header">
+                <button class="back-button" onclick="goBackFromLessonsList()"><i class="fas fa-arrow-left"></i></button>
+                <h2 id="lessons-in-sections-title"></h2>
+            </div>
+            <div class="lesson-list-container" id="lessons-in-sections-container">
+            </div>
+        </div>
+
+
+        <div id="video-player-view" style="display: none;">
+            <div class="section-header">
+                <button class="back-button" onclick="goBackFromPlayerView()"><i class="fas fa-arrow-left"></i></button>
+                <h2 id="player-view-title"></h2>
+            </div>
+            
+            <div class="player-card-container">
+                <div class="player-card">
+                    <div class="main-video-player" id="main-video-player">
+                    </div>
+                    <div class="player-metadata">
+                        <h3 class="lesson-sub-title" id="player-lesson-sub-title"></h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="player-action-buttons">
+                <button class="action-button timeline"><i class="fas fa-stream"></i> Timeline</button>
+                <button class="action-button comments" onclick="showCommentsPopup()"><i class="fas fa-comments"></i> SR Comments</button>
+                <button class="action-button watch-later"><i class="fas fa-bookmark"></i> Watch Later</button>
+            </div>
+            
+            <ul class="lesson-list" id="lessons-for-player-batch">
+            </ul>
+
+        </div>
+
+        <div id="bundles-coming-soon-view" class="coming-soon-section" style="display: none;">
+            <i class="emoji">🎁</i>
+            <h2>Bundles Coming Soon!</h2>
+            <p>Exciting new course bundles are on their way. Stay tuned for amazing deals and curated learning paths!</p>
+        </div>
+
+        <div id="pdfs-coming-soon-view" class="coming-soon-section" style="display: none;">
+            <i class="emoji">📄</i>
+            <h2>PDFs Coming Soon!</h2>
+            <p>We're preparing a comprehensive library of downloadable PDFs and study materials for you. Check back soon!</p>
+        </div>
+
+        <div id="ai-chatbot-coming-soon-view" class="coming-soon-section" style="display: none;">
+            <i class="emoji">🤖</i>
+            <h2>Neast Bro (AI Chatbot) Coming Soon!</h2>
+            <p>Get ready for personalized assistance! Our AI Chatbot, Neast Bro, is under development to help you with your learning journey. Stay tuned for its launch! 🚀</p>
+        </div>
+
+        <div id="about-me-view" style="display: none;">
+            <div class="section-header">
+                <button class="back-button" onclick="showHomeView()"><i class="fas fa-arrow-left"></i></button>
+                <h2>About Me</h2>
+            </div>
+            <div class="about-me-card">
+                <img src="https://via.placeholder.com/120x120/00ADB5/FFFFFF?text=Fahad" alt="Fahad Profile" class="profile-pic" draggable="false">
+                <h3>Hello, I'm Fahad! 👋</h3>
+                <p>I'm 16 years old and currently learning in Class 11 with PCM (Physics, Chemistry, Maths) stream. Skills abhi kuch nahi hain, but har roz kuch naya seekh raha hoon! Learning is my journey. 😊</p>
+                <div class="social-links">
+                    <a href="YOUR_TELEGRAM_GROUP_LINK" target="_blank" class="social-link telegram"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="YOUR_INSTAGRAM_PROFILE_LINK" target="_blank" class="social-link instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="YOUR_YOUTUBE_CHANNEL_LINK" target="_blank" class="social-link youtube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div id="how-to-use-app-view" style="display: none;">
+            <div class="section-header">
+                <button class="back-button" onclick="showHomeView()"><i class="fas fa-arrow-left"></i></button>
+                <h2>How to use the App</h2>
+            </div>
+            <div class="video-container">
+                <iframe src="https://www.youtube-nocookie.com/embed/YOUR_YOUTUBE_TUTORIAL_VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <p>Welcome to SkillNeast! This video will guide you through all the features of our app, from navigating courses to managing your favorites and interacting with our community.</p>
+            <p>If you have any further questions, feel free to reach out to us through the Telegram community link in the menu!</p>
+        </div>
+
+    </div> 
+    
+    <div class="bottom-navbar">
+        <a href="#" class="nav-item" id="courses-nav" onclick="showNewBatchesView('all'); highlightBottomNav('courses-nav')"><i class="fas fa-book-open"></i> Courses</a>
+        <a href="#" class="nav-item" id="bundles-nav" onclick="showComingSoonView('bundles'); highlightBottomNav('bundles-nav');"><i class="fas fa-boxes"></i> Bundles</a>
+        <a href="#" class="nav-item active" id="home-nav" onclick="showHomeView(); highlightBottomNav('home-nav')"><i class="fas fa-home"></i> Home</a>
+        <a href="#" class="nav-item" id="pdfs-nav" onclick="showComingSoonView('pdfs'); highlightBottomNav('pdfs-nav');"><i class="fas fa-file-pdf"></i> PDFs</a>
+        <a href="#" class="nav-item" id="about-me-nav" onclick="showAboutMeView(); highlightBottomNav('about-me-nav');"><i class="fas fa-user-circle"></i> About Me</a>
+    </div>
+
+    <script>
+        // --- Data Structure for Quotes ---
+        const quotes = [
+            { quote: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+            { quote: "Success is not final, failure is not fatal: It is the courage to continue that counts.", author: "Winston Churchill" },
+            { quote: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+            { quote: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+            { quote: "The mind is everything. What you think you become.", author: "Buddha" },
+            { quote: "The best way to predict the future is to create it.", author: "Peter Drucker" },
+            { quote: "It always seems impossible until it's done.", author: "Nelson Mandela" },
+            { quote: "Don't wish it were easier, wish you were better.", author: "Jim Rohn" },
+            { quote: "The expert in anything was once a beginner.", author: "Helen Hayes" },
+            { quote: "Education is the most powerful weapon which you can use to change the world.", author: "Nelson Mandela" },
+            { quote: "Strive not to be a success, but rather to be of value.", author: "Albert Einstein" },
+            { quote: "The best revenge is massive success.", author: "Frank Sinatra" },
+            { quote: "The greatest glory in living lies not in never falling, but in rising every time we fall.", author: "Nelson Mandela" },
+            { quote: "The journey of a thousand miles begins with a single step.", author: "Lao Tzu" },
+            { quote: "What you get by achieving your goals is not as important as what you become by achieving your goals.", author: "Zig Ziglar" },
+            { quote: "The mind is not a vessel to be filled, but a fire to be kindled.", author: "Plutarch" },
+            { quote: "Limitations live only in our minds. But if we use our imaginations, our possibilities become limitless.", author: "Jamie Paolinetti" },
+            { quote: "Innovation distinguishes between a leader and a follower.", author: "Steve Jobs" },
+            { quote: "The harder you work for something, the greater you'll feel when you achieve it.", author: "Unknown" },
+            { quote: "Dreams don't work unless you do.", author: "John C. Maxwell" },
+            { quote: "Success is walking from failure to failure with no loss of enthusiasm.", author: "Winston Churchill" },
+            { quote: "I find that the harder I work, the more luck I seem to have.", author: "Thomas Jefferson" },
+            { quote: "The only place where success comes before work is in the dictionary.", author: "Vidal Sassoon" },
+            { quote: "Quality is not an act, it is a habit.", author: "Aristotle" },
+            { quote: "To be the best, you must be able to handle the worst.", author: "Wilson Kanadi" },
+            { quote: "Opportunities don't happen, you create them.", author: "Chris Grosser" },
+            { quote: "There are no shortcuts to any place worth going.", author: "Beverly Sills" },
+            { quote: "The future depends on what you do today.", author: "Mahatma Gandhi" },
+            { quote: "Push yourself, because no one else is going to do it for you.", author: "Unknown" },
+            { quote: "Great things never came from comfort zones.", author: "Unknown" },
+            { quote: "Success is the sum of small efforts repeated day in and day out.", author: "Robert Collier" },
+            { quote: "The expert in anything was once a beginner.", author: "Helen Hayes" },
+            { quote: "Don’t count the days, make the days count.", author: "Muhammad Ali" },
+            { quote: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+            { quote: "You don’t have to be great to start, but you have to start to be great.", author: "Zig Ziglar" },
+            { quote: "The only limit to our realization of tomorrow will be our doubts of today.", author: "Franklin D. Roosevelt" },
+            { quote: "If you are not willing to risk the usual, you will have to settle for the ordinary.", author: "Jim Rohn" },
+            { quote: "The starting point of all achievement is desire.", author: "Napoleon Hill" },
+            { quote: "It’s not whether you get knocked down, it’s whether you get up.", author: "Vince Lombardi" },
+            { quote: "Your time is limited, don't waste it living someone else's life.", author: "Steve Jobs" }
+        ];
+        const allEmojis = [
+            '✨', '🚀', '💡', '🌟', '💪', '🔥', '💖', '🎓', '📚', '🎯', '💯', '🌈', '🤩', '🏆', '📈', '🧠', '🧩', '🌱', '✅', '👑',
+            '🎉', '💫', '🌠', '🔮', '💎', '🔑', '🔓', '🖋️', '📖', '🧑‍🎓', '💻', '🎼', '🎬', '🎨', '⚙️', '📊', '🌐', '🗺️', '🧭', '🌟',
+            '💡', '✨', '⚡', '💥', '🔥', '🌈', '💎', '🔑', '🏆', '💯', '🚀', '🧠', '📚', '🎓', '💻', '📈', '🗺️', '🌐', '🎯', '💡',
+            '🌟', '🚀', '✨', '🔥', '💖', '💪', '🌱', '🌈', '💯', '🏆', '🧠', '📚', '🎯', '🎉', '💫', '🌠', '🔮', '💎', '🔑', '🔓',
+            '🤩', '🧑‍🎓', '💻', '🎼', '🎬', '🎨', '⚙️', '📊', '🌐', '🗺️', '🧭', '✅', '👑', '📝', '🖋️', '📈', '💡', '⚡', '💥', '☀️'
+        ];
+        let availableQuoteIndices = [];
+        let currentQuoteIndex = -1;
+
+        // Function to shuffle an array (Fisher-Yates algorithm)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // --- Data Structure for Batches ---
+        const batchesData = [
+            {
+                id: 'uday-2026-class-11th',
+                name: 'UDAY 2026 (Class 11th)',
+                category: 'editing',
+                image: 'editing.png',
+                headerColor: '#1E90FF',
+                sections: [
+                    {
+                        name: 'Lectures',
+                        lessons: [
+                            {
+                                name: 'Cell - The Unit of Life',
+                                subTitle: 'Lec 07 : Cell Wall',
+                                pwLogo: 'https://via.placeholder.com/40x40/000000/ffffff?text=PW',
+                                teacherProfile: 'https://via.placeholder.com/60x60/8e24aa/ffffff?text=SM',
+                                teacherName: 'Samridhi Ma\'am',
+                                date: '06 June 2025',
+                                duration: '01:37:24',
+                                description: 'A comprehensive lecture on the cell wall, its structure, functions, and importance in various organisms.',
+                                link: 'https://drive.google.com/file/d/1_YOUR_GOOGLE_DRIVE_VIDEO_ID_1/preview'
+                            },
+                            {
+                                name: 'Cell - The Unit of Life',
+                                subTitle: 'Lec 08 : Plasma Membrane',
+                                pwLogo: 'https://via.placeholder.com/40x40/000000/ffffff?text=PW',
+                                teacherProfile: 'https://via.placeholder.com/60x60/8e24aa/ffffff?text=SM',
+                                teacherName: 'Samridhi Ma\'am',
+                                date: '07 June 2025',
+                                duration: '01:20:00',
+                                description: 'Understanding the structure and functions of the plasma membrane in detail.',
+                                link: 'https://drive.google.com/file/d/1_YOUR_GOOGLE_DRIVE_VIDEO_ID_2/preview'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'awadh-2026-hindi-up-board-11th',
+                name: 'Awadh 2026 Hindi (UP Board 11th)',
+                category: 'personal',
+                image: 'https://via.placeholder.com/90x90/00ADB5/1A2B3C?text=PD',
+                headerColor: '#8A2BE2',
+                sections: [
+                    {
+                        name: 'Lectures',
+                        lessons: [
+                            {
+                                name: 'Hindi Grammar',
+                                subTitle: 'Lec 01 : Basics',
+                                pwLogo: 'https://via.placeholder.com/40x40/000000/ffffff?text=PW',
+                                teacherProfile: 'https://via.placeholder.com/60x60/8e24aa/ffffff?text=TM',
+                                teacherName: 'Teacher Ma\'am',
+                                date: '01 May 2025',
+                                duration: '00:55:00',
+                                description: 'Fundamental concepts of Hindi grammar for UP Board students.',
+                                link: 'https://drive.google.com/file/d/1_YOUR_GOOGLE_DRIVE_VIDEO_ID_3/preview'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'prayas-jee-hindi-2025',
+                name: 'Prayas JEE Hindi 2025',
+                category: 'content',
+                image: 'https://via.placeholder.com/90x90/6A7B8C/EEEEEE?text=CC',
+                headerColor: '#5A2A9A',
+                sections: [
+                    {
+                        name: 'Lectures',
+                        lessons: [
+                            {
+                                name: 'JEE Physics',
+                                subTitle: 'Lec 01 : Kinematics',
+                                pwLogo: 'https://via.placeholder.com/40x40/000000/ffffff?text=PW',
+                                teacherProfile: 'https://via.placeholder.com/60x60/8e24aa/ffffff?text=SM',
+                                teacherName: 'Physics Sir',
+                                date: '10 June 2025',
+                                duration: '02:00:00',
+                                description: 'Introduction to Kinematics for JEE aspirants.',
+                                link: 'https://drive.google.com/file/d/1_YOUR_GOOGLE_DRIVE_VIDEO_ID_4/preview'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'yakeen-neet-2025',
+                name: 'Yakeen NEET 2025',
+                category: 'programming',
+                image: 'https://via.placeholder.com/90x90/222831/FFD700?text=CB',
+                headerColor: '#9C27B0',
+                sections: [
+                    {
+                        name: 'Lectures',
+                        lessons: [
+                            {
+                                name: 'NEET Biology',
+                                subTitle: 'Lec 01 : Plant Physiology',
+                                pwLogo: 'https://via.placeholder.com/40x40/000000/ffffff?text=PW',
+                                teacherProfile: 'https://via.placeholder.com/60x60/8e24aa/ffffff?text=BM',
+                                teacherName: 'Biology Ma\'am',
+                                date: '05 May 2025',
+                                duration: '01:45:00',
+                                description: 'Detailed study of plant physiology relevant for NEET exams.',
+                                link: 'https://drive.google.com/file/d/1_YOUR_GOOGLE_DRIVE_VIDEO_ID_5/preview'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'career-growth-path',
+                name: 'Career Growth Path',
+                category: 'learning_ways',
+                image: 'https://via.placeholder.com/90x90/FFD700/1A2B3C?text=LW',
+                headerColor: '#33FF57',
+                sections: [
+                    {
+                        name: 'Career Planning',
+                        lessons: [
+                            {
+                                name: 'Goal Setting',
+                                subTitle: 'Lec 01 : SMART Goals',
+                                pwLogo: 'https://via.placeholder.com/40x40/000000/ffffff?text=CP',
+                                teacherProfile: 'https://via.placeholder.com/60x60/8e24aa/ffffff?text=CD',
+                                teacherName: 'Coach Ma\'am',
+                                date: '15 Sep 2025',
+                                duration: '01:00:00',
+                                description: 'Learn to set SMART (Specific, Measurable, Achievable, Relevant, Time-bound) goals for career success.',
+                                link: 'https://drive.google.com/file/d/1_YOUR_GOOGLE_DRIVE_VIDEO_ID_7/preview'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'new-other-course',
+                name: 'Digital Marketing Basics',
+                category: 'other_courses',
+                image: 'https://via.placeholder.com/90x90/FF6F61/FFFFFF?text=OC',
+                headerColor: '#FF6F61',
+                sections: [
+                    {
+                        name: 'Introduction',
+                        lessons: [
+                            {
+                                name: 'What is Digital Marketing?',
+                                subTitle: 'Lec 01 : Overview',
+                                pwLogo: 'https://via.placeholder.com/40x40/000000/ffffff?text=DM',
+                                teacherProfile: 'https://via.placeholder.com/60x60/8e24aa/ffffff?text=EX',
+                                teacherName: 'Expert Trainer',
+                                date: '01 Oct 2025',
+                                duration: '00:30:00',
+                                description: 'An introductory lesson to the world of digital marketing.',
+                                link: 'https://drive.google.com/file/d/1_YOUR_GOOGLE_DRIVE_VIDEO_ID_8/preview'
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        let currentView = 'home-view';
+        let currentBatchId = null;
+        let currentSectionIndex = null;
+        let lastCategoryViewed = 'all'; /*cite: 549*/
+        
+        // Define the surprise link here
+        const surpriseLink = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; /*cite: 550*/
+
+        // --- User Name Popup Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            let userName = localStorage.getItem('userName');
+            let userRole = localStorage.getItem('userRole'); // Get saved role
+            const popupOverlay = document.getElementById('namePopupOverlay');
+            const displayedUserName = document.getElementById('displayedUserName');
+            const displayedUserRole = document.getElementById('displayedUserRole'); // Get role display element
+            const appLogo = document.getElementById('appLogo'); /*cite: 551*/
+            const skillNeastLogoImage = document.getElementById('skillNeastLogo'); /*cite: 551*/
+            const offlineOverlay = document.getElementById('offlineOverlay');
+            
+            // Apply page entry animation
+            document.body.classList.add('animate-in'); /*cite: 551*/
+
+            if (!userName || !userRole) { // If no name OR no role stored, show popup
+                popupOverlay.classList.add('active'); // Show the popup
+                // Set default radio button if user hasn't chosen before
+                document.querySelector('input[name="userRole"][value="Other"]').checked = true;
+            } else {
+                displayedUserName.textContent = userName; /*cite: 553*/
+                displayedUserRole.textContent = userRole; // Display the saved role
+                popupOverlay.classList.remove('active'); /*cite: 554*/
+                updateWelcomeSection(); // Ensure welcome section is updated on load
+            }
+
+            // Initialize availableQuoteIndices for the first time
+            for (let i = 0; i < quotes.length; i++) {
+                availableQuoteIndices.push(i); /*cite: 555*/
+            }
+            shuffleArray(availableQuoteIndices); /*cite: 556*/
+            // Shuffle them initially
+
+            highlightBottomNav('home-nav'); /*cite: 557*/
+            // Highlight initial nav item
+            renderFavoritesSectionHomeCard(); /*cite: 558*/
+            updateQuote(); /*cite: 559*/
+            // Display initial quote
+            setInterval(updateQuote, 6 * 60 * 60 * 1000); /*cite: 560*/
+            // Change quote every 6 hours
+
+            document.addEventListener('contextmenu', (e) => {
+                e.preventDefault(); /*cite: 561*/
+            });
+            appLogo.addEventListener('click', () => {
+                if (!appLogo.classList.contains('rotating')) {
+                    appLogo.classList.add('rotating'); /*cite: 561*/
+                    setTimeout(() => {
+                        location.reload(); /*cite: 562*/
+                    }, 1000);
+                }
+            });
+            // Implement scroll animation observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.remove('hidden-on-scroll'); /*cite: 563*/
+                        entry.target.classList.add('visible-on-scroll'); /*cite: 564*/
+                    } else {
+                        entry.target.classList.remove('visible-on-scroll'); /*cite: 564*/
+                        entry.target.classList.add('hidden-on-scroll'); /*cite: 565*/
+                    }
+                });
+            }, { threshold: 0.1 }); /*cite: 566*/
+            // Trigger when 10% of item is visible
+
+            document.querySelectorAll('.course-category-item').forEach(item => {
+                item.classList.add('hidden-on-scroll'); // Initially hide items
+                observer.observe(item);
+            });
+            document.querySelectorAll('.favorites-section-home-card').forEach(item => {
+                item.classList.add('hidden-on-scroll'); // Initially hide items
+                observer.observe(item);
+            });
+            document.querySelectorAll('.telegram-card').forEach(item => {
+                item.classList.add('hidden-on-scroll'); // Initially hide items
+                observer.observe(item);
+            });
+            // Removed .ai-chatbot-home-card from observer
+            document.querySelectorAll('.surprise-button').forEach(item => { // Observe new surprise button
+                item.classList.add('hidden-on-scroll'); /*cite: 569*/
+                observer.observe(item); /*cite: 570*/
+            });
+            // Observe partitions
+            document.querySelectorAll('.partition').forEach(item => {
+                item.classList.add('hidden-on-scroll');
+                observer.observe(item);
+            });
+            // Observe share button
+            document.querySelectorAll('.share-app-button').forEach(item => {
+                item.classList.add('hidden-on-scroll');
+                observer.observe(item);
+            });
+
+            // Implement long press functionality
+            let pressTimer; /*cite: 570*/
+            const longPressDuration = 500; // milliseconds /*cite: 571*/
+
+            function onTouchStart(event) {
+                this.classList.add('active'); /*cite: 571*/
+                // Apply immediate tap effect
+                const targetElement = this; /*cite: 572*/
+                pressTimer = setTimeout(() => {
+                    targetElement.classList.add('long-press'); /*cite: 573*/
+                }, longPressDuration);
+            }
+
+            function onTouchEnd(event) {
+                clearTimeout(pressTimer); /*cite: 574*/
+                this.classList.remove('long-press'); /*cite: 575*/
+                this.classList.remove('active'); // Remove tap effect
+            }
+
+            document.querySelectorAll('.course-category-item, .favorites-section-home-card, .telegram-card, .batch-card, .surprise-button').forEach(item => { // Removed .ai-chatbot-home-card
+                item.addEventListener('touchstart', onTouchStart); /*cite: 576*/
+                item.addEventListener('touchend', onTouchEnd); /*cite: 576*/
+                item.addEventListener('touchcancel', onTouchEnd); // In case touch is interrupted /*cite: 576*/
+                item.addEventListener('mousedown', onTouchStart); // For desktop clicks /*cite: 576*/
+                item.addEventListener('mouseup', onTouchEnd); // For desktop clicks /*cite: 576*/
+                item.addEventListener('mouseleave', onTouchEnd); // For desktop when mouse leaves while pressed /*cite: 576*/
+            });
+            // Offline detection
+            function updateOnlineStatus() {
+                if (navigator.onLine) {
+                    offlineOverlay.classList.remove('active'); /*cite: 578*/
+                } else {
+                    offlineOverlay.classList.add('active'); /*cite: 579*/
+                }
+            }
+
+            window.addEventListener('online', updateOnlineStatus); /*cite: 580*/
+            window.addEventListener('offline', updateOnlineStatus); /*cite: 580*/
+            updateOnlineStatus(); /*cite: 580*/
+
+            // Initial check for dark/light mode preference on load
+            const isLightModeEnabled = localStorage.getItem('lightModeEnabled') === 'true'; // Get saved preference
+            if (isLightModeEnabled) {
+                document.body.classList.add('light-mode');
+                document.getElementById('darkModeToggleSwitch').checked = false; // Set switch to OFF for light mode
+            } else {
+                document.body.classList.remove('light-mode'); // Default to dark if no preference or false
+                document.getElementById('darkModeToggleSwitch').checked = true; // Set switch to ON for dark mode
+            }
+        });
+
+        // --- Quote Logic ---
+        function updateQuote() {
+            const quoteTextElement = document.getElementById('quoteText'); /*cite: 583*/
+            const quoteAuthorElement = document.getElementById('quoteAuthor'); /*cite: 583*/
+            
+            // If all quotes have been shown, reset the pool and shuffle again
+            if (availableQuoteIndices.length === 0) {
+                for (let i = 0; i < quotes.length; i++) {
+                    availableQuoteIndices.push(i); /*cite: 584*/
+                }
+                shuffleArray(availableQuoteIndices); /*cite: 585*/
+            }
+
+            // Get the next unique quote index from the shuffled array
+            const quoteIndex = availableQuoteIndices.pop(); /*cite: 586*/
+            // Removes and returns the last element
+            const selectedQuote = quotes[quoteIndex]; /*cite: 587*/
+            const randomEmoji = allEmojis[Math.floor(Math.random() * allEmojis.length)]; /*cite: 587*/
+
+            // Reset animations by forcing a reflow before applying new ones
+            // This ensures the animation plays every time the content changes
+            quoteTextElement.style.animation = 'none'; /*cite: 588*/
+            quoteAuthorElement.style.animation = 'none'; /*cite: 588*/
+            // Trigger reflow to restart animation (important!)
+            void quoteTextElement.offsetWidth; /*cite: 589*/
+            void quoteAuthorElement.offsetWidth; /*cite: 589*/
+
+            quoteTextElement.innerHTML = `"${selectedQuote.quote}" <span class="quote-emoji">${randomEmoji}</span>`; /*cite: 589*/
+            quoteAuthorElement.textContent = selectedQuote.author; /*cite: 590*/
+            // Apply new animations
+            quoteTextElement.style.animation = 'quoteSlideIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards'; /*cite: 591*/
+            quoteAuthorElement.style.animation = 'quoteAuthorFadeIn 1s ease-out forwards'; /*cite: 591*/
+        }
+
+        function updateCharCount() {
+            const userNameInput = document.getElementById('userNameInput'); /*cite: 592*/
+            const currentCharCount = document.getElementById('currentCharCount'); /*cite: 592*/
+            currentCharCount.textContent = userNameInput.value.length; /*cite: 592*/
+        }
+
+        function submitName() {
+            const userNameInput = document.getElementById('userNameInput'); /*cite: 593*/
+            let userName = userNameInput.value.trim(); /*cite: 593*/
+            const selectedRoleElement = document.querySelector('input[name="userRole"]:checked');
+            let userRole = selectedRoleElement ? selectedRoleElement.value : 'Other'; // Default to 'Other' if none selected
+
+            if (userName === '') {
+                userName = 'Fahad'; /*cite: 594*/
+            } else if (userName.length > 15) {
+                userName = userName.substring(0, 15); /*cite: 595*/
+            }
+
+            localStorage.setItem('userName', userName); /*cite: 596*/
+            localStorage.setItem('userRole', userRole); // Store the selected role
+
+            updateWelcomeSection(); // Call function to update welcome section
+            closeNamePopup(); /*cite: 596*/
+        }
+
+        function updateWelcomeSection() {
+            const userName = localStorage.getItem('userName') || 'Guest';
+            const userRole = localStorage.getItem('userRole') || '';
+            document.getElementById('displayedUserName').textContent = userName;
+            const displayedUserRoleElement = document.getElementById('displayedUserRole');
+            if (userRole && userRole !== 'Other') { // Only display if a specific role is chosen
+                displayedUserRoleElement.textContent = userRole;
+                displayedUserRoleElement.style.display = 'inline-block'; // Show the sticker
+            } else {
+                displayedUserRoleElement.textContent = '';
+                displayedUserRoleElement.style.display = 'none'; // Hide if no specific role chosen
+            }
+        }
+
+
+        function closeNamePopup() {
+            document.getElementById('namePopupOverlay').classList.remove('active'); /*cite: 597*/
+        }
+
+        // --- View Switching Logic ---
+        function hideAllViews() {
+            document.getElementById('home-view').style.display = 'none'; /*cite: 598*/
+            document.getElementById('favorites-section-home-card').style.display = 'none'; /*cite: 598*/
+            document.querySelector('.telegram-card').style.display = 'none'; /*cite: 598*/
+            document.getElementById('new-batches-view').style.display = 'none'; /*cite: 599*/
+            document.getElementById('favorites-view').style.display = 'none'; /*cite: 599*/
+            document.getElementById('sections-view').style.display = 'none'; /*cite: 599*/
+            document.getElementById('lessons-in-sections-view').style.display = 'none'; /*cite: 599*/
+            document.getElementById('video-player-view').style.display = 'none'; /*cite: 600*/
+            document.getElementById('bundles-coming-soon-view').style.display = 'none'; /*cite: 600*/
+            document.getElementById('pdfs-coming-soon-view').style.display = 'none'; /*cite: 600*/
+            document.getElementById('about-me-view').style.display = 'none'; /* Hide about me view*/
+            document.getElementById('how-to-use-app-view').style.display = 'none'; // Hide new view
+            document.getElementById('ai-chatbot-coming-soon-view').style.display = 'none'; // Hide AI Chatbot Coming Soon
+            // Hide partitions
+            document.querySelectorAll('.partition').forEach(p => p.style.display = 'none');
+            // Check if .share-app-button exists before trying to hide it
+            const shareButton = document.querySelector('.share-app-button');
+            if (shareButton) {
+                shareButton.style.display = 'none';
+            }
+
+            // Hide Welcome Banner and Quote Section when not on homepage
+            document.querySelector('.welcome-banner').style.display = 'none'; /*cite: 601*/
+            document.querySelector('.quote-section').style.display = 'none'; /*cite: 601*/
+        }
+
+        function showHomeView() {
+            hideAllViews(); /*cite: 602*/
+            document.getElementById('home-view').style.display = 'grid'; /*cite: 602*/
+            document.getElementById('favorites-section-home-card').style.display = 'flex'; /*cite: 602*/
+            document.querySelector('.telegram-card').style.display = 'flex'; /*cite: 603*/
+            // Show partitions
+            document.querySelectorAll('.partition').forEach(p => p.style.display = 'block');
+            // Show share button
+            const shareButton = document.querySelector('.share-app-button');
+            if (shareButton) {
+                shareButton.style.display = 'flex';
+            }
+            renderFavoritesSectionHomeCard(); /*cite: 603*/
+            currentView = 'home-view'; /*cite: 603*/
+            highlightBottomNav('home-nav'); /*cite: 603*/
+            window.scrollTo(0, 0); /*cite: 603*/
+
+            // Show Welcome Banner and Quote Section only on homepage
+            document.querySelector('.welcome-banner').style.display = 'flex'; /*cite: 604*/
+            document.querySelector('.quote-section').style.display = 'block'; /*cite: 604*/
+
+            updateWelcomeSection(); // Ensure welcome section is updated when returning to home
+        }
+
+        function showNewBatchesView(category = 'all') { 
+            hideAllViews(); /*cite: 605*/
+            document.getElementById('new-batches-view').style.display = 'block'; /*cite: 605*/
+            currentView = 'new-batches-view'; /*cite: 605*/
+            lastCategoryViewed = category; /*cite: 606*/
+            
+            let filteredBatches = []; /*cite: 606*/
+            if (category === 'all') {
+                filteredBatches = batchesData; /*cite: 607*/
+                document.getElementById('new-batches-title').textContent = 'All Courses'; /*cite: 607*/
+            } else {
+                filteredBatches = batchesData.filter(batch => batch.category === category); /*cite: 608*/
+                // Set title based on category
+                if (category === 'editing') document.getElementById('new-batches-title').textContent = 'Editing Courses'; /*cite: 609*/
+                else if (category === 'personal') document.getElementById('new-batches-title').textContent = 'Personal Development Courses'; /*cite: 609*/
+                else if (category === 'content') document.getElementById('new-batches-title').textContent = 'Content Creation Courses'; /*cite: 610*/
+                else if (category === 'programming') document.getElementById('new-batches-title').textContent = 'Programming (Coder Bhai) Courses'; /*cite: 611*/
+                else if (category === 'learning_ways') document.getElementById('new-batches-title').textContent = 'Learning Ways Courses'; /*cite: 611*/
+                else if (category === 'other_courses') document.getElementById('new-batches-title').textContent = 'Other Courses'; /*cite: 612]*/
+            }
+            displayBatches(filteredBatches); /*cite: 612*/
+            highlightBottomNav('courses-nav'); /*cite: 613*/
+            window.scrollTo(0, 0); /*cite: 613*/
+        }
+
+        function displayBatches(batchesToDisplay) {
+            const batchesContainer = document.getElementById('batches-container'); /*cite: 614*/
+            batchesContainer.innerHTML = ''; /*cite: 614*/
+
+            if (batchesToDisplay.length === 0) {
+                batchesContainer.innerHTML = '<p style="text-align: center; color: var(--text-light);">No batches found matching your search or category.</p>'; /*cite: 615*/
+                return; /*cite: 615*/
+            }
+
+            batchesToDisplay.forEach(batch => {
+                const batchCard = document.createElement('div');
+                batchCard.className = 'batch-card';
+                const isFavorited = favorites.includes(batch.id);
+                const heartIconClass = isFavorited ? 'fas fa-heart' : 'far fa-heart';
+
+                batchCard.innerHTML = `
+                    <div class="batch-card-header" style="background-color: ${batch.headerColor || 'var(--accent-teal)'};">
+                        <span>${batch.name}</span>
+                        <div class="icons">
+                            <i class="${heartIconClass}" onclick="event.stopPropagation(); toggleFavorite('${batch.id}', this);"></i>
+                            <i class="fas fa-share-alt" onclick="event.stopPropagation(); alert('Share functionality not implemented yet!');"></i>
+                        </div>
+                    </div>
+                    <div class="batch-card-body" onclick="showSectionsView('${batch.id}')">
+                        <div class="batch-image-container">
+                            <img src="${batch.image}" alt="${batch.name}" draggable="false">
+                        </div>
+                        <div class="batch-title">${batch.name}</div>
+                        <button class="lets-roar-button">LET'S ROAR <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                `; /*cite: 620*/
+                batchesContainer.appendChild(batchCard); /*cite: 620*/
+            });
+        }
+
+        function filterBatches() {
+            const searchTerm = document.getElementById('batchSearchInput').value.toLowerCase(); /*cite: 621*/
+            // Filter based on the last viewed category or all batches if none selected
+            const currentCategoryBatches = (lastCategoryViewed === 'all') ? /*cite: 622*/
+                batchesData : batchesData.filter(batch => batch.category === lastCategoryViewed); /*cite: 622*/
+            const filteredBatches = currentCategoryBatches.filter(batch => 
+                batch.name.toLowerCase().includes(searchTerm)
+            ); /*cite: 623*/
+            displayBatches(filteredBatches); /*cite: 623*/
+        }
+
+        // --- Favorites Logic ---
+        function toggleFavorite(batchId, iconElement) {
+            if (favorites.includes(batchId)) {
+                favorites = favorites.filter(id => id !== batchId); /*cite: 624*/
+                if (iconElement) {
+                    iconElement.classList.remove('fas'); /*cite: 625*/
+                    iconElement.classList.add('far'); /*cite: 625*/
+                }
+            } else {
+                favorites.push(batchId); /*cite: 626*/
+                if (iconElement) {
+                    iconElement.classList.remove('far'); /*cite: 627*/
+                    iconElement.classList.add('fas'); /*cite: 627*/
+                }
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites)); /*cite: 628*/
+            renderFavoritesSectionHomeCard(); /*cite: 628*/
+            if (currentView === 'favorites-view') {
+                showFavoritesView(); /*cite: 629*/
+            }
+        }
+
+        function renderFavoritesSectionHomeCard() {
+            const favoritesCountSpan = document.getElementById('favorites-count'); /*cite: 630*/
+            favoritesCountSpan.textContent = `${favorites.length} Batches`; /*cite: 630*/
+        }
+
+        function showFavoritesView() {
+            hideAllViews(); /*cite: 631*/
+            document.getElementById('favorites-view').style.display = 'block'; /*cite: 631*/
+            currentView = 'favorites-view'; /*cite: 631*/
+            highlightBottomNav('home-nav'); /*cite: 631*/
+
+            const favoriteBatchesContainer = document.getElementById('favorite-batches-container'); /*cite: 631*/
+            favoriteBatchesContainer.innerHTML = ''; /*cite: 632*/
+            if (favorites.length === 0) {
+                document.getElementById('no-favorites-message-view').style.display = 'block'; /*cite: 632*/
+                favoriteBatchesContainer.style.display = 'none'; /*cite: 633*/
+            } else {
+                document.getElementById('no-favorites-message-view').style.display = 'none'; /*cite: 633*/
+                favoriteBatchesContainer.style.display = 'flex'; /*cite: 634*/
+
+                favorites.forEach(favId => {
+                    const batch = batchesData.find(b => b.id === favId); /*cite: 634*/
+                    if (batch) {
+                        const isFavorited = favorites.includes(batch.id); /*cite: 635*/
+                        const heartIconClass = isFavorited ? 'fas fa-heart' : 'far fa-heart'; /*cite: 635*/
+
+                        const favBatchCard = document.createElement('div'); /*cite: 636*/
+                        favBatchCard.className = 'batch-card'; /*cite: 636*/
+                        favBatchCard.innerHTML = `
+                            <div class="batch-card-header" style="background-color: ${batch.headerColor || 'var(--accent-teal)'};">
+                                <span>${batch.name}</span>
+                                <div class="icons">
+                                    <i class="${heartIconClass}" onclick="event.stopPropagation(); toggleFavorite('${batch.id}', this);"></i>
+                                    <i class="fas fa-share-alt" onclick="event.stopPropagation(); alert('Share functionality not implemented yet!');"></i>
+                                </div>
+                            </div>
+                            <div class="batch-card-body" onclick="showSectionsView('${batch.id}')">
+                                <div class="batch-image-container">
+                                    <img src="${batch.image}" alt="${batch.name}" draggable="false">
+                                </div>
+                                <div class="batch-title">${batch.name}</div>
+                                <button class="lets-roar-button">LET'S ROAR <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        `; /*cite: 641*/
+                        favoriteBatchesContainer.appendChild(favBatchCard); /*cite: 641*/
+                    }
+                });
+            }
+            window.scrollTo(0, 0); /*cite: 643*/
+        }
+
+        // --- Show Sections (Folders) for a Batch ---
+        function showSectionsView(batchId) {
+            hideAllViews(); /*cite: 644*/
+            currentBatchId = batchId; /*cite: 644*/
+            
+            const selectedBatch = batchesData.find(batch => batch.id === batchId); /*cite: 644*/
+            const sectionsContainer = document.getElementById('sections-container'); /*cite: 645*/
+            const sectionsTitle = document.getElementById('sections-title'); /*cite: 645*/
+            sectionsContainer.innerHTML = ''; /*cite: 645*/
+            if (selectedBatch && selectedBatch.sections && selectedBatch.sections.length > 0) {
+                sectionsTitle.textContent = selectedBatch.name + ' Sections'; /*cite: 646*/
+                selectedBatch.sections.forEach((section, index) => {
+                    const sectionItem = document.createElement('div'); /*cite: 646*/
+                    sectionItem.className = 'section-item'; /*cite: 647*/
+                    sectionItem.onclick = () => showLessonsInSectionsView(batchId, index); /*cite: 647*/
+                    sectionItem.innerHTML = `
+                        <i class="fas fa-folder section-icon"></i>
+                        <span class="section-name">${section.name}</span>
+                        <i class="fas fa-chevron-right section-arrow"></i>
+                    `; /*cite: 648*/
+                    sectionsContainer.appendChild(sectionItem); /*cite: 648*/
+                });
+            } else {
+                sectionsTitle.textContent = selectedBatch ? /*cite: 649*/
+                    selectedBatch.name + ' Sections' : 'Sections'; /*cite: 650*/
+                sectionsContainer.innerHTML = '<p style="text-align: center; color: var(--text-light);">No sections found for this batch.</p>'; /*cite: 651*/
+            }
+
+            document.getElementById('sections-view').style.display = 'block'; /*cite: 651*/
+            currentView = 'sections-view'; /*cite: 652*/
+            window.scrollTo(0, 0); /*cite: 652*/
+        }
+
+        // --- Show Lessons within a Section (Folder) ---
+        function showLessonsInSectionsView(batchId, sectionIndex) {
+            hideAllViews(); /*cite: 653*/
+            currentBatchId = batchId; /*cite: 653*/
+            currentSectionIndex = sectionIndex; /*cite: 653*/
+
+            const selectedBatch = batchesData.find(batch => batch.id === batchId); /*cite: 654*/
+            const section = selectedBatch ? /*cite: 654*/
+                selectedBatch.sections[sectionIndex] : null; /*cite: 654*/
+            const lessonsContainer = document.getElementById('lessons-in-sections-container'); /*cite: 654*/
+            const lessonsTitle = document.getElementById('lessons-in-sections-title'); /*cite: 655*/
+            lessonsContainer.innerHTML = ''; /*cite: 655*/
+            if (section && section.lessons && section.lessons.length > 0) {
+                lessonsTitle.textContent = section.name + ' (' + selectedBatch.name + ')'; /*cite: 656*/
+                section.lessons.forEach((lesson, lessonIndex) => {
+                    const lessonItem = document.createElement('div'); /*cite: 656*/
+                    lessonItem.className = 'lesson-list-item'; /*cite: 657*/
+                    lessonItem.onclick = () => showVideoPlayerView(batchId, sectionIndex, lessonIndex); /*cite: 657*/
+                    
+                    lessonItem.innerHTML = `
+                        <div class="lesson-list-item-header">
+                            <img src="${lesson.pwLogo || 'https://via.placeholder.com/40x40/000000/ffffff?text=PW'}" alt="PW Logo" class="pw-logo" draggable="false">
+                            <h3 class="lesson-list-item-title">${lesson.name} : ${lesson.subTitle}</h3>
+                        </div>
+                    `; /*cite: 659*/
+                    lessonsContainer.appendChild(lessonItem); /*cite: 659*/
+                });
+            } else {
+                lessonsTitle.textContent = section ? /*cite: 660*/
+                    section.name : 'Lessons'; /*cite: 660*/
+                lessonsContainer.innerHTML = '<p style="text-align: center; color: var(--text-light);">No lessons found in this section.</p>'; /*cite: 661*/
+            }
+
+            document.getElementById('lessons-in-sections-view').style.display = 'block'; /*cite: 661*/
+            currentView = 'lessons-in-sections-view'; /*cite: 662*/
+            window.scrollTo(0, 0); /*cite: 662*/
+        }
+
+        // --- Video Player View (For individual lessons) ---
+        function showVideoPlayerView(batchId, sectionIndex, lessonIndex) {
+            hideAllViews(); /*cite: 663*/
+            currentBatchId = batchId; /*cite: 663*/
+            currentSectionIndex = sectionIndex; /*cite: 663*/
+
+            const selectedBatch = batchesData.find(batch => batch.id === batchId); /*cite: 664*/
+            const section = selectedBatch ? /*cite: 664*/
+                selectedBatch.sections[sectionIndex] : null; /*cite: 664*/
+            const lesson = section ? section.lessons[lessonIndex] : null; /*cite: 665*/
+            if (!selectedBatch || !section || !lesson) {
+                alert('Lesson details not found! Please check the data structure.'); /*cite: 665*/
+                goBackFromPlayerView(); /*cite: 666*/
+                return; /*cite: 666*/
+            }
+            
+            document.getElementById('player-view-title').textContent = `${lesson.name} : ${lesson.subTitle}`; /*cite: 667*/
+            document.getElementById('player-lesson-sub-title').textContent = lesson.subTitle; /*cite: 667*/
+
+
+            const mainVideoPlayer = document.getElementById('main-video-player'); /*cite: 667*/
+            if (mainVideoPlayer) {
+                mainVideoPlayer.innerHTML = ''; /*cite: 668*/
+                const videoInfo = extractGdriveId(lesson.link); /*cite: 668*/
+                if (videoInfo) {
+                    let embedUrl = ''; /*cite: 669*/
+                    if (videoInfo.type === 'gdrive') {
+                        embedUrl = `https://drive.google.com/file/d/${videoInfo.id}/preview`; /*cite: 670*/
+                    } else if (videoInfo.type === 'youtube') {
+                        embedUrl = `https://www.youtube-nocookie.com/embed/${videoInfo.id}?autoplay=1`; /*cite: 671*/
+                    }
+                    
+                    if (embedUrl) {
+                        mainVideoPlayer.innerHTML = `<iframe src="${embedUrl}" allowfullscreen draggable="false" allow="autoplay; encrypted-media"></iframe>`; /*cite: 672*/
+                    } else {
+                        mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">Error: Could not construct embed URL for this video type.</p>`; /*cite: 673*/
+                    }
+                } else {
+                    mainVideoPlayer.innerHTML = `
+                        <p style="color: white; text-align: center; padding: 20px; background-color: rgba(0,0,0,0.5); border-radius: 10px;">
+                            Video Not Found or Link Invalid.<br><br>
+                            To play videos, ensure:<br>
+                            1. It's a Google Drive video with 'Anyone with the link' access.<br>
+                            2. You copy the ID correctly from a URL like:
+                            <code>https://drive.google.com/file/d/<b>YOUR_VIDEO_ID</b>/view</code><br>
+                            Then paste the full preview link: <code>https://drive.google.com/file/d/<b>YOUR_VIDEO_ID</b>/preview</code><br>
+                            (YouTube links are also supported for demonstration, e.g., <code>https://www.youtube.com/watch?v=<b>VIDEO_ID</b></code>)
+                        </p>
+                    `; /*cite: 677*/
+                }
+            }
+
+
+            const lessonsForPlayerBatch = document.getElementById('lessons-for-player-batch'); /*cite: 678*/
+            if (lessonsForPlayerBatch) {
+                lessonsForPlayerBatch.innerHTML = ''; /*cite: 679*/
+                section.lessons.forEach((otherLesson, otherLessonIndex) => {
+                    const lessonItem = document.createElement('li'); /*cite: 679*/
+                    lessonItem.className = 'lesson-item'; /*cite: 680*/
+                    lessonItem.onclick = () => showVideoPlayerView(batchId, sectionIndex, otherLessonIndex); /*cite: 680*/
+                    lessonItem.innerHTML = `
+                        <h3>${otherLesson.name} : ${otherLesson.subTitle}</h3>
+                        `; /*cite: 681*/
+                    lessonsForPlayerBatch.appendChild(lessonItem); /*cite: 681*/
+                });
+            }
+
+            document.getElementById('video-player-view').style.display = 'block'; /*cite: 681*/
+            currentView = 'video-player-view'; /*cite: 682*/
+            window.scrollTo(0, 0); /*cite: 682*/
+        }
+
+        // --- Back Button Logic from Player View ---
+        function goBackFromPlayerView() {
+            if (currentBatchId && currentSectionIndex !== null) {
+                showLessonsInSectionsView(currentBatchId, currentSectionIndex); /*cite: 683*/
+            } else if (currentView === 'favorites-view') {
+                 showFavoritesView(); /*cite: 684*/
+            }
+            else {
+                showNewBatchesView(lastCategoryViewed); /*cite: 685*/
+                // Go back to the last viewed category
+            }
+        }
+
+        // --- Back Button Logic from Lessons In Sections View ---
+        function goBackFromLessonsList() {
+            if (currentBatchId) {
+                showSectionsView(currentBatchId); /*cite: 686*/
+            } else {
+                showNewBatchesView(lastCategoryViewed); /*cite: 687*/
+                // Go back to the last viewed category
+            }
+        }
+
+
+        // --- Video ID Extraction Logic (Handles Google Drive and YouTube) ---
+        function extractGdriveId(url) {
+            const gdriveRegex = /(?:id=|file\/d\/|open\?id=)([a-zA-Z0-9_-]+)/; /*cite: 688*/
+            const gdriveMatch = url.match(gdriveRegex); /*cite: 688*/
+            if (gdriveMatch) {
+                return { type: 'gdrive', id: gdriveMatch[1] }; /*cite: 689*/
+            }
+
+            const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/; /*cite: 689*/
+            const youtubeMatch = url.match(youtubeRegex); /*cite: 690*/
+            if (youtubeMatch) {
+                return { type: 'youtube', id: youtubeMatch[1] }; /*cite: 691*/
+            }
+
+            return null; /*cite: 692*/
+        }
+
+        // --- Bottom Navigation Highlight ---
+        function highlightBottomNav(activeId) {
+            document.querySelectorAll('.bottom-navbar .nav-item').forEach(item => {
+                item.classList.remove('active'); /*cite: 693*/
+            });
+            document.getElementById(activeId).classList.add('active'); /*cite: 693*/
+        }
+
+        // --- Comments Popup Logic ---
+        function showCommentsPopup() {
+            document.getElementById('commentsPopupOverlay').classList.add('active'); /*cite: 694*/
+            renderComments(); /*cite: 694*/
+        }
+
+        function closeCommentsPopup() {
+            document.getElementById('commentsPopupOverlay').classList.remove('active'); /*cite: 695*/
+        }
+
+        let tempComments = []; /*cite: 696*/
+        function postComment() {
+            const commentInput = document.getElementById('commentInput'); /*cite: 697*/
+            const commentText = commentInput.value.trim(); /*cite: 697*/
+            const userName = localStorage.getItem('userName') || 'Guest'; /*cite: 698*/
+            if (commentText) {
+                const newComment = {
+                    user: userName,
+                    text: commentText,
+                    timestamp: new Date().toLocaleTimeString()
+                }; /*cite: 699*/
+                tempComments.push(newComment); /*cite: 699*/
+                commentInput.value = ''; /*cite: 699*/
+                renderComments(); /*cite: 699*/
+            } else {
+                alert('Please write something before posting!'); /*cite: 700*/
+            }
+        }
+
+        function renderComments() {
+            const commentsDisplayArea = document.getElementById('commentsDisplayArea'); /*cite: 701*/
+            commentsDisplayArea.innerHTML = ''; /*cite: 701*/
+
+            if (tempComments.length === 0) {
+                commentsDisplayArea.innerHTML = '<p class="no-comments-message">No comments yet. Be the first to comment!</p>'; /*cite: 702*/
+            } else {
+                tempComments.forEach(comment => {
+                    const commentItem = document.createElement('div'); /*cite: 702*/
+                    commentItem.className = 'comment-item'; /*cite: 703*/
+                    commentItem.innerHTML = `
+                        <strong>${comment.user}</strong> <span>(${comment.timestamp})</span><br>
+                        ${comment.text}
+                    `; /*cite: 704*/
+                    commentsDisplayArea.appendChild(commentItem); /*cite: 704*/
+                });
+            }
+            commentsDisplayArea.scrollTop = commentsDisplayArea.scrollHeight; /*cite: 705*/
+        }
+
+        // --- New: Show Coming Soon Views ---
+        function showComingSoonView(type) {
+            hideAllViews(); /*cite: 706*/
+            if (type === 'bundles') {
+                document.getElementById('bundles-coming-soon-view').style.display = 'flex'; /*cite: 707*/
+                currentView = 'bundles-coming-soon-view'; /*cite: 707*/
+            } else if (type === 'pdfs') {
+                document.getElementById('pdfs-coming-soon-view').style.display = 'flex'; /*cite: 708*/
+                currentView = 'pdfs-coming-soon-view'; /*cite: 708*/
+            } else if (type === 'ai-chatbot') { // New case for AI Chatbot
+                document.getElementById('ai-chatbot-coming-soon-view').style.display = 'flex';
+                currentView = 'ai-chatbot-coming-soon-view';
+            }
+            window.scrollTo(0, 0); /*cite: 709*/
+        }
+
+        // --- Today's Surprise Function ---
+        function openSurpriseLink() {
+            window.open(surpriseLink, '_blank'); /*cite: 710*/
+        }
+
+        // --- About Me View Logic ---
+        function showAboutMeView() {
+            hideAllViews(); /*cite: 711*/
+            document.getElementById('about-me-view').style.display = 'flex'; /*cite: 711*/
+            currentView = 'about-me-view'; /*cite: 711*/
+            highlightBottomNav('about-me-nav'); /*cite: 711*/
+            window.scrollTo(0, 0); /*cite: 711*/
+        }
+
+        // --- New: How to use the App View Logic ---
+        function showHowToUseAppView() {
+            hideAllViews();
+            document.getElementById('how-to-use-app-view').style.display = 'flex';
+            currentView = 'how-to-use-app-view';
+            window.scrollTo(0, 0);
+        }
+
+        // --- Slider Menu Functions ---
+        function openSliderMenu() {
+            document.getElementById('sliderMenuOverlay').classList.add('active');
+            document.getElementById('sliderMenu').classList.add('active');
+        }
+
+        function closeSliderMenu() {
+            document.getElementById('sliderMenuOverlay').classList.remove('active');
+            document.getElementById('sliderMenu').classList.remove('active');
+        }
+
+        // --- Share App Function ---
+        function shareApp() {
+            if (navigator.share && navigator.canShare) { // Added navigator.canShare check for more robustness
+                navigator.share({
+                    title: 'SkillNeast - Master New Skills! 🚀',
+                    text: 'Join SkillNeast to learn and grow with amazing courses and a vibrant community. Download the app now! ✨',
+                    url: window.location.href // Or your app's download link
+                }).then(() => {
+                    console.log('Thanks for sharing!');
+                }).catch((error) => {
+                    console.error('Error sharing:', error);
+                    // Fallback to alert if sharing fails or is cancelled
+                    alert("Share feature not fully supported or allowed on this device/browser. You can copy the link and share: " + window.location.href);
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                alert("Share feature not supported on this browser. You can copy the link and share: " + window.location.href);
+            }
+        }
+
+        // --- Dark Mode Toggle Functionality ---
+        function toggleDarkMode() {
+            const body = document.body;
+            // Toggle 'light-mode' class. If it's present, it's light. If not, it's dark.
+            body.classList.toggle('light-mode'); 
+            
+            const isLightMode = body.classList.contains('light-mode');
+            localStorage.setItem('lightModeEnabled', isLightMode); // Save preference as 'lightModeEnabled'
+            
+            // Update the switch state visually
+            document.getElementById('darkModeToggleSwitch').checked = !isLightMode; // Checkbox is ON for Dark Mode, OFF for Light Mode
+        }
+    </script>
+</body>
+</html>
