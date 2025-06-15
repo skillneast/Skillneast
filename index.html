@@ -128,8 +128,8 @@
             color: var(--white);
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            width: 48px;
-            height: 48px;
+            width: 52px; /* Adjusted size for better tap target */
+            height: 52px; /* Adjusted size for better tap target */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -137,32 +137,48 @@
             cursor: pointer;
             transition: background-color 0.2s ease, transform 0.2s ease, color 0.3s ease;
         }
+        .top-navbar .menu-icon { margin-right: 8px; } /* Added margin for spacing */
+        .top-navbar .telegram-icon { margin-left: 8px; } /* Added margin for spacing */
+
         .top-navbar .menu-icon:hover, .top-navbar .telegram-icon:hover {
             background-color: rgba(255, 255, 255, 0.2);
             transform: scale(1.05);
         }
         .top-navbar .app-logo {
             display: flex;
+            flex-direction: column; /* To stack logo and tagline */
             align-items: center;
-            padding: 10px 22px;
-            background-color: var(--white);
+            padding: 8px 18px; /* Adjusted padding */
+            background-color: var(--primary-dark); /* Changed to dark background */
             border-radius: var(--border-radius-button);
             box-shadow: var(--shadow-light);
             cursor: pointer;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative; /* Needed for absolute positioning of tagline */
+            overflow: hidden; /* For tagline animation */
+            flex-grow: 1; /* Allow it to take available space */
+            margin: 0 10px; /* Space from icons */
         }
         .top-navbar .app-logo:hover {
-            background-color: var(--secondary-light);
+            background-color: #2F4156; /* Darker on hover */
         }
-        .top-navbar .app-logo img {
-            height: 38px;
-            margin-right: 10px;
+        .top-navbar .app-logo img#skillNeastLogo {
+            height: 34px; /* Adjusted size */
+            margin-bottom: 2px; /* Smaller space below logo */
+            transition: transform 1s linear; /* Ensure smooth rotation */
         }
-        .top-navbar .app-logo span {
+        .top-navbar .app-logo img#skillNeastLogo.rotating {
+            animation: rotate360 1s linear forwards; /* Apply rotation to image only */
+        }
+        @keyframes rotate360 {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .top-navbar .app-logo .main-title {
             font-family: 'Poppins', sans-serif;
             font-weight: 800;
-            font-size: 1.7em;
-            letter-spacing: 1.5px;
+            font-size: 1.5em; /* Slightly smaller font for main title */
+            letter-spacing: 1.2px; /* Adjusted spacing */
             background: linear-gradient(90deg, #FF6F61, #FFD700, #4CAF50, #00ADB5, #3F51B5, #9C27B0);
             -webkit-background-clip: text;
             color: transparent;
@@ -174,6 +190,17 @@
         @keyframes rainbowText {
             0% { background-position: 0% 50%; }
             100% { background-position: 100% 50%; }
+        }
+        /* New Tagline Styles */
+        .top-navbar .app-logo .tagline {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.65em; /* Smaller font for tagline */
+            font-weight: 600;
+            color: var(--text-light); /* Lighter text for tagline */
+            text-align: center;
+            animation: floatUpDown 2s infinite ease-in-out; /* Floating animation */
+            white-space: nowrap; /* Prevent wrapping */
+            transition: color 0.3s ease;
         }
 
         /* --- Main Content Area --- */
@@ -189,10 +216,14 @@
             color: var(--text-dark);
             padding: 28px;
             border-radius: var(--border-radius-main);
-            box-shadow: var(--shadow-light);
+            /* New 3D Glow Effect */
+            box-shadow: 0 0 10px rgba(0, 173, 181, 0.6), /* Teal glow */
+                        0 0 20px rgba(0, 173, 181, 0.4),
+                        0 10px 30px rgba(0, 0, 0, 0.4); /* Deeper shadow */
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center; /* Center items with gap */
+            gap: 15px; /* Space between greeting and fire icon */
             margin-bottom: 25px;
             border: 1px solid rgba(0, 173, 181, 0.1);
             position: relative;
@@ -200,7 +231,7 @@
         }
         .welcome-banner .greeting {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.7em;
+            font-size: 1.9em; /* Slightly larger */
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -208,14 +239,17 @@
             transition: color 0.3s ease;
         }
         .welcome-banner .greeting i {
-            margin-right: 15px;
+            margin-right: 10px; /* Adjusted margin */
             color: var(--error-red);
-            font-size: 1.3em;
+            font-size: 1.5em; /* Slightly larger */
+            vertical-align: middle; /* Align icon vertically */
         }
         .welcome-banner .fire-icon {
-            font-size: 2.2em;
+            font-size: 2.5em; /* Slightly larger */
             color: #FF5722;
             animation: pulse 1s infinite alternate;
+            vertical-align: middle; /* Align icon vertically */
+            margin-left: 0; /* Ensure no extra margin */
         }
         .role-sticker {
             position: absolute;
@@ -339,6 +373,7 @@
             min-height: 180px;
             border: 1px solid var(--border-color);
             overflow: hidden;
+            width: 100%; /* Ensure it takes full column width */
         }
         .course-category-item:hover {
             transform: translateY(-5px);
@@ -472,6 +507,7 @@
         }
 
         .favorites-section-home-card {
+            grid-column: 1 / -1; /* Span across columns */
             background-color: #333333;
             border-radius: var(--border-radius-main);
             box-shadow: var(--shadow-light);
@@ -527,6 +563,7 @@
         }
 
         .telegram-card {
+            grid-column: 1 / -1; /* Span across columns */
             background-color: #333333;
             border-radius: var(--border-radius-card);
             box-shadow: var(--shadow-light);
@@ -760,7 +797,7 @@
 
 
         #favorites-view {
-            display: none;
+            display: none; /* This view will ONLY be accessible via the "My Favorites" card on the homepage */
             padding: 0px;
         }
         #favorites-view .section-header {
@@ -1873,7 +1910,22 @@
 
         @media (max-width: 768px) {
             .top-navbar { padding: 12px 15px; }
-            .top-navbar .app-logo span { font-size: 1.3em; }
+            .top-navbar .app-logo .main-title { font-size: 1.3em; } /* Adjusted for mobile */
+            .top-navbar .app-logo .tagline { font-size: 0.6em; } /* Adjusted for mobile */
+            .top-navbar .app-logo img#skillNeastLogo { height: 30px; } /* Adjusted for mobile */
+            .top-navbar .menu-icon, .top-navbar .telegram-icon {
+                width: 44px; /* Smaller for mobile */
+                height: 44px; /* Smaller for mobile */
+                font-size: 1.6em;
+            }
+            .top-navbar .menu-icon { margin-right: 5px; }
+            .top-navbar .telegram-icon { margin-left: 5px; }
+            .top-navbar .app-logo {
+                padding: 5px 10px; /* Adjusted padding for mobile */
+                margin: 0 5px; /* Smaller margin for mobile */
+            }
+
+
             .welcome-banner { padding: 20px; }
             .welcome-banner .greeting { font-size: 1.4em; }
             .welcome-banner .fire-icon { font-size: 1.8em; }
@@ -2335,11 +2387,26 @@
         </div>
     </div>
 
+    <div class="comments-popup-overlay" id="commentsPopupOverlay">
+        <div class="comments-popup">
+            <button class="popup-close-button" onclick="window.closeCommentsPopup()">×</button>
+            <h2>SR Comments</h2>
+            <div class="comments-input-area">
+                <textarea id="commentInput" placeholder="Write your comment here..."></textarea>
+                <button onclick="window.postComment()">Post Comment</button>
+            </div>
+            <div class="comments-display-area" id="commentsDisplayArea">
+                <p class="no-comments-message">No comments yet. Be the first to comment!</p>
+            </div>
+        </div>
+    </div>
+
     <div class="top-navbar">
         <div class="menu-icon" onclick="window.openSliderMenu()"><i class="fas fa-bars"></i></div>
         <div class="app-logo" id="appLogo">
-            <img src="https://via.placeholder.com/40x40/00ADB5/ffffff?text=SN" alt="SkillNeast Logo" draggable="false">
-            <span>SKILLNEAST</span>
+            <img src="https://via.placeholder.com/40x40/00ADB5/ffffff?text=SN" alt="SkillNeast Logo" draggable="false" id="skillNeastLogo">
+            <span class="main-title">SKILLNEAST</span>
+            <span class="tagline">Master New Skill 🚀💡</span>
         </div>
         <div class="telegram-icon" onclick="window.open('YOUR_TELEGRAM_GROUP_LINK', '_blank');"><i class="fab fa-telegram-plane"></i></div>
     </div>
@@ -2360,27 +2427,28 @@
         <div id="home-view">
             <!-- Categories will be loaded here dynamically from Firebase -->
             <p class="text-center text-muted col-span-full" id="loadingCategoriesMessage">Loading categories...</p>
-        </div>
 
-        <div class="favorites-section-home-card" onclick="window.showFavoritesView()">
-            <i class="fas fa-heart fav-icon"></i>
-            <h2>My Favorite Batches</h2>
-            <p>View all your saved courses and batches here.</p>
-            <span class="fav-count" id="favorites-count">0 Batches</span>
-        </div>
+            <!-- Favorites Section (ONLY on Home Page) -->
+            <div class="favorites-section-home-card" onclick="window.showFavoritesView()">
+                <i class="fas fa-heart fav-icon"></i>
+                <h2>My Favorite Batches</h2>
+                <p>View all your saved courses and batches here.</p>
+                <span class="fav-count" id="favorites-count">0 Batches</span>
+            </div>
 
-        <div class="partition"></div>
-        <div class="partition"></div>
-        <div class="partition"></div>
+            <div class="partition"></div>
+            <div class="partition"></div>
+            <div class="partition"></div>
 
-        <div class="telegram-card" onclick="window.open('YOUR_TELEGRAM_GROUP_LINK', '_blank');">
-            <i class="fab fa-telegram-plane telegram-icon-large"></i>
-            <span class="telegram-text">Join Our Telegram Community!</span>
+            <div class="telegram-card" onclick="window.open('YOUR_TELEGRAM_GROUP_LINK', '_blank');">
+                <i class="fab fa-telegram-plane telegram-icon-large"></i>
+                <span class="telegram-text">Join Our Telegram Community!</span>
+            </div>
+            
+            <button class="share-app-button" onclick="window.shareApp()">
+                <i class="fas fa-share-alt"></i> Share with your Friends
+            </button>
         </div>
-        
-        <button class="share-app-button" onclick="window.shareApp()">
-            <i class="fas fa-share-alt"></i> Share with your Friends
-        </button>
 
         <div id="new-batches-view" style="display: none;">
             <div class="section-header">
@@ -2415,7 +2483,7 @@
 
         <div id="sections-view" style="display: none;">
             <div class="section-header">
-                <button class="back-button" onclick="window.showNewBatchesView(lastCategoryViewed)"><i class="fas fa-arrow-left"></i></button>
+                <button class="back-button" onclick="window.showNewBatchesView(window.lastCategoryViewed)"><i class="fas fa-arrow-left"></i></button>
                 <h2 id="sections-title"></h2>
             </div>
             <div class="sections-container" id="sections-container">
@@ -2665,11 +2733,11 @@
         }
 
         let allCategoriesData = {}; // Stores fetched categories and their nested data
-        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        window.favorites = JSON.parse(localStorage.getItem('favorites')) || []; // Made global for direct access
         let currentView = 'home-view';
         let currentBatchId = null;
         let currentSectionIndex = null;
-        let lastCategoryViewed = 'all';
+        window.lastCategoryViewed = 'all'; // Made global for direct access from HTML
         const surpriseLink = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Example link
 
         // --- User Name Popup Logic ---
@@ -2720,14 +2788,8 @@
                 this.classList.remove('active');
             }
 
-            document.querySelectorAll('.favorites-section-home-card, .telegram-card, .surprise-button').forEach(item => {
-                item.addEventListener('touchstart', onTouchStart);
-                item.addEventListener('touchend', onTouchEnd);
-                item.addEventListener('touchcancel', onTouchEnd);
-                item.addEventListener('mousedown', onTouchStart);
-                item.addEventListener('mouseup', onTouchEnd);
-                item.addEventListener('mouseleave', onTouchEnd);
-            });
+            // Event listeners for static elements now handled in renderCategories for their re-addition
+            // And for dynamically added elements handled in their respective display functions.
 
             // Offline detection
             function updateOnlineStatus() {
@@ -2759,13 +2821,15 @@
 
             // Ensure appLogo rotation works globally
             const appLogo = document.getElementById('appLogo');
-            if (appLogo) {
+            const skillNeastLogoImage = document.getElementById('skillNeastLogo');
+            if (appLogo && skillNeastLogoImage) { // Check both parent and child
                 appLogo.addEventListener('click', () => {
-                    if (!appLogo.classList.contains('rotating')) {
-                        appLogo.classList.add('rotating');
+                    if (!skillNeastLogoImage.classList.contains('rotating')) {
+                        skillNeastLogoImage.classList.add('rotating'); // Apply rotating class to image
                         setTimeout(() => {
-                            location.reload();
-                        }, 1000);
+                            skillNeastLogoImage.classList.remove('rotating'); // Remove class after rotation
+                            location.reload(); // Then refresh
+                        }, 1000); // Duration of rotation animation
                     }
                 });
             }
@@ -2852,30 +2916,26 @@
         // --- View Switching Logic ---
         function hideAllViews() {
             const views = [
-                'home-view', 'favorites-section-home-card', 'new-batches-view',
-                'favorites-view', 'sections-view', 'lessons-in-sections-view',
-                'video-player-view', 'bundles-coming-soon-view', 'pdfs-coming-soon-view',
-                'about-me-view', 'how-to-use-app-view', 'ai-chatbot-coming-soon-view'
+                'home-view', /* Now contains favorites, partitions, telegram, share button */
+                'new-batches-view',
+                'favorites-view',
+                'sections-view',
+                'lessons-in-sections-view',
+                'video-player-view',
+                'bundles-coming-soon-view',
+                'pdfs-coming-soon-view',
+                'about-me-view',
+                'how-to-use-app-view',
+                'ai-chatbot-coming-soon-view'
             ];
             views.forEach(id => {
                 const element = document.getElementById(id);
-                if (element) { // Check if element exists before accessing style
+                if (element) {
                     element.style.display = 'none';
                 }
             });
 
-            // Specific element checks for querySelector
-            const telegramCard = document.querySelector('.telegram-card');
-            if (telegramCard) telegramCard.style.display = 'none';
-
-            const partitions = document.querySelectorAll('.partition');
-            partitions.forEach(p => {
-                if (p) p.style.display = 'none'; // Ensure check for each partition
-            });
-            
-            const shareButton = document.querySelector('.share-app-button');
-            if (shareButton) shareButton.style.display = 'none';
-
+            // Specific top-level elements that are not part of a "view" div
             const welcomeBanner = document.querySelector('.welcome-banner');
             if (welcomeBanner) welcomeBanner.style.display = 'none';
 
@@ -2886,18 +2946,10 @@
         window.showHomeView = function() {
             hideAllViews();
             const homeView = document.getElementById('home-view');
-            const favoritesHomeCard = document.getElementById('favorites-section-home-card');
-            const telegramCard = document.querySelector('.telegram-card');
-            const shareButton = document.querySelector('.share-app-button');
             const welcomeBanner = document.querySelector('.welcome-banner');
             const quoteSection = document.querySelector('.quote-section');
-            const partitions = document.querySelectorAll('.partition');
-
-            if (homeView) homeView.style.display = 'grid';
-            if (favoritesHomeCard) favoritesHomeCard.style.display = 'flex';
-            if (telegramCard) telegramCard.style.display = 'flex';
-            if (shareButton) shareButton.style.display = 'flex';
-            partitions.forEach(p => { if (p) p.style.display = 'block'; }); // Ensure check for each partition
+            
+            if (homeView) homeView.style.display = 'grid'; /* Use grid as home-view is now a grid container */
 
             renderFavoritesSectionHomeCard();
             currentView = 'home-view';
@@ -2908,7 +2960,7 @@
             if (quoteSection) quoteSection.style.display = 'block';
 
             updateWelcomeSection();
-            renderCategories();
+            renderCategories(); /* Re-render categories including static homepage elements */
         }
 
         // --- Firebase Data Fetching and Rendering ---
@@ -2942,12 +2994,24 @@
             const homeView = document.getElementById('home-view');
             if (!homeView) return;
 
-            homeView.innerHTML = '';
-            const loadingMessage = document.getElementById('loadingCategoriesMessage');
-            if (loadingMessage) loadingMessage.remove();
+            // Clear only dynamic content, keep static elements within home-view
+            // Find existing static elements and store them
+            const staticElements = Array.from(homeView.children).filter(child => 
+                child.id === 'favorites-section-home-card' ||
+                child.classList.contains('partition') ||
+                child.classList.contains('telegram-card') ||
+                child.classList.contains('share-app-button') ||
+                child.id === 'loadingCategoriesMessage' || /* Keep loading message if it exists */
+                child.classList.contains('surprise-button')
+            );
+            
+            // Clear all content to re-render dynamic categories first
+            homeView.innerHTML = ''; 
 
             if (Object.keys(allCategoriesData).length === 0) {
                 homeView.innerHTML = '<p class="text-center text-muted col-span-full">No categories found. Please add courses via the admin panel.</p>';
+                // Append static elements back after clearing dynamic content
+                staticElements.forEach(el => homeView.appendChild(el));
                 return;
             }
 
@@ -2974,17 +3038,31 @@
                 observer.observe(categoryItem);
             });
 
-            const surpriseButton = document.createElement('div');
-            surpriseButton.className = 'surprise-button hidden-on-scroll';
-            surpriseButton.onclick = window.openSurpriseLink;
-            surpriseButton.innerHTML = '<i class="fas fa-gift"></i> Today\'s Surprise! <i class="fas fa-arrow-right"></i>';
-            homeView.appendChild(surpriseButton);
-            observer.observe(surpriseButton);
-
-            document.querySelectorAll('.favorites-section-home-card, .telegram-card, .partition, .share-app-button').forEach(item => {
-                item.classList.add('hidden-on-scroll');
-                observer.observe(item);
+            // Append static elements back after dynamic categories
+            staticElements.forEach(el => {
+                // Check if element is already in the DOM (prevents duplicates on re-render)
+                if (!homeView.contains(el)) {
+                    homeView.appendChild(el);
+                    // Re-observe static elements for animation if they were added
+                    if (el.classList.contains('hidden-on-scroll') && !el.classList.contains('visible-on-scroll')) {
+                        observer.observe(el);
+                    }
+                }
             });
+            // Ensure static elements are displayed correctly if home-view is active
+            if (currentView === 'home-view') {
+                const favoritesHomeCard = document.getElementById('favorites-section-home-card');
+                const telegramCard = document.querySelector('.telegram-card');
+                const shareButton = document.querySelector('.share-app-button');
+                const surpriseButton = document.querySelector('.surprise-button');
+                const partitions = document.querySelectorAll('.partition');
+
+                if (favoritesHomeCard) favoritesHomeCard.style.display = 'flex';
+                if (telegramCard) telegramCard.style.display = 'flex';
+                if (shareButton) shareButton.style.display = 'flex';
+                if (surpriseButton) surpriseButton.style.display = 'flex';
+                partitions.forEach(p => { if (p) p.style.display = 'block'; });
+            }
         }
 
 
@@ -2994,7 +3072,7 @@
             if (newBatchesView) newBatchesView.style.display = 'block';
             
             currentView = 'new-batches-view';
-            lastCategoryViewed = categoryId;
+            window.lastCategoryViewed = categoryId; // Use window.lastCategoryViewed
             
             const batchesContainer = document.getElementById('batches-container');
             if (batchesContainer) batchesContainer.innerHTML = '<p class="text-center text-muted" id="loadingBatchesMessage">Loading batches...</p>';
@@ -3039,7 +3117,7 @@
             batchesToDisplay.forEach(batch => {
                 const batchCard = document.createElement('div');
                 batchCard.className = 'batch-card hidden-on-scroll';
-                const isFavorited = favorites.includes(batch.id);
+                const isFavorited = window.favorites.includes(batch.id); /* Use window.favorites */
                 const heartIconClass = isFavorited ? 'fas fa-heart' : 'far fa-heart';
 
                 batchCard.innerHTML = `
@@ -3080,14 +3158,14 @@
             
             let currentCategoryBatches = [];
 
-            if (lastCategoryViewed === 'all') {
+            if (window.lastCategoryViewed === 'all') { // Use window.lastCategoryViewed
                 Object.values(allCategoriesData).forEach(category => {
                     if (category.batches) {
                         currentCategoryBatches = currentCategoryBatches.concat(Object.keys(category.batches).map(key => ({ id: key, ...category.batches[key] })));
                     }
                 });
             } else {
-                const selectedCategory = allCategoriesData[lastCategoryViewed];
+                const selectedCategory = allCategoriesData[window.lastCategoryViewed]; // Use window.lastCategoryViewed
                 if (selectedCategory && selectedCategory.batches) {
                     currentCategoryBatches = Object.keys(selectedCategory.batches).map(key => ({ id: key, ...selectedCategory.batches[key] }));
                 }
@@ -3101,20 +3179,20 @@
 
         // --- Favorites Logic ---
         window.toggleFavorite = function(batchId, iconElement) {
-            if (favorites.includes(batchId)) {
-                favorites = favorites.filter(id => id !== batchId);
+            if (window.favorites.includes(batchId)) { // Use window.favorites
+                window.favorites = window.favorites.filter(id => id !== batchId); // Use window.favorites
                 if (iconElement) {
                     iconElement.classList.remove('fas');
                     iconElement.classList.add('far');
                 }
             } else {
-                favorites.push(batchId);
+                window.favorites.push(batchId); // Use window.favorites
                 if (iconElement) {
                     iconElement.classList.remove('far');
                     iconElement.classList.add('fas');
                 }
             }
-            localStorage.setItem('favorites', JSON.stringify(favorites));
+            localStorage.setItem('favorites', JSON.stringify(window.favorites)); // Use window.favorites
             renderFavoritesSectionHomeCard();
             if (currentView === 'favorites-view') {
                 window.showFavoritesView();
@@ -3123,7 +3201,7 @@
 
         function renderFavoritesSectionHomeCard() {
             const favoritesCountSpan = document.getElementById('favorites-count');
-            if (favoritesCountSpan) favoritesCountSpan.textContent = `${favorites.length} Batches`;
+            if (favoritesCountSpan) favoritesCountSpan.textContent = `${window.favorites.length} Batches`; // Use window.favorites
         }
 
         window.showFavoritesView = function() {
@@ -3140,14 +3218,14 @@
             if (!favoriteBatchesContainer || !noFavoritesMessageView) return;
 
             favoriteBatchesContainer.innerHTML = '';
-            if (favorites.length === 0) {
+            if (window.favorites.length === 0) { // Use window.favorites
                 noFavoritesMessageView.style.display = 'block';
                 favoriteBatchesContainer.style.display = 'none';
             } else {
                 noFavoritesMessageView.style.display = 'none';
                 favoriteBatchesContainer.style.display = 'flex';
 
-                favorites.forEach(favId => {
+                window.favorites.forEach(favId => { // Use window.favorites
                     let batch = null;
                     for (const catId in allCategoriesData) {
                         if (allCategoriesData[catId].batches && allCategoriesData[catId].batches[favId]) {
@@ -3157,7 +3235,7 @@
                     }
 
                     if (batch) {
-                        const isFavorited = favorites.includes(batch.id);
+                        const isFavorited = window.favorites.includes(batch.id); // Use window.favorites
                         const heartIconClass = isFavorited ? 'fas fa-heart' : 'far fa-heart';
 
                         const favBatchCard = document.createElement('div');
@@ -3426,11 +3504,8 @@
                     return;
                 }
             } 
-            if (currentView === 'favorites-view') {
-                 window.showFavoritesView();
-            } else {
-                window.showNewBatchesView(lastCategoryViewed);
-            }
+            // Removed direct navigation to favorites-view as it's only on homepage now
+            window.showNewBatchesView(window.lastCategoryViewed); // Go back to the last viewed category
         }
 
         // --- Back Button Logic from Lessons In Sections View ---
@@ -3438,7 +3513,7 @@
             if (currentBatchId) {
                 window.showSectionsView(currentBatchId);
             } else {
-                window.showNewBatchesView(lastCategoryViewed);
+                window.showNewBatchesView(window.lastCategoryViewed); // Go back to the last viewed category
             }
         }
 
