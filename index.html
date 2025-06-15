@@ -304,7 +304,7 @@
             z-index: 1;
             animation: emojiPopAndGlow 0.6s ease-out forwards, floatUpDown 2s infinite ease-in-out;
         }
-        @keyframes emojiPopAndGlow {
+        @keyframes emojiPopAndG0low {
             0% { transform: scale(0); opacity: 0; text-shadow: none; }
             50% { transform: scale(1.3); opacity: 1; text-shadow: 0 0 8px var(--cyan-glow-color); }
             100% { transform: scale(1); opacity: 1; text-shadow: none; }
@@ -729,6 +729,7 @@
             color: var(--text-light);
             margin-bottom: 15px;
             line-height: 1.5;
+            text-align: justify; /* Justified text for description */
             transition: color 0.3s ease;
         }
         .batch-card-body .lets-roar-button {
@@ -2198,14 +2199,15 @@
         <button class="reload-button" onclick="location.reload()">Retry Connection</button>
     </div>
 
+    <!-- Name Popup (for first-time users) -->
     <div class="popup-overlay" id="namePopupOverlay">
         <div class="name-popup">
-            <button class="popup-close-button" onclick="closeNamePopup()">×</button>
+            <button class="popup-close-button" onclick="window.closeNamePopup()">×</button>
             <h2>Welcome to SkillNeast!</h2>
             <p>Please tell us your name and what you do to personalize your experience.</p>
             <div class="input-container">
                 <label for="userNameInput" style="position: absolute; top: 12px; left: 18px; font-size: 0.9em; color: var(--text-light); transition: all 0.2s ease;">Enter Your Name</label>
-                <input type="text" id="userNameInput" placeholder=" " maxlength="15" onkeyup="updateCharCount()">
+                <input type="text" id="userNameInput" placeholder=" " maxlength="15" onkeyup="window.updateCharCount()">
             </div>
             <div class="char-count"><span id="currentCharCount">0</span>/15</div>
             <div class="role-selection">
@@ -2215,13 +2217,14 @@
                 <label class="role-option"><input type="radio" name="userRole" value="Music Artist"> Music Artist 🎶</label>
                 <label class="role-option"><input type="radio" name="userRole" value="Other" checked> Other ✨</label>
             </div>
-            <button onclick="submitName()">START LEARNING</button>
+            <button onclick="window.submitName()">START LEARNING</button>
         </div>
     </div>
 
+    <!-- Batch Details Modal (New Feature) -->
     <div class="batch-detail-modal-overlay" id="batchDetailModalOverlay">
         <div class="batch-detail-modal-content">
-            <button class="close-button" onclick="closeBatchDetailModal()">×</button>
+            <button class="close-button" onclick="window.closeBatchDetailModal()">×</button>
             <h3 id="modalBatchTitle"></h3>
             <img id="modalBatchImage" src="" alt="Batch Image" />
             <p id="modalBatchDescription" class="modal-description"></p>
@@ -2235,7 +2238,7 @@
     </div>
 
     <div class="top-navbar">
-        <div class="menu-icon" onclick="openSliderMenu()"><i class="fas fa-bars"></i></div>
+        <div class="menu-icon" onclick="window.openSliderMenu()"><i class="fas fa-bars"></i></div>
         <div class="app-logo" id="appLogo">
             <img src="https://via.placeholder.com/40x40/00ADB5/ffffff?text=SN" alt="SkillNeast Logo" draggable="false">
             <span>SKILLNEAST</span>
@@ -2257,10 +2260,11 @@
         </div>
 
         <div id="home-view">
+            <!-- Categories will be loaded here dynamically from Firebase -->
             <p class="text-center text-muted col-span-full" id="loadingCategoriesMessage">Loading categories...</p>
         </div>
 
-        <div class="favorites-section-home-card" onclick="showFavoritesView()">
+        <div class="favorites-section-home-card" onclick="window.showFavoritesView()">
             <i class="fas fa-heart fav-icon"></i>
             <h2>My Favorite Batches</h2>
             <p>View all your saved courses and batches here.</p>
@@ -2276,28 +2280,29 @@
             <span class="telegram-text">Join Our Telegram Community!</span>
         </div>
         
-        <button class="share-app-button" onclick="shareApp()">
+        <button class="share-app-button" onclick="window.shareApp()">
             <i class="fas fa-share-alt"></i> Share with your Friends
         </button>
 
         <div id="new-batches-view" style="display: none;">
             <div class="section-header">
-                <button class="back-button" onclick="showHomeView()"><i class="fas fa-arrow-left"></i></button>
+                <button class="back-button" onclick="window.showHomeView()"><i class="fas fa-arrow-left"></i></button>
                 <h2 id="new-batches-title">All Courses</h2>
             </div>
             <div class="search-bar-container">
                 <i class="fas fa-search search-icon"></i>
-                <input type="text" id="batchSearchInput" placeholder="Search by batch name" onkeyup="filterBatches()">
-                <button class="search-button" onclick="filterBatches()">Search</button>
+                <input type="text" id="batchSearchInput" placeholder="Search by batch name" onkeyup="window.filterBatches()">
+                <button class="search-button" onclick="window.filterBatches()">Search</button>
             </div>
             <div class="batch-list" id="batches-container">
+                <!-- Batches will be loaded here dynamically -->
                 <p class="text-center text-muted" id="loadingBatchesMessage">Loading batches...</p>
             </div>
         </div>
 
         <div id="favorites-view" style="display: none;">
             <div class="section-header">
-                <button class="back-button" onclick="showHomeView()"><i class="fas fa-arrow-left"></i></button>
+                <button class="back-button" onclick="window.showHomeView()"><i class="fas fa-arrow-left"></i></button>
                 <h2>Favourite Batches</h2>
             </div>
             <div class="promotional-banner">
@@ -2312,7 +2317,7 @@
 
         <div id="sections-view" style="display: none;">
             <div class="section-header">
-                <button class="back-button" onclick="showNewBatchesView(lastCategoryViewed)"><i class="fas fa-arrow-left"></i></button>
+                <button class="back-button" onclick="window.showNewBatchesView(lastCategoryViewed)"><i class="fas fa-arrow-left"></i></button>
                 <h2 id="sections-title"></h2>
             </div>
             <div class="sections-container" id="sections-container">
@@ -2321,7 +2326,7 @@
 
         <div id="lessons-in-sections-view" style="display: none;">
             <div class="section-header">
-                <button class="back-button" onclick="goBackFromLessonsList()"><i class="fas fa-arrow-left"></i></button>
+                <button class="back-button" onclick="window.goBackFromLessonsList()"><i class="fas fa-arrow-left"></i></button>
                 <h2 id="lessons-in-sections-title"></h2>
             </div>
             <div class="lesson-list-container" id="lessons-in-sections-container">
@@ -2330,7 +2335,7 @@
 
         <div id="video-player-view" style="display: none;">
             <div class="section-header">
-                <button class="back-button" onclick="goBackFromPlayerView()"><i class="fas fa-arrow-left"></i></button>
+                <button class="back-button" onclick="window.goBackFromPlayerView()"><i class="fas fa-arrow-left"></i></button>
                 <h2 id="player-view-title"></h2>
             </div>
             
@@ -2346,7 +2351,7 @@
 
             <div class="player-action-buttons">
                 <button class="action-button timeline"><i class="fas fa-stream"></i> Timeline</button>
-                <button class="action-button comments" onclick="showCommentsPopup()"><i class="fas fa-comments"></i> SR Comments</button>
+                <button class="action-button comments" onclick="window.showCommentsPopup()"><i class="fas fa-comments"></i> SR Comments</button>
                 <button class="action-button watch-later"><i class="fas fa-bookmark"></i> Watch Later</button>
             </div>
             
@@ -2374,7 +2379,7 @@
 
         <div id="about-me-view" style="display: none;">
             <div class="section-header">
-                <button class="back-button" onclick="showHomeView()"><i class="fas fa-arrow-left"></i></button>
+                <button class="back-button" onclick="window.showHomeView()"><i class="fas fa-arrow-left"></i></button>
                 <h2>About Me</h2>
             </div>
             <div class="about-me-card">
@@ -2391,7 +2396,7 @@
 
         <div id="how-to-use-app-view" style="display: none;">
             <div class="section-header">
-                <button class="back-button" onclick="showHomeView()"><i class="fas fa-arrow-left"></i></button>
+                <button class="back-button" onclick="window.showHomeView()"><i class="fas fa-arrow-left"></i></button>
                 <h2>How to use the App</h2>
             </div>
             <div class="video-container">
@@ -2403,27 +2408,28 @@
     </div> 
   
     <div class="bottom-navbar">
-        <a href="#" class="nav-item" id="courses-nav" onclick="showNewBatchesView('all'); highlightBottomNav('courses-nav')"><i class="fas fa-book-open"></i> Courses</a>
-        <a href="#" class="nav-item" id="bundles-nav" onclick="showComingSoonView('bundles'); highlightBottomNav('bundles-nav');"><i class="fas fa-boxes"></i> Bundles</a>
-        <a href="#" class="nav-item active" id="home-nav" onclick="showHomeView(); highlightBottomNav('home-nav')"><i class="fas fa-home"></i> Home</a>
-        <a href="#" class="nav-item" id="pdfs-nav" onclick="showComingSoonView('pdfs'); highlightBottomNav('pdfs-nav');"><i class="fas fa-file-pdf"></i> PDFs</a>
-        <a href="#" class="nav-item" id="about-me-nav" onclick="showAboutMeView(); highlightBottomNav('about-me-nav');"><i class="fas fa-user-circle"></i> About Me</a>
+        <a href="#" class="nav-item" id="courses-nav" onclick="window.showNewBatchesView('all'); window.highlightBottomNav('courses-nav')"><i class="fas fa-book-open"></i> Courses</a>
+        <a href="#" class="nav-item" id="bundles-nav" onclick="window.showComingSoonView('bundles'); window.highlightBottomNav('bundles-nav');"><i class="fas fa-boxes"></i> Bundles</a>
+        <a href="#" class="nav-item active" id="home-nav" onclick="window.showHomeView(); window.highlightBottomNav('home-nav')"><i class="fas fa-home"></i> Home</a>
+        <a href="#" class="nav-item" id="pdfs-nav" onclick="window.showComingSoonView('pdfs'); window.highlightBottomNav('pdfs-nav');"><i class="fas fa-file-pdf"></i> PDFs</a>
+        <a href="#" class="nav-item" id="about-me-nav" onclick="window.showAboutMeView(); window.highlightBottomNav('about-me-nav');"><i class="fas fa-user-circle"></i> About Me</a>
     </div>
 
-    <div class="slider-menu-overlay" id="sliderMenuOverlay" onclick="closeSliderMenu()"></div>
+    <!-- Slider Menu -->
+    <div class="slider-menu-overlay" id="sliderMenuOverlay" onclick="window.closeSliderMenu()"></div>
     <div class="slider-menu" id="sliderMenu">
         <div class="slider-header">
             <img src="https://via.placeholder.com/50x50/00ADB5/ffffff?text=SN" alt="SkillNeast Logo">
             <h3>SkillNeast</h3>
         </div>
         
-        <a href="#" class="slider-menu-item" onclick="showComingSoonView('ai-chatbot'); closeSliderMenu();">
+        <a href="#" class="slider-menu-item" onclick="window.showComingSoonView('ai-chatbot'); window.closeSliderMenu();">
             <i class="fas fa-robot"></i> <span class="item-text">Neast Bro (AI Chatbot)</span> <span class="coming-soon-tag">Coming Soon</span>
         </a>
-        <a href="#" class="slider-menu-item" onclick="showAboutMeView(); closeSliderMenu();">
+        <a href="#" class="slider-menu-item" onclick="window.showAboutMeView(); window.closeSliderMenu();">
             <i class="fas fa-user-circle"></i> <span class="item-text">About Me</span>
         </a>
-        <a href="#" class="slider-menu-item" onclick="showFavoritesView(); closeSliderMenu();">
+        <a href="#" class="slider-menu-item" onclick="window.showFavoritesView(); window.closeSliderMenu();">
             <i class="fas fa-heart"></i> <span class="item-text">Favorite Batches</span>
         </a>
         <a href="YOUR_TELEGRAM_CHANNEL_LINK" target="_blank" class="slider-menu-item">
@@ -2432,17 +2438,17 @@
         <a href="YOUR_TELEGRAM_GROUP_LINK" target="_blank" class="slider-menu-item">
             <i class="fab fa-telegram-plane"></i> <span class="item-text">Join Telegram Group</span>
         </a>
-        <a href="#" class="slider-menu-item" onclick="alert('Request Courses functionality coming soon!'); closeSliderMenu();">
+        <a href="#" class="slider-menu-item" onclick="alert('Request Courses functionality coming soon!'); window.closeSliderMenu();">
             <i class="fas fa-hand-paper"></i> <span class="item-text">Request Courses</span>
         </a>
-        <a href="#" class="slider-menu-item" onclick="showHowToUseAppView(); closeSliderMenu();">
+        <a href="#" class="slider-menu-item" onclick="window.showHowToUseAppView(); window.closeSliderMenu();">
             <i class="fas fa-question-circle"></i> <span class="item-text">How to use the App</span>
         </a>
-        <a href="#" class="slider-menu-item" onclick="shareApp(); closeSliderMenu();">
+        <a href="#" class="slider-menu-item" onclick="window.shareApp(); window.closeSliderMenu();">
             <i class="fas fa-share-alt"></i> <span class="item-text">Share with your Friends</span>
         </a>
 
-        <div class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <div class="dark-mode-toggle" onclick="window.toggleDarkMode()">
             <i class="fas fa-moon"></i> <span>Dark Mode</span>
             <label class="switch">
                 <input type="checkbox" id="darkModeToggleSwitch">
@@ -2491,6 +2497,8 @@
                 }
             } catch (error) {
                 console.error("Public site Firebase authentication error:", error);
+                // Display user-friendly message for Firebase auth issues
+                alert("Firebase Authentication Error: Could not connect to courses. Please check your Firebase configuration and network. If you are hosting this app, ensure your domain is added to Firebase Authorized Domains. Error: " + error.message);
             }
         };
 
@@ -2584,10 +2592,10 @@
             }
             shuffleArray(availableQuoteIndices);
 
-            highlightBottomNav('home-nav');
+            window.highlightBottomNav('home-nav'); // Call global function
             renderFavoritesSectionHomeCard();
-            updateQuote();
-            setInterval(updateQuote, 6 * 60 * 60 * 1000); // Change quote every 6 hours
+            window.updateQuote(); // Call global function
+            setInterval(window.updateQuote, 6 * 60 * 60 * 1000); // Call global function
 
             document.addEventListener('contextmenu', (e) => { e.preventDefault(); });
 
@@ -2609,7 +2617,7 @@
                 this.classList.remove('active');
             }
 
-            document.querySelectorAll('.course-category-item, .favorites-section-home-card, .telegram-card, .batch-card, .surprise-button').forEach(item => {
+            document.querySelectorAll('.favorites-section-home-card, .telegram-card, .surprise-button').forEach(item => {
                 item.addEventListener('touchstart', onTouchStart);
                 item.addEventListener('touchend', onTouchEnd);
                 item.addEventListener('touchcancel', onTouchEnd);
@@ -2641,10 +2649,23 @@
                 document.body.classList.remove('light-mode');
                 document.getElementById('darkModeToggleSwitch').checked = true;
             }
+
+            // Ensure appLogo rotation works globally
+            const appLogo = document.getElementById('appLogo');
+            if (appLogo) {
+                appLogo.addEventListener('click', () => {
+                    if (!appLogo.classList.contains('rotating')) {
+                        appLogo.classList.add('rotating');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    }
+                });
+            }
         });
 
         // --- Quote Logic ---
-        function updateQuote() {
+        window.updateQuote = function() {
             const quoteTextElement = document.getElementById('quoteText');
             const quoteAuthorElement = document.getElementById('quoteAuthor');
             
@@ -2670,20 +2691,20 @@
             quoteAuthorElement.style.animation = 'quoteAuthorFadeIn 1s ease-out forwards';
         }
 
-        function updateCharCount() {
+        window.updateCharCount = function() {
             const userNameInput = document.getElementById('userNameInput');
             const currentCharCount = document.getElementById('currentCharCount');
             currentCharCount.textContent = userNameInput.value.length;
         }
 
-        function submitName() {
+        window.submitName = function() {
             const userNameInput = document.getElementById('userNameInput');
             let userName = userNameInput.value.trim();
             const selectedRoleElement = document.querySelector('input[name="userRole"]:checked');
             let userRole = selectedRoleElement ? selectedRoleElement.value : 'Other';
 
             if (userName === '') {
-                userName = 'Guest'; // Changed default to Guest
+                userName = 'Guest';
             } else if (userName.length > 15) {
                 userName = userName.substring(0, 15);
             }
@@ -2692,7 +2713,7 @@
             localStorage.setItem('userRole', userRole);
 
             updateWelcomeSection();
-            closeNamePopup();
+            window.closeNamePopup(); // Call global function
         }
 
         function updateWelcomeSection() {
@@ -2709,7 +2730,7 @@
             }
         }
 
-        function closeNamePopup() {
+        window.closeNamePopup = function() {
             document.getElementById('namePopupOverlay').classList.remove('active');
         }
 
@@ -2738,7 +2759,7 @@
             document.querySelector('.quote-section').style.display = 'none';
         }
 
-        function showHomeView() {
+        window.showHomeView = function() {
             hideAllViews();
             document.getElementById('home-view').style.display = 'grid';
             document.getElementById('favorites-section-home-card').style.display = 'flex';
@@ -2750,17 +2771,32 @@
             }
             renderFavoritesSectionHomeCard();
             currentView = 'home-view';
-            highlightBottomNav('home-nav');
+            window.highlightBottomNav('home-nav'); // Call global function
             window.scrollTo(0, 0);
 
             document.querySelector('.welcome-banner').style.display = 'flex';
             document.querySelector('.quote-section').style.display = 'block';
 
             updateWelcomeSection();
-            renderCategories(); // Re-render categories on returning to home view
+            renderCategories();
         }
 
         // --- Firebase Data Fetching and Rendering ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.remove('hidden-on-scroll');
+                    entry.target.classList.add('visible-on-scroll');
+                } else {
+                    // Only hide if it's explicitly in 'visible-on-scroll' state
+                    if (entry.target.classList.contains('visible-on-scroll')) {
+                        entry.target.classList.remove('visible-on-scroll');
+                        entry.target.classList.add('hidden-on-scroll');
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+
         function loadAllCategoriesFromFirebase() {
             const categoriesRef = ref(db, 'categories');
             onValue(categoriesRef, (snapshot) => {
@@ -2774,9 +2810,9 @@
 
         function renderCategories() {
             const homeView = document.getElementById('home-view');
-            homeView.innerHTML = ''; // Clear existing content
+            homeView.innerHTML = '';
             const loadingMessage = document.getElementById('loadingCategoriesMessage');
-            if (loadingMessage) loadingMessage.remove(); // Remove loading message
+            if (loadingMessage) loadingMessage.remove();
 
             if (Object.keys(allCategoriesData).length === 0) {
                 homeView.innerHTML = '<p class="text-center text-muted col-span-full">No categories found. Please add courses via the admin panel.</p>';
@@ -2785,13 +2821,12 @@
 
             Object.entries(allCategoriesData).forEach(([catId, category]) => {
                 const categoryItem = document.createElement('div');
-                categoryItem.className = 'course-category-item';
-                categoryItem.onclick = () => showNewBatchesView(catId); // Pass category ID
+                categoryItem.className = 'course-category-item hidden-on-scroll';
+                categoryItem.onclick = () => window.showNewBatchesView(catId);
 
-                // Use the first batch's thumbnail as category image if available, otherwise a placeholder
                 const firstBatch = category.batches ? Object.values(category.batches)[0] : null;
                 const imageUrl = firstBatch && firstBatch.thumbnail ? firstBatch.thumbnail : 'https://via.placeholder.com/90x90/00ADB5/1A2B3C?text=Category';
-                const isNewCategory = firstBatch && firstBatch.isNew; // Check if the first batch is new for category tag
+                const isNewCategory = firstBatch && firstBatch.isNew;
 
                 categoryItem.innerHTML = `
                     <div class="image-container">
@@ -2803,48 +2838,54 @@
                     ${isNewCategory ? '<span class="new-tag">NEW</span>' : ''}
                 `;
                 homeView.appendChild(categoryItem);
+                observer.observe(categoryItem);
             });
 
-            // Add the fixed buttons back after dynamic content
             const surpriseButton = document.createElement('div');
-            surpriseButton.className = 'surprise-button';
-            surpriseButton.onclick = openSurpriseLink;
+            surpriseButton.className = 'surprise-button hidden-on-scroll';
+            surpriseButton.onclick = window.openSurpriseLink;
             surpriseButton.innerHTML = '<i class="fas fa-gift"></i> Today\'s Surprise! <i class="fas fa-arrow-right"></i>';
             homeView.appendChild(surpriseButton);
+            observer.observe(surpriseButton);
+
+            document.querySelectorAll('.favorites-section-home-card, .telegram-card, .partition, .share-app-button').forEach(item => {
+                item.classList.add('hidden-on-scroll');
+                observer.observe(item);
+            });
         }
 
 
-        function showNewBatchesView(categoryId = 'all') {
+        window.showNewBatchesView = function(categoryId = 'all') {
             hideAllViews();
             document.getElementById('new-batches-view').style.display = 'block';
             currentView = 'new-batches-view';
             lastCategoryViewed = categoryId;
             
             const batchesContainer = document.getElementById('batches-container');
-            batchesContainer.innerHTML = '<p class="text-center text-muted" id="loadingBatchesMessage">Loading batches...</p>'; // Show loading
+            batchesContainer.innerHTML = '<p class="text-center text-muted" id="loadingBatchesMessage">Loading batches...</p>';
 
             let batchesToDisplay = [];
             if (categoryId === 'all') {
                 document.getElementById('new-batches-title').textContent = 'All Courses';
                 Object.values(allCategoriesData).forEach(category => {
                     if (category.batches) {
-                        batchesToDisplay = batchesToDisplay.concat(Object.values(category.batches));
+                        // Firebase Realtime Database returns objects, so convert to array
+                        batchesToDisplay = batchesToDisplay.concat(Object.keys(category.batches).map(key => ({ id: key, ...category.batches[key] })));
                     }
                 });
             } else {
                 const selectedCategory = allCategoriesData[categoryId];
                 document.getElementById('new-batches-title').textContent = selectedCategory ? selectedCategory.name + ' Courses' : 'Courses';
                 if (selectedCategory && selectedCategory.batches) {
-                    batchesToDisplay = Object.values(selectedCategory.batches);
+                    batchesToDisplay = Object.keys(selectedCategory.batches).map(key => ({ id: key, ...selectedCategory.batches[key] }));
                 }
             }
             
-            // Remove loading message
             const loadingMsg = document.getElementById('loadingBatchesMessage');
             if(loadingMsg) loadingMsg.remove();
             
             displayBatches(batchesToDisplay);
-            highlightBottomNav('courses-nav');
+            window.highlightBottomNav('courses-nav');
             window.scrollTo(0, 0);
         }
 
@@ -2859,14 +2900,16 @@
 
             batchesToDisplay.forEach(batch => {
                 const batchCard = document.createElement('div');
-                batchCard.className = 'batch-card';
+                batchCard.className = 'batch-card hidden-on-scroll';
                 const isFavorited = favorites.includes(batch.id);
                 const heartIconClass = isFavorited ? 'fas fa-heart' : 'far fa-heart';
 
+                // Use encodeURIComponent for all string parameters passed to openBatchDetailModal
                 batchCard.innerHTML = `
                     <div class="batch-card-header" style="background-color: ${batch.headerColor || 'var(--accent-teal)'};">
-                        <span>${batch.title}</span> <div class="icons">
-                            <i class="${heartIconClass}" onclick="event.stopPropagation(); toggleFavorite('${batch.id}', this);"></i>
+                        <span>${batch.title}</span>
+                        <div class="icons">
+                            <i class="${heartIconClass}" onclick="event.stopPropagation(); window.toggleFavorite('${batch.id}', this);"></i>
                             <i class="fas fa-share-alt" onclick="event.stopPropagation(); alert('Share functionality not implemented yet!');"></i>
                         </div>
                     </div>
@@ -2876,42 +2919,43 @@
                         </div>
                         <div class="batch-title">${batch.title}</div>
                         <p class="batch-description">${batch.description || 'No detailed description available. Click "View Details" for an AI overview!'}</p>
-                        <button class="lets-roar-button" onclick="openBatchDetailModal(
-                            '${batch.title}', 
-                            '${batch.thumbnail}', 
+                        <button class="lets-roar-button" onclick="window.openBatchDetailModal(
+                            '${encodeURIComponent(batch.title || '')}', 
+                            '${encodeURIComponent(batch.thumbnail || '')}', 
                             '${encodeURIComponent(batch.description || '')}'
                         )">View Details <i class="fas fa-info-circle"></i></button>
                     </div>
                 `;
                 batchesContainer.appendChild(batchCard);
+                observer.observe(batchCard);
             });
         }
 
-        function filterBatches() {
+        window.filterBatches = function() {
             const searchTerm = document.getElementById('batchSearchInput').value.toLowerCase();
             let currentCategoryBatches = [];
 
             if (lastCategoryViewed === 'all') {
                 Object.values(allCategoriesData).forEach(category => {
                     if (category.batches) {
-                        currentCategoryBatches = currentCategoryBatches.concat(Object.values(category.batches));
+                        currentCategoryBatches = currentCategoryBatches.concat(Object.keys(category.batches).map(key => ({ id: key, ...category.batches[key] })));
                     }
                 });
             } else {
                 const selectedCategory = allCategoriesData[lastCategoryViewed];
                 if (selectedCategory && selectedCategory.batches) {
-                    currentCategoryBatches = Object.values(selectedCategory.batches);
+                    currentCategoryBatches = Object.keys(selectedCategory.batches).map(key => ({ id: key, ...selectedCategory.batches[key] }));
                 }
             }
 
             const filteredBatches = currentCategoryBatches.filter(batch => 
-                batch.title.toLowerCase().includes(searchTerm) // Use batch.title
+                batch.title.toLowerCase().includes(searchTerm)
             );
             displayBatches(filteredBatches);
         }
 
         // --- Favorites Logic ---
-        function toggleFavorite(batchId, iconElement) {
+        window.toggleFavorite = function(batchId, iconElement) {
             if (favorites.includes(batchId)) {
                 favorites = favorites.filter(id => id !== batchId);
                 if (iconElement) {
@@ -2928,7 +2972,7 @@
             localStorage.setItem('favorites', JSON.stringify(favorites));
             renderFavoritesSectionHomeCard();
             if (currentView === 'favorites-view') {
-                showFavoritesView();
+                window.showFavoritesView();
             }
         }
 
@@ -2937,11 +2981,11 @@
             favoritesCountSpan.textContent = `${favorites.length} Batches`;
         }
 
-        function showFavoritesView() {
+        window.showFavoritesView = function() {
             hideAllViews();
             document.getElementById('favorites-view').style.display = 'block';
             currentView = 'favorites-view';
-            highlightBottomNav('home-nav');
+            window.highlightBottomNav('home-nav');
 
             const favoriteBatchesContainer = document.getElementById('favorite-batches-container');
             favoriteBatchesContainer.innerHTML = '';
@@ -2953,7 +2997,6 @@
                 favoriteBatchesContainer.style.display = 'flex';
 
                 favorites.forEach(favId => {
-                    // Find batch across all categories
                     let batch = null;
                     for (const catId in allCategoriesData) {
                         if (allCategoriesData[catId].batches && allCategoriesData[catId].batches[favId]) {
@@ -2967,29 +3010,30 @@
                         const heartIconClass = isFavorited ? 'fas fa-heart' : 'far fa-heart';
 
                         const favBatchCard = document.createElement('div');
-                        favBatchCard.className = 'batch-card';
+                        favBatchCard.className = 'batch-card hidden-on-scroll';
                         favBatchCard.innerHTML = `
                             <div class="batch-card-header" style="background-color: ${batch.headerColor || 'var(--accent-teal)'};">
                                 <span>${batch.title}</span>
                                 <div class="icons">
-                                    <i class="${heartIconClass}" onclick="event.stopPropagation(); toggleFavorite('${batch.id}', this);"></i>
+                                    <i class="${heartIconClass}" onclick="event.stopPropagation(); window.toggleFavorite('${batch.id}', this);"></i>
                                     <i class="fas fa-share-alt" onclick="event.stopPropagation(); alert('Share functionality not implemented yet!');"></i>
                                 </div>
                             </div>
                             <div class="batch-card-body">
-                                <div class="batch-image-container">
+                                 <div class="batch-image-container">
                                     <img src="${batch.thumbnail}" alt="${batch.title}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=Batch+Image';">
                                 </div>
                                 <div class="batch-title">${batch.title}</div>
                                 <p class="batch-description">${batch.description || 'No detailed description available. Click "View Details" for an AI overview!'}</p>
-                                <button class="lets-roar-button" onclick="openBatchDetailModal(
-                                    '${batch.title}', 
-                                    '${batch.thumbnail}', 
+                                <button class="lets-roar-button" onclick="window.openBatchDetailModal(
+                                    '${encodeURIComponent(batch.title || '')}', 
+                                    '${encodeURIComponent(batch.thumbnail || '')}', 
                                     '${encodeURIComponent(batch.description || '')}'
                                 )">View Details <i class="fas fa-info-circle"></i></button>
                             </div>
                         `;
                         favoriteBatchesContainer.appendChild(favBatchCard);
+                        observer.observe(favBatchCard);
                     }
                 });
             }
@@ -2997,11 +3041,10 @@
         }
 
         // --- Show Sections (Folders) for a Batch ---
-        function showSectionsView(batchId) {
+        window.showSectionsView = function(batchId) {
             hideAllViews();
             currentBatchId = batchId;
             
-            // Find the batch in allCategoriesData
             let selectedBatch = null;
             let currentCategoryId = null;
             for (const catId in allCategoriesData) {
@@ -3016,18 +3059,20 @@
             const sectionsTitle = document.getElementById('sections-title');
             sectionsContainer.innerHTML = '';
 
-            if (selectedBatch && selectedBatch.modules && Object.keys(selectedBatch.modules).length > 0) { // Check for 'modules' instead of 'sections'
-                sectionsTitle.textContent = selectedBatch.title + ' Modules'; // Use batch.title
-                Object.entries(selectedBatch.modules).forEach(([moduleId, module], index) => { // Iterate over modules
+            if (selectedBatch && selectedBatch.modules && Object.keys(selectedBatch.modules).length > 0) {
+                sectionsTitle.textContent = selectedBatch.title + ' Modules';
+                Object.entries(selectedBatch.modules).forEach(([moduleId, module], index) => {
                     const sectionItem = document.createElement('div');
-                    sectionItem.className = 'section-item';
-                    sectionItem.onclick = () => showLessonsInSectionsView(currentCategoryId, batchId, moduleId); // Pass module ID
+                    sectionItem.className = 'section-item hidden-on-scroll';
+                    sectionItem.onclick = () => window.showLessonsInSectionsView(currentCategoryId, batchId, moduleId);
     
                     sectionItem.innerHTML = `
                         <i class="fas fa-folder section-icon"></i>
-                        <span class="section-name">${module.name}</span> <i class="fas fa-chevron-right section-arrow"></i>
+                        <span class="section-name">${module.name}</span>
+                        <i class="fas fa-chevron-right section-arrow"></i>
                     `;
                     sectionsContainer.appendChild(sectionItem);
+                    observer.observe(sectionItem);
                 });
             } else {
                 sectionsTitle.textContent = selectedBatch ? selectedBatch.title + ' Modules' : 'Modules';
@@ -3040,32 +3085,34 @@
         }
 
         // --- Show Lessons within a Section (Folder) ---
-        function showLessonsInSectionsView(categoryId, batchId, moduleId) { // Updated parameters
+        window.showLessonsInSectionsView = function(categoryId, batchId, moduleId) {
             hideAllViews();
             currentBatchId = batchId;
-            currentSectionIndex = moduleId; // Store module ID
+            currentSectionIndex = moduleId;
 
             const selectedCategory = allCategoriesData[categoryId];
             const selectedBatch = selectedCategory && selectedCategory.batches ? selectedCategory.batches[batchId] : null;
-            const selectedModule = selectedBatch && selectedBatch.modules ? selectedBatch.modules[moduleId] : null; // Get module
+            const selectedModule = selectedBatch && selectedBatch.modules ? selectedBatch.modules[moduleId] : null;
 
             const lessonsContainer = document.getElementById('lessons-in-sections-container');
             const lessonsTitle = document.getElementById('lessons-in-sections-title');
             lessonsContainer.innerHTML = '';
 
-            if (selectedModule && selectedModule.lectures && Object.keys(selectedModule.lectures).length > 0) { // Check for 'lectures'
-                lessonsTitle.textContent = selectedModule.name + ' (' + selectedBatch.title + ')'; // Use module/batch titles
-                Object.entries(selectedModule.lectures).forEach(([lectureId, lecture], lessonIndex) => { // Iterate over lectures
+            if (selectedModule && selectedModule.lectures && Object.keys(selectedModule.lectures).length > 0) {
+                lessonsTitle.textContent = selectedModule.name + ' (' + selectedBatch.title + ')';
+                Object.entries(selectedModule.lectures).forEach(([lectureId, lecture], lessonIndex) => {
                     const lessonItem = document.createElement('div');
-                    lessonItem.className = 'lesson-list-item';
-                    lessonItem.onclick = () => showVideoPlayerView(categoryId, batchId, moduleId, lectureId); // Pass lecture ID
+                    lessonItem.className = 'lesson-list-item hidden-on-scroll';
+                    lessonItem.onclick = () => window.showVideoPlayerView(categoryId, batchId, moduleId, lectureId);
                    
                     lessonItem.innerHTML = `
                         <div class="lesson-list-item-header">
                             <img src="https://via.placeholder.com/40x40/000000/ffffff?text=PW" alt="PW Logo" class="pw-logo" draggable="false">
-                            <h3 class="lesson-list-item-title">${lecture.name}</h3> </div>
+                            <h3 class="lesson-list-item-title">${lecture.name}</h3>
+                        </div>
                     `;
                     lessonsContainer.appendChild(lessonItem);
+                    observer.observe(lessonItem);
                 });
             } else {
                 lessonsTitle.textContent = selectedModule ? selectedModule.name : 'Lessons';
@@ -3078,30 +3125,30 @@
         }
 
         // --- Video Player View (For individual lessons) ---
-        function showVideoPlayerView(categoryId, batchId, moduleId, lectureId) { // Updated parameters
+        window.showVideoPlayerView = function(categoryId, batchId, moduleId, lectureId) {
             hideAllViews();
             currentBatchId = batchId;
-            currentSectionIndex = moduleId; // Store module ID
+            currentSectionIndex = moduleId;
 
             const selectedCategory = allCategoriesData[categoryId];
             const selectedBatch = selectedCategory && selectedCategory.batches ? selectedCategory.batches[batchId] : null;
             const selectedModule = selectedBatch && selectedBatch.modules ? selectedBatch.modules[moduleId] : null;
-            const selectedLecture = selectedModule && selectedModule.lectures ? selectedModule.lectures[lectureId] : null; // Get lecture
+            const selectedLecture = selectedModule && selectedModule.lectures ? selectedModule.lectures[lectureId] : null;
 
             if (!selectedCategory || !selectedBatch || !selectedModule || !selectedLecture) {
-                alert('Lesson details not found! Please check the data structure.');
-                goBackFromPlayerView();
+                alert('Lesson details not found! Please check the data structure or Firebase data.'); // Improved alert message
+                window.goBackFromPlayerView();
                 return;
             }
             
-            document.getElementById('player-view-title').textContent = selectedLecture.name; // Use lecture name
-            document.getElementById('player-lesson-sub-title').textContent = selectedLecture.name; // Use lecture name for subtitle for now
+            document.getElementById('player-view-title').textContent = selectedLecture.name;
+            document.getElementById('player-lesson-sub-title').textContent = selectedLecture.name;
 
 
             const mainVideoPlayer = document.getElementById('main-video-player');
             if (mainVideoPlayer) {
                 mainVideoPlayer.innerHTML = '';
-                const videoInfo = extractGdriveId(selectedLecture.link); // Use lecture link
+                const videoInfo = extractGdriveId(selectedLecture.link);
                 if (videoInfo) {
                     let embedUrl = '';
                     if (videoInfo.type === 'gdrive') {
@@ -3133,14 +3180,14 @@
             const lessonsForPlayerBatch = document.getElementById('lessons-for-player-batch');
             if (lessonsForPlayerBatch) {
                 lessonsForPlayerBatch.innerHTML = '';
-                // Get all lectures from the current module for the "Up Next" list
                 if (selectedModule && selectedModule.lectures) {
                     Object.entries(selectedModule.lectures).forEach(([otherLectureId, otherLecture]) => {
                         const lessonItem = document.createElement('li');
-                        lessonItem.className = 'lesson-item';
-                        lessonItem.onclick = () => showVideoPlayerView(categoryId, batchId, moduleId, otherLectureId);
+                        lessonItem.className = 'lesson-item hidden-on-scroll';
+                        lessonItem.onclick = () => window.showVideoPlayerView(categoryId, batchId, moduleId, otherLectureId);
                         lessonItem.innerHTML = `<h3>${otherLecture.name}</h3>`;
                         lessonsForPlayerBatch.appendChild(lessonItem);
+                        observer.observe(lessonItem);
                     });
                 } else {
                      lessonsForPlayerBatch.innerHTML = '<p style="text-align: center; color: var(--text-light);">No other lectures in this module.</p>';
@@ -3153,10 +3200,8 @@
         }
 
         // --- Back Button Logic from Player View ---
-        function goBackFromPlayerView() {
-            // Check if we came from a specific module's lessons
-            if (currentBatchId && currentSectionIndex !== null) { // currentSectionIndex now stores moduleId
-                // To go back to lessons list, we need the original categoryId and batchId
+        window.goBackFromPlayerView = function() {
+            if (currentBatchId && currentSectionIndex !== null) {
                 let categoryId = null;
                 for (const catId in allCategoriesData) {
                     if (allCategoriesData[catId].batches && allCategoriesData[catId].batches[currentBatchId]) {
@@ -3165,30 +3210,28 @@
                     }
                 }
                 if (categoryId) {
-                    showLessonsInSectionsView(categoryId, currentBatchId, currentSectionIndex);
+                    window.showLessonsInSectionsView(categoryId, currentBatchId, currentSectionIndex);
                     return;
                 }
             } 
-            // If not from a specific module, try going to favorites or general batches
             if (currentView === 'favorites-view') {
-                 showFavoritesView();
+                 window.showFavoritesView();
             } else {
-                showNewBatchesView(lastCategoryViewed);
+                window.showNewBatchesView(lastCategoryViewed);
             }
         }
 
         // --- Back Button Logic from Lessons In Sections View ---
-        function goBackFromLessonsList() {
-            if (currentBatchId) { // currentBatchId stores the batch ID
-                showSectionsView(currentBatchId);
+        window.goBackFromLessonsList = function() {
+            if (currentBatchId) {
+                window.showSectionsView(currentBatchId);
             } else {
-                showNewBatchesView(lastCategoryViewed);
+                window.showNewBatchesView(lastCategoryViewed);
             }
         }
 
         // --- Video ID Extraction Logic (Handles Google Drive and YouTube) ---
         function extractGdriveId(url) {
-            // Updated regex for more common Google Drive share link formats
             const gdriveRegex = /(?:drive\.google\.com\/(?:file\/d\/|open\?id=)|docs\.google\.com\/file\/d\/|drive\.google\.com\/uc\?id=)([a-zA-Z0-9_-]+)(?:\/preview|\/view|\/edit)?/;
             const gdriveMatch = url.match(gdriveRegex);
             if (gdriveMatch) {
@@ -3205,7 +3248,7 @@
         }
 
         // --- Bottom Navigation Highlight ---
-        function highlightBottomNav(activeId) {
+        window.highlightBottomNav = function(activeId) {
             document.querySelectorAll('.bottom-navbar .nav-item').forEach(item => {
                 item.classList.remove('active');
             });
@@ -3213,17 +3256,17 @@
         }
 
         // --- Comments Popup Logic (kept as is for now, not Firebase integrated) ---
-        function showCommentsPopup() {
+        window.showCommentsPopup = function() {
             document.getElementById('commentsPopupOverlay').classList.add('active');
             renderComments();
         }
 
-        function closeCommentsPopup() {
+        window.closeCommentsPopup = function() {
             document.getElementById('commentsPopupOverlay').classList.remove('active');
         }
 
-        let tempComments = []; // Local storage for comments
-        function postComment() {
+        let tempComments = [];
+        window.postComment = function() {
             const commentInput = document.getElementById('commentInput');
             const commentText = commentInput.value.trim();
             const userName = localStorage.getItem('userName') || 'Guest';
@@ -3262,7 +3305,7 @@
         }
 
         // --- New: Show Coming Soon Views ---
-        function showComingSoonView(type) {
+        window.showComingSoonView = function(type) {
             hideAllViews();
             if (type === 'bundles') {
                 document.getElementById('bundles-coming-soon-view').style.display = 'flex';
@@ -3278,21 +3321,21 @@
         }
 
         // --- Today's Surprise Function ---
-        function openSurpriseLink() {
+        window.openSurpriseLink = function() {
             window.open(surpriseLink, '_blank');
         }
 
         // --- About Me View Logic ---
-        function showAboutMeView() {
+        window.showAboutMeView = function() {
             hideAllViews();
             document.getElementById('about-me-view').style.display = 'flex';
             currentView = 'about-me-view';
-            highlightBottomNav('about-me-nav');
+            window.highlightBottomNav('about-me-nav');
             window.scrollTo(0, 0);
         }
 
         // --- New: How to use the App View Logic ---
-        function showHowToUseAppView() {
+        window.showHowToUseAppView = function() {
             hideAllViews();
             document.getElementById('how-to-use-app-view').style.display = 'flex';
             currentView = 'how-to-use-app-view';
@@ -3300,18 +3343,18 @@
         }
 
         // --- Slider Menu Functions ---
-        function openSliderMenu() {
+        window.openSliderMenu = function() {
             document.getElementById('sliderMenuOverlay').classList.add('active');
             document.getElementById('sliderMenu').classList.add('active');
         }
 
-        function closeSliderMenu() {
+        window.closeSliderMenu = function() {
             document.getElementById('sliderMenuOverlay').classList.remove('active');
             document.getElementById('sliderMenu').classList.remove('active');
         }
 
         // --- Share App Function ---
-        function shareApp() {
+        window.shareApp = function() {
             if (navigator.share) {
                 navigator.share({
                     title: 'SkillNeast - Master New Skills! 🚀',
@@ -3328,7 +3371,7 @@
         }
 
         // --- Dark Mode Toggle Functionality ---
-        function toggleDarkMode() {
+        window.toggleDarkMode = function() {
             const body = document.body;
             body.classList.toggle('light-mode'); 
             
@@ -3339,21 +3382,23 @@
         }
 
         // --- Batch Detail Modal (New AI Feature) ---
-        async function openBatchDetailModal(title, thumbnail, descriptionEncoded) {
-            const description = decodeURIComponent(descriptionEncoded);
+        window.openBatchDetailModal = async function(titleEncoded, thumbnailEncoded, descriptionEncoded) { // Changed parameters to receive encoded strings
+            const title = decodeURIComponent(titleEncoded); // Decode here
+            const thumbnail = decodeURIComponent(thumbnailEncoded); // Decode here
+            const description = decodeURIComponent(descriptionEncoded); // Decode here
+
             document.getElementById('modalBatchTitle').textContent = title;
             document.getElementById('modalBatchImage').src = thumbnail;
             document.getElementById('modalBatchImage').onerror = function() { this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=Batch+Image'; };
             document.getElementById('modalBatchDescription').textContent = description;
-            document.getElementById('generatedOverview').textContent = ''; // Clear previous overview
-            document.getElementById('loadingOverview').style.display = 'none'; // Hide loading
+            document.getElementById('generatedOverview').textContent = '';
+            document.getElementById('loadingOverview').style.display = 'none';
             document.getElementById('batchDetailModalOverlay').classList.add('active');
 
-            // Store current batch title for LLM generation
             document.getElementById('generateOverviewBtn').dataset.batchTitle = title;
         }
 
-        function closeBatchDetailModal() {
+        window.closeBatchDetailModal = function() {
             document.getElementById('batchDetailModalOverlay').classList.remove('active');
         }
 
@@ -3368,7 +3413,7 @@
             }
 
             loadingIndicator.style.display = 'flex';
-            overviewDisplay.textContent = ''; // Clear previous content
+            overviewDisplay.textContent = '';
 
             try {
                 const prompt = `Generate a very brief (1-2 sentences), engaging, and marketing-friendly overview for a course batch titled "${batchTitle}". Highlight its key benefit or what a student will gain.`;
