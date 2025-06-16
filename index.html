@@ -2346,13 +2346,13 @@
     <div class="top-navbar">
         <div class="menu-icon" onclick="window.openSliderMenu()"><i class="fas fa-bars"></i></div>
         <div class="app-logo" id="appLogo">
-            <img src="https://via.placeholder.com/40x40/00ADB5/ffffff?text=SN" alt="SkillNeast Logo" draggable="false" id="skillNeastLogo">
+            <img src="" alt="SkillNeast Logo" draggable="false" id="skillNeastLogo" onerror="this.onerror=null;this.src='https://via.placeholder.com/40x40/00ADB5/ffffff?text=SN';">
             <div class="text-wrapper"> <!-- Added text wrapper -->
                 <span class="main-title">SKILLNEAST</span>
                 <span class="tagline">Master New Skill 🚀💡</span>
             </div>
         </div>
-        <div class="telegram-icon" onclick="window.open('YOUR_TELEGRAM_GROUP_LINK', '_blank');"><i class="fab fa-telegram-plane"></i></div>
+        <div class="telegram-icon" onclick="window.open(window.siteConfig.telegramGroupLink || 'https://t.me/', '_blank');"><i class="fab fa-telegram-plane"></i></div>
     </div>
 
     <div class="main-content">
@@ -2382,7 +2382,7 @@
 
             <!-- Removed partitions -->
 
-            <div class="telegram-card" onclick="window.open('YOUR_TELEGRAM_GROUP_LINK', '_blank');">
+            <div class="telegram-card" onclick="window.open(window.siteConfig.telegramGroupLink || 'https://t.me/', '_blank');">
                 <i class="fab fa-telegram-plane telegram-icon-large"></i>
                 <span class="telegram-text">Join Our Telegram Community!</span>
             </div>
@@ -2454,9 +2454,9 @@
             </div>
 
             <div class="player-action-buttons">
-                <button class="action-button timeline" onclick="window.showComingSoonPopup('timeline')"><i class="fas fa-stream"></i> Timeline</button>
+                <button class="action-button timeline" onclick="window.showComingSoonView('timeline')"><i class="fas fa-stream"></i> Timeline</button>
                 <button class="action-button comments" onclick="window.showCommentsPopup()"><i class="fas fa-comments"></i> SR Comments</button>
-                <button class="action-button watch-later" onclick="window.showComingSoonPopup('watch-later')"><i class="fas fa-bookmark"></i> Watch Later</button>
+                <button class="action-button watch-later" onclick="window.showComingSoonView('watch-later')"><i class="fas fa-bookmark"></i> Watch Later</button>
             </div>
             
             <ul class="lesson-list" id="lessons-for-player-batch">
@@ -2500,13 +2500,13 @@
                 <h2>About Me</h2>
             </div>
             <div class="about-me-card">
-                <img src="https://via.placeholder.com/120x120/00ADB5/ffffff?text=Fahad" alt="Fahad Profile" draggable="false">
+                <img src="" alt="Fahad Profile" class="profile-pic" draggable="false" id="aboutMeProfilePic" onerror="this.onerror=null;this.src='https://via.placeholder.com/120x120/00ADB5/ffffff?text=Fahad';">
                 <h3>Hello, I'm Fahad! 👋</h3>
                 <p>I'm 16 years old and currently learning in Class 11 with PCM (Physics, Chemistry, Maths) stream. Skills abhi kuch nahi hain, but har roz kuch naya seekh raha hoon! Learning is my journey. 😊</p>
                 <div class="social-links">
-                    <a href="YOUR_TELEGRAM_GROUP_LINK" target="_blank" class="social-link telegram"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="YOUR_INSTAGRAM_PROFILE_LINK" target="_blank" class="social-link instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="YOUR_YOUTUBE_CHANNEL_LINK" target="_blank" class="social-link youtube"><i class="fab fa-youtube"></i></a>
+                    <a href="" target="_blank" class="social-link telegram" id="aboutMeTelegramGroupLink"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="" target="_blank" class="social-link instagram" id="aboutMeInstagramLink"><i class="fab fa-instagram"></i></a>
+                    <a href="" target="_blank" class="social-link youtube" id="aboutMeYoutubeLink"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
         </div>
@@ -2536,7 +2536,7 @@
     <div class="slider-menu-overlay" id="sliderMenuOverlay" onclick="window.closeSliderMenu()"></div>
     <div class="slider-menu" id="sliderMenu">
         <div class="slider-header">
-            <img src="https://via.placeholder.com/50x50/00ADB5/ffffff?text=SN" alt="SkillNeast Logo">
+            <img src="" alt="SkillNeast Logo" id="sliderHeaderLogo" onerror="this.onerror=null;this.src='https://via.placeholder.com/50x50/00ADB5/ffffff?text=SN';">
             <h3>SkillNeast</h3>
         </div>
         
@@ -2549,13 +2549,13 @@
         <a href="#" class="slider-menu-item" onclick="window.showFavoritesView(); window.closeSliderMenu();">
             <i class="fas fa-heart"></i> <span class="item-text">Favorite Batches</span>
         </a>
-        <a href="YOUR_TELEGRAM_CHANNEL_LINK" target="_blank" class="slider-menu-item">
+        <a href="" target="_blank" class="slider-menu-item" id="sliderTelegramChannelLink">
             <i class="fab fa-telegram-plane"></i> <span class="item-text">Join Telegram Channel</span>
         </a>
-        <a href="YOUR_TELEGRAM_GROUP_LINK" target="_blank" class="slider-menu-item">
+        <a href="" target="_blank" class="slider-menu-item" id="sliderTelegramGroupLink">
             <i class="fab fa-telegram-plane"></i> <span class="item-text">Join Telegram Group</span>
         </a>
-        <a href="#" class="slider-menu-item" onclick="alert('Request Courses functionality coming soon!'); window.closeSliderMenu();">
+        <a href="" class="slider-menu-item" id="sliderRequestCoursesLink" onclick="if(this.href === window.location.href + '#') { alert('Request Courses functionality coming soon!'); return false; } window.closeSliderMenu();">
             <i class="fas fa-hand-paper"></i> <span class="item-text">Request Courses</span>
         </a>
         <a href="#" class="slider-menu-item" onclick="window.showHowToUseAppView(); window.closeSliderMenu();">
@@ -2612,6 +2612,19 @@
 
         // Current user ID for Firestore operations
         let currentUserId = null;
+
+        // Global site configuration
+        window.siteConfig = {
+            telegramChannelLink: 'https://t.me/default_channel',
+            telegramGroupLink: 'https://t.me/default_group',
+            youtubeLink: 'https://youtube.com/default_channel',
+            instagramLink: 'https://instagram.com/default_profile',
+            requestCoursesLink: '#', // Default to current page hash
+            profilePictureUrl: 'https://via.placeholder.com/120x120/00ADB5/ffffff?text=Fahad',
+            skillNeastLogoUrl: 'https://via.placeholder.com/40x40/00ADB5/ffffff?text=SN',
+            sliderHeaderPictureUrl: 'https://via.placeholder.com/50x50/00ADB5/ffffff?text=SN',
+            pwLogoUrl: 'https://via.placeholder.com/50x50/000000/ffffff?text=PW' // Default PW Logo
+        };
 
 
         // Authenticate Firebase
@@ -2706,6 +2719,7 @@
         document.addEventListener('DOMContentLoaded', async () => {
             await authenticateFirebase(); // Authenticate Firebase first
             loadAllCategoriesFromFirebase(); // Start loading categories
+            loadSiteConfigAndApply(); // Load and apply site config
 
             let userName = localStorage.getItem('userName');
             let userRole = localStorage.getItem('userRole');
@@ -2959,6 +2973,62 @@
             });
         }
 
+        // --- Site Configuration (Links & Profile Assets) Application ---
+        const loadSiteConfigAndApply = () => {
+            const configRef = dbRef(rtdb, 'siteConfig');
+            onValue(configRef, (snapshot) => {
+                const config = snapshot.val() || {};
+                window.siteConfig = { ...window.siteConfig, ...config }; // Merge with defaults
+
+                // Apply to Top Navbar
+                const skillNeastLogoImage = document.getElementById('skillNeastLogo');
+                if (skillNeastLogoImage) {
+                    skillNeastLogoImage.src = window.siteConfig.skillNeastLogoUrl || 'https://via.placeholder.com/40x40/00ADB5/ffffff?text=SN';
+                }
+                const telegramTopIcon = document.querySelector('.top-navbar .telegram-icon');
+                if (telegramTopIcon) {
+                    telegramTopIcon.onclick = () => window.open(window.siteConfig.telegramGroupLink || 'https://t.me/', '_blank');
+                }
+
+                // Apply to About Me section
+                const aboutMeProfilePic = document.getElementById('aboutMeProfilePic');
+                if (aboutMeProfilePic) {
+                    aboutMeProfilePic.src = window.siteConfig.profilePictureUrl || 'https://via.placeholder.com/120x120/00ADB5/ffffff?text=Fahad';
+                }
+                const aboutMeTelegramGroupLink = document.getElementById('aboutMeTelegramGroupLink');
+                if (aboutMeTelegramGroupLink) aboutMeTelegramGroupLink.href = window.siteConfig.telegramGroupLink || 'https://t.me/';
+                const aboutMeInstagramLink = document.getElementById('aboutMeInstagramLink');
+                if (aboutMeInstagramLink) aboutMeInstagramLink.href = window.siteConfig.instagramLink || 'https://instagram.com/';
+                const aboutMeYoutubeLink = document.getElementById('aboutMeYoutubeLink');
+                if (aboutMeYoutubeLink) aboutMeYoutubeLink.href = window.siteConfig.youtubeLink || 'https://youtube.com/';
+
+                // Apply to Slider Menu
+                const sliderHeaderLogo = document.getElementById('sliderHeaderLogo');
+                if (sliderHeaderLogo) {
+                    sliderHeaderLogo.src = window.siteConfig.sliderHeaderPictureUrl || 'https://via.placeholder.com/50x50/00ADB5/ffffff?text=SN';
+                }
+                const sliderTelegramChannelLink = document.getElementById('sliderTelegramChannelLink');
+                if (sliderTelegramChannelLink) sliderTelegramChannelLink.href = window.siteConfig.telegramChannelLink || 'https://t.me/';
+                const sliderTelegramGroupLink = document.getElementById('sliderTelegramGroupLink');
+                if (sliderTelegramGroupLink) sliderTelegramGroupLink.href = window.siteConfig.telegramGroupLink || 'https://t.me/';
+                const sliderRequestCoursesLink = document.getElementById('sliderRequestCoursesLink');
+                if (sliderRequestCoursesLink) sliderRequestCoursesLink.href = window.siteConfig.requestCoursesLink || '#';
+
+                // Apply to dynamically loaded lecture items (PW Logo)
+                // This will re-render existing ones and apply to new ones.
+                document.querySelectorAll('.pw-logo').forEach(img => {
+                    img.src = window.siteConfig.pwLogoUrl || 'https://via.placeholder.com/50x50/000000/ffffff?text=PW';
+                    img.onerror = function() { this.src='https://via.placeholder.com/50x50/000000/ffffff?text=PW'; };
+                });
+
+                console.log("Site configuration applied:", window.siteConfig);
+
+            }, (error) => {
+                console.error("Error loading site config:", error);
+                msg(`Error loading site configuration: ${error.message}`, 'danger');
+            });
+        };
+
         function renderCategories() {
             const homeView = document.getElementById('home-view');
             if (!homeView) return;
@@ -2968,13 +3038,6 @@
 
             const loadingMessage = document.getElementById('loadingCategoriesMessage');
             if (loadingMessage) loadingMessage.remove(); // Remove initial loading message for categories
-
-            // These elements are now part of home-view's static HTML content.
-            // We just need to ensure they are visible if home-view is active and observed for animation.
-            const favoritesSection = document.getElementById('favorites-section-home-card');
-            const telegramCard = homeView.querySelector('.telegram-card');
-            const shareButton = homeView.querySelector('.share-app-button');
-            const surpriseButton = homeView.querySelector('.surprise-button');
 
             if (Object.keys(allCategoriesData).length === 0) {
                 // Only add "No categories" message if it doesn't exist and there are no categories
@@ -3375,11 +3438,12 @@
                 if (videoInfo) {
                     let embedUrl = '';
                     if (videoInfo.type === 'gdrive') {
-                        embedUrl = `https://drive.google.com/file/d/${videoInfo.id}/preview`;
+                        embedUrl = `https://www.youtube.com/embed/videoseries?list=${videoInfo.id}&autoplay=1`; // Attempt to embed a playlist for GDrive as videos
                     } else if (videoInfo.type === 'youtube') {
                         embedUrl = `https://www.youtube-nocookie.com/embed/${videoInfo.id}?autoplay=1`;
                     }
                     
+                    console.log("Embedding video with URL:", embedUrl); // Debugging
                     if (embedUrl) {
                         mainVideoPlayer.innerHTML = `<iframe src="${embedUrl}" allowfullscreen draggable="false" allow="autoplay; encrypted-media"></iframe>`;
                     } else {
@@ -3390,11 +3454,11 @@
                         <p style="color: white; text-align: center; padding: 20px; background-color: rgba(0,0,0,0.5); border-radius: 10px;">
                             Video Not Found or Link Invalid.<br><br>
                             To play videos, ensure:<br>
-                            1. It's a Google Drive video with 'Anyone with the link' access.<br>
+                            1. It's a Google Drive video with 'Anyone with the link' access (use 'preview' link).<br>
                             2. You copy the ID correctly from a URL like:
                             <code>https://drive.google.com/file/d/<b>YOUR_VIDEO_ID</b>/view</code><br>
-                            Then paste the full preview link: <code>https://www.youtube.com/file/d/<b>YOUR_VIDEO_ID</b>/preview</code><br>
-                            (YouTube links are also supported for demonstration, e.g., <code>https://www.youtube.com/watch?v=<b>VIDEO_ID</b></code>)
+                            Then paste the full preview link: <code>https://drive.google.com/file/d/<b>YOUR_VIDEO_ID</b>/preview</code><br>
+                            (YouTube links are also supported, e.g., <code>https://www.youtube.com/watch?v=<b>VIDEO_ID</b></code>)
                         </p>
                     `;
                 }
@@ -3609,7 +3673,12 @@
                 targetView = document.getElementById('pdfs-coming-soon-view');
             } else if (type === 'ai-chatbot') {
                 targetView = document.getElementById('ai-chatbot-coming-soon-view');
+            } else if (type === 'timeline') { /* Added for Timeline button */
+                targetView = document.getElementById('timeline-coming-soon-view');
+            } else if (type === 'watch-later') { /* Added for Watch Later button */
+                targetView = document.getElementById('watch-later-coming-soon-view');
             }
+
 
             if (targetView) targetView.style.display = 'flex';
             currentView = `${type}-coming-soon-view`;
@@ -3656,6 +3725,24 @@
         }
 
         // --- Share App Function (for specific batches) ---
+        window.shareApp = function() {
+            if (navigator.share) {
+                navigator.share({
+                    title: `Check out this course: ${window.location.hostname} on SkillNeast! 🚀`, // Use hostname or a generic app title
+                    text: `Master new skills with SkillNeast - your ultimate learning hub! Engaging courses, expert instructors, and a vibrant community. Dive in and unlock your full potential! 🌟 More exciting features coming soon! 🚀`, // Generic description
+                    url: window.location.href 
+                }).then(() => {
+                    console.log('Thanks for sharing!');
+                }).catch((error) => {
+                    console.error('Error sharing:', error);
+                    alert(`Share feature not fully supported or allowed on this device/browser. You can copy the link and share: ${window.location.href}`);
+                });
+            } else {
+                alert(`Share feature not supported on this browser. You can copy the link and share: ${window.location.href}`);
+            }
+        }
+
+        // --- Share Individual Batch Function ---
         window.shareBatch = function(title, description) {
             if (navigator.share) {
                 navigator.share({
@@ -3665,13 +3752,14 @@
                 }).then(() => {
                     console.log('Thanks for sharing!');
                 }).catch((error) => {
-                    console.error('Error sharing:', error);
-                    alert(`Share feature not fully supported or allowed on this device/browser. You can copy the link and share:\n\nTitle: ${title}\nDescription: ${description}\nLink: ${window.location.href}`);
+                    console.error('Error sharing batch:', error);
+                    alert(`Share feature not fully supported or allowed on this device/browser for this batch. You can copy the link and share:\n\nTitle: ${title}\nDescription: ${description}\nLink: ${window.location.href}`);
                 });
             } else {
-                alert(`Share feature not supported on this browser. You can copy the link and share:\n\nTitle: ${title}\nDescription: ${description}\nLink: ${window.location.href}`);
+                alert(`Share feature not supported on this browser for this batch. You can copy the link and share:\n\nTitle: ${title}\nDescription: ${description}\nLink: ${window.location.href}`);
             }
         }
+
 
         // --- Dark Mode Toggle Functionality ---
         window.toggleDarkMode = function() {
