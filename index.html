@@ -1624,9 +1624,9 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             z-index: 3000;
             color: white;
             font-size: 1.5em;
@@ -2287,8 +2287,8 @@
 
     <div class="offline-overlay" id="offlineOverlay">
         <i class="fas fa-wifi"></i>
-        <p>You are offline. Please check your internet connection.</p>
-        <button class="reload-button" onclick="location.reload()">Retry Connection</button>
+        <p>No Internet Connection 😕</p>
+        <button class="reload-button" onclick="location.reload()">Retry 🔁</button>
     </div>
 
     <!-- Name Popup (for first-time users) -->
@@ -2454,14 +2454,27 @@
             </div>
 
             <div class="player-action-buttons">
-                <button class="action-button timeline"><i class="fas fa-stream"></i> Timeline</button>
+                <button class="action-button timeline" onclick="window.showComingSoonPopup('timeline')"><i class="fas fa-stream"></i> Timeline</button>
                 <button class="action-button comments" onclick="window.showCommentsPopup()"><i class="fas fa-comments"></i> SR Comments</button>
-                <button class="action-button watch-later"><i class="fas fa-bookmark"></i> Watch Later</button>
+                <button class="action-button watch-later" onclick="window.showComingSoonPopup('watch-later')"><i class="fas fa-bookmark"></i> Watch Later</button>
             </div>
             
             <ul class="lesson-list" id="lessons-for-player-batch">
             </ul>
         </div>
+
+        <!-- New Coming Soon for Timeline and Watch Later -->
+        <div id="timeline-coming-soon-view" class="coming-soon-section" style="display: none;">
+            <i class="emoji">⏳</i>
+            <h2>Timeline Coming Soon!</h2>
+            <p>We're building advanced timeline features to help you navigate lectures seamlessly. Stay tuned! 🚀</p>
+        </div>
+        <div id="watch-later-coming-soon-view" class="coming-soon-section" style="display: none;">
+            <i class="emoji">⏰</i>
+            <h2>Watch Later Coming Soon!</h2>
+            <p>Save lectures to watch later and organize your study schedule. This feature is in the works! ✨</p>
+        </div>
+
 
         <div id="bundles-coming-soon-view" class="coming-soon-section" style="display: none;">
             <i class="emoji">🎁</i>
@@ -2569,44 +2582,50 @@
     <script type="module">
         // Firebase configuration (from firebase-client-config.js)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-        import { getDatabase, ref, onValue, push, set, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+        import { getDatabase, ref as dbRef, onValue, push, set, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+        // Removed storage imports as image upload is now URL-based
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-        import { getFirestore, collection, query, where, addDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        import { getFirestore, collection, query, where, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
 
         const firebaseConfig = {
-            apiKey: "AIzaSyChwpbFb6M4HtG6zwjg0AXh7Lz9KjnrGZk",
-            authDomain: "adminneast.firebaseapp.com",
-            databaseURL: "https://adminneast-default-rtdb.firebaseio.com",
-            projectId: "adminneast",
-            storageBucket: "adminneast.firebasestorage.app",
-            messagingSenderId: "883877553418",
-            appId: "1:883877553418:web:84ce8200f4b471bfffc6f3",
-            measurementId: "G-PCH99BDF1S"
+          apiKey: "AIzaSyChwpbFb6M4HtG6zwjg0AXh7Lz9KjnrGZk",
+          authDomain: "adminneast.firebaseapp.com",
+          databaseURL: "https://adminneast-default-rtdb.firebaseio.com",
+          projectId: "adminneast",
+          storageBucket: "adminneast.appspot.com", 
+          messagingSenderId: "883877553418",
+          appId: "1:883877553418:web:84ce8200f4b471bfffc6f3",
+          measurementId: "G-PCH99BDF1S"
         };
+        // Ensure __app_id is accessible. Provide a fallback if not in Canvas environment.
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
         const app = initializeApp(firebaseConfig);
-        const rtdb = getDatabase(app); // Renamed for Realtime Database
-        const auth = getAuth(app);
+        const rtdb = getDatabase(app); // Realtime Database
+        // const storage = getStorage(app); // Removed storage initialization
+        const auth = getAuth(app); // Firebase Auth
         const firestore = getFirestore(app); // Initialized Firestore
 
-        // API Key for Gemini (Canvas will automatically provide the API key)
-        const API_KEY = ""; 
+        // Global variable to hold authentication status
+        let isAuthenticated = false;
 
         // Current user ID for Firestore operations
         let currentUserId = null;
 
 
-        // Authenticate Firebase (anonymous for public site)
+        // Authenticate Firebase
         const authenticateFirebase = async () => {
             try {
                 if (typeof __initial_auth_token !== 'undefined') {
                     const userCredential = await signInWithCustomToken(auth, __initial_auth_token);
                     currentUserId = userCredential.user.uid;
+                    isAuthenticated = true;
                     console.log("Public site: Signed in with custom token. UID:", currentUserId);
                 } else {
-                    const userCredential = await signInAnonymously(auth);
-                    currentUserId = userCredential.user.uid;
-                    console.log("Public site: Signed in anonymously. UID:", currentUserId);
+                    await signInAnonymously(auth);
+                    isAuthenticated = true;
+                    console.log("Public site: Signed in anonymously.");
                 }
             } catch (error) {
                 console.error("Public site Firebase authentication error:", error);
@@ -2929,7 +2948,7 @@
         }, { threshold: 0.1 });
 
         function loadAllCategoriesFromFirebase() {
-            const categoriesRef = ref(rtdb, 'categories'); // Use rtdb for Realtime Database
+            const categoriesRef = dbRef(rtdb, 'categories'); // Use rtdb for Realtime Database
             onValue(categoriesRef, (snapshot) => {
                 allCategoriesData = snapshot.val() || {};
                 renderCategories();
@@ -2944,7 +2963,7 @@
             const homeView = document.getElementById('home-view');
             if (!homeView) return;
 
-            // Remove only dynamically added category items
+            // Remove only dynamically added category items, keep static elements within home-view
             Array.from(homeView.querySelectorAll('.course-category-item')).forEach(el => el.remove());
 
             const loadingMessage = document.getElementById('loadingCategoriesMessage');
@@ -2963,7 +2982,6 @@
                 if (!noCategoriesMessage) {
                     homeView.insertAdjacentHTML('afterbegin', '<p class="text-center text-muted col-span-full" id="noCategoriesMessage">No categories found. Please add courses via the admin panel.</p>');
                 }
-                return;
             } else {
                  // Ensure noCategoriesMessage is removed if categories are found
                  const noCategoriesMessage = document.getElementById('noCategoriesMessage');
@@ -2977,12 +2995,16 @@
                 categoryItem.onclick = () => window.showNewBatchesView(catId);
 
                 const firstBatch = category.batches ? Object.values(category.batches)[0] : null;
-                const imageUrl = firstBatch && firstBatch.thumbnail ? firstBatch.thumbnail : 'https://via.placeholder.com/90x90/00ADB5/1A2B3C?text=Category';
+                const imageUrl = category.imageUrl || (firstBatch && firstBatch.thumbnail ? firstBatch.thumbnail : 'https://via.placeholder.com/90x90/00ADB5/1A2B3C?text=Category');
+                
+                // Log the image URL to console for debugging
+                console.log(`Category ID: ${catId}, Image URL: ${imageUrl}`);
+
                 const isNewCategory = firstBatch && firstBatch.isNew;
 
                 categoryItem.innerHTML = `
                     <div class="image-container">
-                        <img src="${imageUrl}" alt="${category.name}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/90x90/00ADB5/1A2B3C?text=Category';">
+                        <img src="${imageUrl}" alt="${category.name}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/90x90/00ADB5/1A2B3C?text=Category'; console.error('Image failed to load:', this.src);">
                     </div>
                     <div class="content-overlay">
                         <span class="category-name">${category.name}</span>
@@ -3058,6 +3080,9 @@
                 const isFavorited = window.favorites.includes(batch.id); /* Use window.favorites */
                 const heartIconClass = isFavorited ? 'fas fa-heart' : 'far fa-heart';
 
+                // Log the batch thumbnail URL to console for debugging
+                console.log(`Batch ID: ${batch.id}, Thumbnail URL: ${batch.thumbnail}`);
+
                 batchCard.innerHTML = `
                     <div class="batch-card-header" style="background-color: ${batch.headerColor || 'var(--accent-teal)'};">
                         <span>${batch.title}</span>
@@ -3068,7 +3093,7 @@
                     </div>
                     <div class="batch-card-body">
                         <div class="batch-image-container">
-                            <img src="${batch.thumbnail}" alt="${batch.title}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=Batch+Image';">
+                            <img src="${batch.thumbnail}" alt="${batch.title}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=Batch+Image'; console.error('Image failed to load:', this.src);">
                         </div>
                         <div class="batch-title">${batch.title}</div>
                         <p class="batch-description">${batch.description || 'No detailed description available.'}</p>
@@ -3197,7 +3222,7 @@
                             </div>
                             <div class="batch-card-body">
                                  <div class="batch-image-container">
-                                    <img src="${batch.thumbnail}" alt="${batch.title}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=Batch+Image';">
+                                    <img src="${batch.thumbnail}" alt="${batch.title}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=Batch+Image'; console.error('Image failed to load:', this.src);">
                                 </div>
                                 <div class="batch-title">${batch.title}</div>
                                 <p class="batch-description">${batch.description || 'No detailed description available.'}</p>
@@ -3298,9 +3323,6 @@
                    
                     // Implement UI from Screenshot_20250613-191010.jpg (simplified to remove unnecessary elements)
                     lessonItem.innerHTML = `
-                        <div class="lesson-list-item-left">
-                            <!-- Removed PW Logo -->
-                        </div>
                         <div class="lesson-list-item-right">
                             <h3 class="lesson-list-item-title">${lecture.name}</h3>
                         </div>
@@ -3389,9 +3411,6 @@
                         
                         // Re-use the simplified lesson-list-item structure from showLessonsInSectionsView
                         lessonItem.innerHTML = `
-                            <div class="lesson-list-item-left">
-                                <!-- Removed PW Logo -->
-                            </div>
                             <div class="lesson-list-item-right">
                                 <h3 class="lesson-list-item-title">${otherLecture.name}</h3>
                             </div>
