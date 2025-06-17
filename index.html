@@ -347,7 +347,7 @@
             z-index: 1;
             animation: emojiPopAndGlow 0.6s ease-out forwards, floatUpDown 2s infinite ease-in-out;
         }
-        @keyframes emojiPopAndG0low {
+        @keyframes emojiPopAndGlow {
             0% { transform: scale(0); opacity: 0; text-shadow: none; }
             50% { transform: scale(1.3); opacity: 1; text-shadow: 0 0 8px var(--cyan-glow-color); }
             100% { transform: scale(1); opacity: 1; text-shadow: none; }
@@ -993,47 +993,26 @@
             flex-direction: column;
             gap: 15px;
         }
-        /* New styles for lesson item to match screenshot 191010.jpg */
+        /* New styles for lesson item */
         .lesson-list-item {
-            background: linear-gradient(135deg, #2A2A2A, #222222); /* Darker background, matching quote section for consistency */
+            background: linear-gradient(135deg, #2A2A2A, #222222);
             border-radius: var(--border-radius-card);
             box-shadow: var(--shadow-light);
-            padding: 20px; /* Increased padding */
+            padding: 20px;
             display: flex;
-            flex-direction: row; /* Changed to row for layout */
-            align-items: center; /* Vertically center content */
+            flex-direction: row;
+            align-items: center;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
             border: 1px solid var(--border-color);
-            position: relative; /* For positioning video icon */
+            position: relative;
         }
         .lesson-list-item:hover {
             transform: translateY(-3px);
             box-shadow: var(--shadow-medium);
         }
-        .lesson-list-item-left {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-right: 20px; /* Space between left and right content */
-            flex-shrink: 0; /* Don't shrink logo/teacher area */
-        }
-        .lesson-list-item .pw-logo {
-            width: 50px; /* Larger logo */
-            height: 50px; /* Larger logo */
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--accent-teal); /* Highlight logo */
-            margin-bottom: 8px; /* Space below logo */
-        }
-        .lesson-list-item .teacher-name {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 0.8em;
-            color: var(--text-light);
-            text-align: center;
-        }
         .lesson-list-item-right {
-            flex-grow: 1; /* Allows text content to take remaining space */
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             text-align: left;
@@ -1045,23 +1024,6 @@
             color: var(--text-dark);
             margin: 0 0 5px 0;
             line-height: 1.2;
-        }
-        .lesson-list-item .lesson-list-item-subtitle {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 1em;
-            color: var(--text-light);
-            margin-bottom: 10px;
-        }
-        .lesson-list-item .lesson-meta {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 0.85em;
-            color: var(--text-light);
-        }
-        .lesson-list-item .lesson-meta i {
-            color: var(--accent-teal);
-            margin-right: 5px;
         }
         .lesson-list-item .video-icon-overlay {
             position: absolute;
@@ -1157,9 +1119,6 @@
             transition: color 0.3s ease;
         }
         
-        /* Removed Teacher & Meta info from player view */
-
-
         .player-action-buttons {
             display: flex;
             gap: 10px;
@@ -1190,7 +1149,7 @@
             background-color: var(--timeline-btn-bg);
         }
         .player-action-buttons .action-button.comments {
-            background-color: var(--comments-btn-bg); /* This button is removed via JS but CSS remains */
+            background-color: var(--comments-btn-bg);
         }
         .player-action-buttons .action-button.watch-later {
             background-color: var(--watch-later-btn-bg);
@@ -1201,7 +1160,6 @@
             padding: 0 20px;
             margin-top: 20px;
         }
-        /* Player view lesson item is same as general lesson list item now */
         .lesson-item {
             background-color: #333333;
             border-radius: var(--border-radius-card);
@@ -2164,123 +2122,6 @@
         input:checked + .slider-round:before {
             transform: translateX(20px);
         }
-
-        /* Modal for Batch Details (AI Overview, now removed from general flow) */
-        .batch-detail-modal-overlay {
-            display: none; /* Hide by default, only shown via specific function calls if needed */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            justify-content: center;
-            align-items: center;
-            z-index: 2500;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .batch-detail-modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-            display: flex; /* Show when active */
-        }
-        .batch-detail-modal-content {
-            background-color: var(--player-section-bg);
-            padding: 30px;
-            border-radius: var(--border-radius-main);
-            box-shadow: var(--shadow-popup);
-            width: 90%;
-            max-width: 600px;
-            position: relative;
-            transform: translateY(20px);
-            opacity: 0;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-            border: 1px solid var(--border-color);
-            color: var(--text-dark);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        .batch-detail-modal-overlay.active .batch-detail-modal-content {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        .batch-detail-modal-content .close-button {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            font-size: 2em;
-            color: var(--text-light);
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-        .batch-detail-modal-content .close-button:hover {
-            color: var(--text-dark);
-        }
-        .batch-detail-modal-content h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.8em;
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-align: center;
-            color: var(--text-dark);
-        }
-        .batch-detail-modal-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: var(--border-radius-card);
-            margin-bottom: 20px;
-        }
-        .batch-detail-modal-content .modal-description, .batch-detail-modal-content .modal-overview {
-            font-size: 1em;
-            line-height: 1.6;
-            color: var(--text-light);
-            margin-bottom: 20px;
-            text-align: justify;
-        }
-        .batch-detail-modal-content .generate-overview-btn {
-            background-color: var(--accent-teal);
-            color: var(--white);
-            padding: 10px 20px;
-            border: none;
-            border-radius: var(--border-radius-button);
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.2s ease;
-            margin-top: 10px;
-            display: block;
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .batch-detail-modal-content .generate-overview-btn:hover {
-            background-color: #00939b;
-            transform: translateY(-2px);
-        }
-        .batch-detail-modal-content .loading-overview {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 15px;
-            color: var(--text-light);
-        }
-        .batch-detail-modal-content .loading-overview .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid var(--accent-teal);
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-            margin-right: 10px;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body>
@@ -2313,22 +2154,6 @@
         </div>
     </div>
 
-    <!-- This modal is now unused in the main flow, but kept in case you want to use it for other purposes -->
-    <div class="batch-detail-modal-overlay" id="batchDetailModalOverlay">
-        <div class="batch-detail-modal-content">
-            <button class="close-button" onclick="window.closeBatchDetailModal()">×</button>
-            <h3 id="modalBatchTitle"></h3>
-            <img id="modalBatchImage" src="" alt="Batch Image" />
-            <p id="modalBatchDescription" class="modal-description"></p>
-            <button class="generate-overview-btn" id="generateOverviewBtn">Generate AI Overview ✨</button>
-            <div id="loadingOverview" class="loading-overview" style="display: none;">
-                <div class="spinner"></div>
-                <span>Generating overview...</span>
-            </div>
-            <p id="generatedOverview" class="modal-overview"></p>
-        </div>
-    </div>
-
     <div class="comments-popup-overlay" id="commentsPopupOverlay">
         <div class="comments-popup">
             <button class="popup-close-button" onclick="window.closeCommentsPopup()">×</button>
@@ -2347,7 +2172,7 @@
         <div class="menu-icon" onclick="window.openSliderMenu()"><i class="fas fa-bars"></i></div>
         <div class="app-logo" id="appLogo">
             <img src="" alt="SkillNeast Logo" draggable="false" id="skillNeastLogo" onerror="this.onerror=null;this.src='https://via.placeholder.com/40x40/00ADB5/ffffff?text=SN';">
-            <div class="text-wrapper"> <!-- Added text wrapper -->
+            <div class="text-wrapper">
                 <span class="main-title">SKILLNEAST</span>
                 <span class="tagline">Master New Skill 🚀💡</span>
             </div>
@@ -2372,15 +2197,12 @@
             <!-- Categories will be loaded here dynamically from Firebase -->
             <p class="text-center text-muted col-span-full" id="loadingCategoriesMessage">Loading categories...</p>
 
-            <!-- Favorites Section (ONLY on Home Page - moved inside home-view) -->
             <div class="favorites-section-home-card" onclick="window.showFavoritesView()" id="favorites-section-home-card">
                 <i class="fas fa-heart fav-icon"></i>
                 <h2>My Favorite Batches</h2>
                 <p>Explore SkillNeast! Your ultimate hub for mastering new skills with engaging courses, expert instructors, and a vibrant community. Dive into learning, track your progress, and unlock your full potential! 🌟 More exciting features coming soon! 🚀</p>
                 <span class="fav-count" id="favorites-count">0 Batches</span>
             </div>
-
-            <!-- Removed partitions -->
 
             <div class="telegram-card" onclick="window.open(window.siteConfig.telegramGroupLink || 'https://t.me/', '_blank');">
                 <i class="fab fa-telegram-plane telegram-icon-large"></i>
@@ -2403,7 +2225,6 @@
                 <button class="search-button" onclick="window.filterBatches()">Search</button>
             </div>
             <div class="batch-list" id="batches-container">
-                <!-- Batches will be loaded here dynamically -->
                 <p class="text-center text-muted" id="loadingBatchesMessage">Loading batches...</p>
             </div>
         </div>
@@ -2448,7 +2269,6 @@
                     </div>
                     <div class="player-metadata">
                         <h3 class="lesson-sub-title" id="player-lesson-sub-title"></h3>
-                        <!-- Removed player-lesson-meta-info div entirely -->
                     </div>
                 </div>
             </div>
@@ -2463,7 +2283,6 @@
             </ul>
         </div>
 
-        <!-- New Coming Soon for Timeline and Watch Later -->
         <div id="timeline-coming-soon-view" class="coming-soon-section" style="display: none;">
             <i class="emoji">⏳</i>
             <h2>Timeline Coming Soon!</h2>
@@ -2474,7 +2293,6 @@
             <h2>Watch Later Coming Soon!</h2>
             <p>Save lectures to watch later and organize your study schedule. This feature is in the works! ✨</p>
         </div>
-
 
         <div id="bundles-coming-soon-view" class="coming-soon-section" style="display: none;">
             <i class="emoji">🎁</i>
@@ -2580,10 +2398,8 @@
     </div>
 
     <script type="module">
-        // Firebase configuration (from firebase-client-config.js)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
         import { getDatabase, ref as dbRef, onValue, push, set, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
-        // Removed storage imports as image upload is now URL-based
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
         import { getFirestore, collection, query, where, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
@@ -2598,36 +2414,28 @@
           appId: "1:883877553418:web:84ce8200f4b471bfffc6f3",
           measurementId: "G-PCH99BDF1S"
         };
-        // Ensure __app_id is accessible. Provide a fallback if not in Canvas environment.
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
         const app = initializeApp(firebaseConfig);
-        const rtdb = getDatabase(app); // Realtime Database
-        // const storage = getStorage(app); // Removed storage initialization
-        const auth = getAuth(app); // Firebase Auth
-        const firestore = getFirestore(app); // Initialized Firestore
+        const rtdb = getDatabase(app);
+        const auth = getAuth(app);
+        const firestore = getFirestore(app);
 
-        // Global variable to hold authentication status
         let isAuthenticated = false;
-
-        // Current user ID for Firestore operations
         let currentUserId = null;
 
-        // Global site configuration
         window.siteConfig = {
             telegramChannelLink: 'https://t.me/default_channel',
             telegramGroupLink: 'https://t.me/default_group',
             youtubeLink: 'https://youtube.com/default_channel',
             instagramLink: 'https://instagram.com/default_profile',
-            requestCoursesLink: '#', // Default to current page hash
+            requestCoursesLink: '#',
             profilePictureUrl: 'https://via.placeholder.com/120x120/00ADB5/ffffff?text=Fahad',
             skillNeastLogoUrl: 'https://via.placeholder.com/40x40/00ADB5/ffffff?text=SN',
             sliderHeaderPictureUrl: 'https://via.placeholder.com/50x50/00ADB5/ffffff?text=SN',
-            pwLogoUrl: 'https://via.placeholder.com/50x50/000000/ffffff?text=PW' // Default PW Logo
+            pwLogoUrl: 'https://via.placeholder.com/50x50/000000/ffffff?text=PW'
         };
 
-
-        // Authenticate Firebase
         const authenticateFirebase = async () => {
             try {
                 if (typeof __initial_auth_token !== 'undefined') {
@@ -2636,67 +2444,25 @@
                     isAuthenticated = true;
                     console.log("Public site: Signed in with custom token. UID:", currentUserId);
                 } else {
-                    await signInAnonymously(auth);
+                    const userCredential = await signInAnonymously(auth);
+                    currentUserId = userCredential.user.uid;
                     isAuthenticated = true;
-                    console.log("Public site: Signed in anonymously.");
+                    console.log("Public site: Signed in anonymously. UID:", currentUserId);
                 }
             } catch (error) {
                 console.error("Public site Firebase authentication error:", error);
-                // Display user-friendly message for Firebase auth issues
-                alert("Firebase Authentication Error: Could not connect to courses. Please check your Firebase configuration and network. If you are hosting this app, ensure your domain is added to Firebase Authorized Domains. Error: " + error.message);
+                alert("Firebase Authentication Error: " + error.message);
             }
         };
 
-        // --- Data Structure for Quotes (moved to JS for dynamic updates) ---
         const quotes = [
             { quote: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
             { quote: "Success is not final, failure is not fatal: It is the courage to continue that counts.", author: "Winston Churchill" },
             { quote: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
-            { quote: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
             { quote: "The mind is everything. What you think you become.", author: "Buddha" },
-            { quote: "The best way to predict the future is to create it.", author: "Peter Drucker" },
-            { quote: "It always seems impossible until it's done.", author: "Nelson Mandela" },
-            { quote: "Don't wish it were easier, wish you were better.", author: "Jim Rohn" },
-            { quote: "The expert in anything was once a beginner.", author: "Helen Hayes" },
-            { quote: "Education is the most powerful weapon which you can use to change the world.", author: "Nelson Mandela" },
-            { quote: "Strive not to be a success, but rather to be of value.", author: "Albert Einstein" },
-            { quote: "The best revenge is massive success.", author: "Frank Sinatra" },
-            { quote: "The greatest glory in living lies not in never falling, but in rising every time we fall.", author: "Nelson Mandela" },
-            { quote: "The journey of a thousand miles begins with a single step.", author: "Lao Tzu" },
-            { quote: "What you get by achieving your goals is not as important as what you become by achieving your goals.", author: "Zig Ziglar" },
-            { quote: "The mind is not a vessel to be filled, but a fire to be kindled.", author: "Plutarch" },
-            { quote: "Limitations live only in our minds. But if we use our imaginations, our possibilities become limitless.", author: "Jamie Paolinetti" },
-            { quote: "Innovation distinguishes between a leader and a follower.", author: "Steve Jobs" },
-            { quote: "The harder you work for something, the greater you'll feel when you achieve it.", author: "Unknown" },
-            { quote: "Dreams don't work unless you do.", author: "John C. Maxwell" },
-            { quote: "Success is walking from failure to failure with no loss of enthusiasm.", author: "Winston Churchill" },
-            { quote: "I find that the harder I work, the more luck I seem to have.", author: "Thomas Jefferson" },
-            { quote: "The only place where success comes before work is in the dictionary.", author: "Vidal Sassoon" },
-            { quote: "Quality is not an act, it is a habit.", author: "Aristotle" },
-            { quote: "To be the best, you must be able to handle the worst.", author: "Wilson Kanadi" },
-            { quote: "Opportunities don't happen, you create them.", author: "Chris Grosser" },
-            { quote: "There are no shortcuts to any place worth going.", author: "Beverly Sills" },
-            { quote: "The future depends on what you do today.", author: "Mahatma Gandhi" },
-            { quote: "Push yourself, because no one else is going to do it for you.", author: "Unknown" },
-            { quote: "Great things never came from comfort zones.", author: "Unknown" },
-            { quote: "Success is the sum of small efforts repeated day in and day out.", author: "Robert Collier" },
-            { quote: "The expert in anything was once a beginner.", author: "Helen Hayes" },
-            { quote: "Don’t count the days, make the days count.", author: "Muhammad Ali" },
-            { quote: "The secret of getting ahead is getting started.", author: "Mark Twain" },
-            { quote: "You don’t have to be great to start, but you have to start to be great.", author: "Zig Ziglar" },
-            { quote: "The only limit to our realization of tomorrow will be our doubts of today.", author: "Franklin D. Roosevelt" },
-            { quote: "If you are not willing to risk the usual, you will have to settle for the ordinary.", author: "Jim Rohn" },
-            { quote: "The starting point of all achievement is desire.", author: "Napoleon Hill" },
-            { quote: "It’s not whether you get knocked down, it’s whether you get up.", author: "Vince Lombardi" },
-            { quote: "Your time is limited, don't waste it living someone else's life.", author: "Steve Jobs" }
+            { quote: "The best way to predict the future is to create it.", author: "Peter Drucker" }
         ];
-        const allEmojis = [
-            '✨', '🚀', '💡', '🌟', '💪', '🔥', '💖', '🎓', '📚', '🎯', '💯', '🌈', '🤩', '🏆', '📈', '🧠', '🧩', '🌱', '✅', '👑',
-            '🎉', '💫', '🌠', '🔮', '💎', '🔑', '🔓', '🖋️', '📖', '🧑‍🎓', '💻', '🎼', '🎬', '🎨', '⚙️', '📊', '🌐', '🗺️', '🧭', '🌟',
-            '💡', '✨', '⚡', '💥', '🔥', '🌈', '💎', '🔑', '🏆', '💯', '🚀', '🧠', '📚', '🎓', '💻', '📈', '🗺️', '🌐', '🎯', '💡',
-            '🌟', '🚀', '✨', '🔥', '💖', '💪', '🌱', '🌈', '💯', '🏆', '🧠', '📚', '🎯', '🎉', '💫', '🌠', '🔮', '💎', '🔑', '🔓',
-            '🤩', '🧑‍🎓', '💻', '🎼', '🎬', '🎨', '⚙️', '📊', '🌐', '🗺️', '🧭', '✅', '👑', '📝', '🖋️', '📈', '💡', '⚡', '💥', '☀️'
-        ];
+        const allEmojis = ['✨', '🚀', '💡', '🌟', '💪', '🔥', '💖', '🎓', '📚', '🎯'];
         let availableQuoteIndices = [];
 
         function shuffleArray(array) {
@@ -2706,20 +2472,18 @@
             }
         }
 
-        let allCategoriesData = {}; // Stores fetched categories and their nested data
-        window.favorites = JSON.parse(localStorage.getItem('favorites')) || []; // Made global for direct access
+        let allCategoriesData = {};
+        window.favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         let currentView = 'home-view';
         let currentBatchId = null;
         let currentSectionIndex = null;
-        window.currentPlayingLectureId = null; // New global to store currently playing lecture ID for comments
-        window.lastCategoryViewed = 'all'; // Made global for direct access from HTML
-        const surpriseLink = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Example link
+        window.currentPlayingLectureId = null;
+        window.lastCategoryViewed = 'all';
 
-        // --- User Name Popup Logic ---
         document.addEventListener('DOMContentLoaded', async () => {
-            await authenticateFirebase(); // Authenticate Firebase first
-            loadAllCategoriesFromFirebase(); // Start loading categories
-            loadSiteConfigAndApply(); // Load and apply site config
+            await authenticateFirebase();
+            loadAllCategoriesFromFirebase();
+            loadSiteConfigAndApply();
 
             let userName = localStorage.getItem('userName');
             let userRole = localStorage.getItem('userRole');
@@ -2739,50 +2503,19 @@
             }
             shuffleArray(availableQuoteIndices);
 
-            window.highlightBottomNav('home-nav'); // Call global function
+            window.highlightBottomNav('home-nav');
             renderFavoritesSectionHomeCard();
-            window.updateQuote(); // Call global function
-            setInterval(window.updateQuote, 6 * 60 * 60 * 1000); // Call global function
+            window.updateQuote();
+            setInterval(window.updateQuote, 6 * 60 * 60 * 1000);
 
             document.addEventListener('contextmenu', (e) => { e.preventDefault(); });
-
-            // Long press functionality
-            let pressTimer;
-            const longPressDuration = 500;
-
-            function onTouchStart(event) {
-                this.classList.add('active');
-                const targetElement = this;
-                pressTimer = setTimeout(() => {
-                    targetElement.classList.add('long-press');
-                }, longPressDuration);
-            }
-
-            function onTouchEnd(event) {
-                clearTimeout(pressTimer);
-                this.classList.remove('long-press');
-                this.classList.remove('active');
-            }
-
-            // Event listeners for static elements now handled in renderCategories for their re-addition
-            // document.querySelectorAll('.favorites-section-home-card, .telegram-card, .surprise-button').forEach(item => {
-            //     item.addEventListener('touchstart', onTouchStart);
-            //     item.addEventListener('touchend', onTouchEnd);
-            //     item.addEventListener('touchcancel', onTouchEnd);
-            //     item.addEventListener('mousedown', onTouchStart);
-            //     item.addEventListener('mouseup', onTouchEnd);
-            //     item.addEventListener('mouseleave', onTouchEnd);
-            // });
-
-            // Offline detection
+            
             function updateOnlineStatus() {
                 const offlineOverlay = document.getElementById('offlineOverlay');
-                if (offlineOverlay) { // Check if element exists
-                    if (navigator.onLine) {
-                        offlineOverlay.classList.remove('active');
-                    } else {
-                        offlineOverlay.classList.add('active');
-                    }
+                if (navigator.onLine) {
+                    offlineOverlay.classList.remove('active');
+                } else {
+                    offlineOverlay.classList.add('active');
                 }
             }
 
@@ -2790,45 +2523,33 @@
             window.addEventListener('offline', updateOnlineStatus);
             updateOnlineStatus();
 
-            // Initial check for dark/light mode preference on load
             const isLightModeEnabled = localStorage.getItem('lightModeEnabled') === 'true';
             if (isLightModeEnabled) {
                 document.body.classList.add('light-mode');
-                const darkModeToggleSwitch = document.getElementById('darkModeToggleSwitch');
-                if (darkModeToggleSwitch) darkModeToggleSwitch.checked = false; // Check if element exists
+                document.getElementById('darkModeToggleSwitch').checked = false;
             } else {
-                document.body.classList.remove('light-mode');
-                const darkModeToggleSwitch = document.getElementById('darkModeToggleSwitch');
-                if (darkModeToggleSwitch) darkModeToggleSwitch.checked = true; // Check if element exists
+                document.getElementById('darkModeToggleSwitch').checked = true;
             }
 
-            // Ensure appLogo rotation works globally
             const appLogo = document.getElementById('appLogo');
             const skillNeastLogoImage = document.getElementById('skillNeastLogo');
-            if (appLogo && skillNeastLogoImage) { // Check both parent and child
-                appLogo.addEventListener('click', () => {
-                    if (!skillNeastLogoImage.classList.contains('rotating')) {
-                        skillNeastLogoImage.classList.add('rotating'); // Apply rotating class to image
-                        setTimeout(() => {
-                            skillNeastLogoImage.classList.remove('rotating'); // Remove class after rotation
-                            location.reload(); // Then refresh
-                        }, 1000); // Duration of rotation animation
-                    }
-                });
-            }
+            appLogo.addEventListener('click', () => {
+                if (!skillNeastLogoImage.classList.contains('rotating')) {
+                    skillNeastLogoImage.classList.add('rotating');
+                    setTimeout(() => {
+                        skillNeastLogoImage.classList.remove('rotating');
+                        location.reload();
+                    }, 1000);
+                }
+            });
         });
 
-        // --- Quote Logic ---
         window.updateQuote = function() {
             const quoteTextElement = document.getElementById('quoteText');
             const quoteAuthorElement = document.getElementById('quoteAuthor');
             
-            if (!quoteTextElement || !quoteAuthorElement) return; // Add null check
-
             if (availableQuoteIndices.length === 0) {
-                for (let i = 0; i < quotes.length; i++) {
-                    availableQuoteIndices.push(i);
-                }
+                for (let i = 0; i < quotes.length; i++) availableQuoteIndices.push(i);
                 shuffleArray(availableQuoteIndices);
             }
 
@@ -2836,38 +2557,20 @@
             const selectedQuote = quotes[quoteIndex];
             const randomEmoji = allEmojis[Math.floor(Math.random() * allEmojis.length)];
 
-            quoteTextElement.style.animation = 'none';
-            quoteAuthorElement.style.animation = 'none';
-            void quoteTextElement.offsetWidth;
-            void quoteAuthorElement.offsetWidth;
-
             quoteTextElement.innerHTML = `"${selectedQuote.quote}" <span class="quote-emoji">${randomEmoji}</span>`;
             quoteAuthorElement.textContent = selectedQuote.author;
-            quoteTextElement.style.animation = 'quoteSlideIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards';
-            quoteAuthorElement.style.animation = 'quoteAuthorFadeIn 1s ease-out forwards';
         }
 
         window.updateCharCount = function() {
-            const userNameInput = document.getElementById('userNameInput');
-            const currentCharCount = document.getElementById('currentCharCount');
-            if (!userNameInput || !currentCharCount) return; // Add null check
-            currentCharCount.textContent = userNameInput.value.length;
+            document.getElementById('currentCharCount').textContent = document.getElementById('userNameInput').value.length;
         }
 
         window.submitName = function() {
-            const userNameInput = document.getElementById('userNameInput');
-            if (!userNameInput) return; // Add null check
-            let userName = userNameInput.value.trim();
-            const selectedRoleElement = document.querySelector('input[name="userRole"]:checked');
-            let userRole = selectedRoleElement ? selectedRoleElement.value : 'Other';
+            let userName = document.getElementById('userNameInput').value.trim();
+            let userRole = document.querySelector('input[name="userRole"]:checked').value;
 
-            if (userName === '') {
-                userName = 'Guest';
-            } else if (userName.length > 15) {
-                userName = userName.substring(0, 15);
-            }
-
-            localStorage.setItem('userName', userName);
+            if (userName === '') userName = 'Guest';
+            localStorage.setItem('userName', userName.substring(0, 15));
             localStorage.setItem('userRole', userRole);
 
             updateWelcomeSection();
@@ -2877,250 +2580,124 @@
         function updateWelcomeSection() {
             const userName = localStorage.getItem('userName') || 'Guest';
             const userRole = localStorage.getItem('userRole') || '';
-            const displayedUserName = document.getElementById('displayedUserName');
+            document.getElementById('displayedUserName').textContent = userName;
             const displayedUserRoleElement = document.getElementById('displayedUserRole');
-            if (displayedUserName) displayedUserName.textContent = userName; // Add null check
-            if (displayedUserRoleElement) { // Add null check
-                if (userRole && userRole !== 'Other') {
-                    displayedUserRoleElement.textContent = userRole;
-                    displayedUserRoleElement.style.display = 'inline-block';
-                } else {
-                    displayedUserRoleElement.textContent = '';
-                    displayedUserRoleElement.style.display = 'none';
-                }
+            if (userRole && userRole !== 'Other') {
+                displayedUserRoleElement.textContent = userRole;
+                displayedUserRoleElement.style.display = 'inline-block';
+            } else {
+                displayedUserRoleElement.style.display = 'none';
             }
         }
 
-        window.closeNamePopup = function() {
-            const namePopupOverlay = document.getElementById('namePopupOverlay');
-            if (namePopupOverlay) namePopupOverlay.classList.remove('active'); // Add null check
-        }
+        window.closeNamePopup = () => document.getElementById('namePopupOverlay').classList.remove('active');
 
-        // --- View Switching Logic ---
         function hideAllViews() {
             const views = [
-                'home-view', /* Now contains favorites, partitions, telegram, share button */
-                'new-batches-view',
-                'favorites-view',
-                'sections-view',
-                'lessons-in-sections-view',
-                'video-player-view',
-                'bundles-coming-soon-view',
-                'pdfs-coming-soon-view',
-                'about-me-view',
-                'how-to-use-app-view',
-                'ai-chatbot-coming-soon-view'
+                'home-view', 'new-batches-view', 'favorites-view', 'sections-view', 
+                'lessons-in-sections-view', 'video-player-view', 'bundles-coming-soon-view', 
+                'pdfs-coming-soon-view', 'about-me-view', 'how-to-use-app-view', 
+                'ai-chatbot-coming-soon-view', 'timeline-coming-soon-view', 'watch-later-coming-soon-view'
             ];
-            views.forEach(id => {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.style.display = 'none';
-                }
-            });
-
-            // Specific top-level elements that are not part of a "view" div
-            const welcomeBanner = document.querySelector('.welcome-banner');
-            if (welcomeBanner) welcomeBanner.style.display = 'none';
-
-            const quoteSection = document.querySelector('.quote-section');
-            if (quoteSection) quoteSection.style.display = 'none';
+            views.forEach(id => document.getElementById(id).style.display = 'none');
+            document.querySelector('.welcome-banner').style.display = 'none';
+            document.querySelector('.quote-section').style.display = 'none';
         }
 
         window.showHomeView = function() {
             hideAllViews();
-            const homeView = document.getElementById('home-view');
-            const welcomeBanner = document.querySelector('.welcome-banner');
-            const quoteSection = document.querySelector('.quote-section');
-            
-            if (homeView) homeView.style.display = 'grid'; /* Use grid as home-view is now a grid container */
-
-            renderFavoritesSectionHomeCard(); // Ensure favorites are rendered when showing home view
+            document.getElementById('home-view').style.display = 'grid';
+            document.querySelector('.welcome-banner').style.display = 'flex';
+            document.querySelector('.quote-section').style.display = 'block';
             currentView = 'home-view';
             window.highlightBottomNav('home-nav');
             window.scrollTo(0, 0);
-
-            if (welcomeBanner) welcomeBanner.style.display = 'flex';
-            if (quoteSection) quoteSection.style.display = 'block';
-
             updateWelcomeSection();
-            renderCategories(); /* Re-render categories including static homepage elements */
+            renderCategories();
         }
 
-        // --- Firebase Data Fetching and Rendering ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.remove('hidden-on-scroll');
                     entry.target.classList.add('visible-on-scroll');
-                } else {
-                    if (entry.target.classList.contains('visible-on-scroll')) {
-                        entry.target.classList.remove('visible-on-scroll');
-                        entry.target.classList.add('hidden-on-scroll');
-                    }
                 }
             });
         }, { threshold: 0.1 });
 
         function loadAllCategoriesFromFirebase() {
-            const categoriesRef = dbRef(rtdb, 'categories'); // Use rtdb for Realtime Database
-            onValue(categoriesRef, (snapshot) => {
+            onValue(dbRef(rtdb, 'categories'), (snapshot) => {
                 allCategoriesData = snapshot.val() || {};
                 renderCategories();
             }, (error) => {
                 console.error("Error fetching categories:", error);
-                const loadingCategoriesMessage = document.getElementById('loadingCategoriesMessage');
-                if (loadingCategoriesMessage) loadingCategoriesMessage.textContent = `Error loading categories: ${error.message}`;
+                document.getElementById('loadingCategoriesMessage').textContent = `Error loading categories: ${error.message}`;
             });
         }
 
-        // --- Site Configuration (Links & Profile Assets) Application ---
         const loadSiteConfigAndApply = () => {
-            const configRef = dbRef(rtdb, 'siteConfig');
-            onValue(configRef, (snapshot) => {
+            onValue(dbRef(rtdb, 'siteConfig'), (snapshot) => {
                 const config = snapshot.val() || {};
-                window.siteConfig = { ...window.siteConfig, ...config }; // Merge with defaults
-
-                // Apply to Top Navbar
-                const skillNeastLogoImage = document.getElementById('skillNeastLogo');
-                if (skillNeastLogoImage) {
-                    skillNeastLogoImage.src = window.siteConfig.skillNeastLogoUrl || 'https://via.placeholder.com/40x40/00ADB5/ffffff?text=SN';
-                }
-                const telegramTopIcon = document.querySelector('.top-navbar .telegram-icon');
-                if (telegramTopIcon) {
-                    telegramTopIcon.onclick = () => window.open(window.siteConfig.telegramGroupLink || 'https://t.me/', '_blank');
-                }
-
-                // Apply to About Me section
-                const aboutMeProfilePic = document.getElementById('aboutMeProfilePic');
-                if (aboutMeProfilePic) {
-                    aboutMeProfilePic.src = window.siteConfig.profilePictureUrl || 'https://via.placeholder.com/120x120/00ADB5/ffffff?text=Fahad';
-                }
-                const aboutMeTelegramGroupLink = document.getElementById('aboutMeTelegramGroupLink');
-                if (aboutMeTelegramGroupLink) aboutMeTelegramGroupLink.href = window.siteConfig.telegramGroupLink || 'https://t.me/';
-                const aboutMeInstagramLink = document.getElementById('aboutMeInstagramLink');
-                if (aboutMeInstagramLink) aboutMeInstagramLink.href = window.siteConfig.instagramLink || 'https://instagram.com/';
-                const aboutMeYoutubeLink = document.getElementById('aboutMeYoutubeLink');
-                if (aboutMeYoutubeLink) aboutMeYoutubeLink.href = window.siteConfig.youtubeLink || 'https://youtube.com/';
-
-                // Apply to Slider Menu
-                const sliderHeaderLogo = document.getElementById('sliderHeaderLogo');
-                if (sliderHeaderLogo) {
-                    sliderHeaderLogo.src = window.siteConfig.sliderHeaderPictureUrl || 'https://via.placeholder.com/50x50/00ADB5/ffffff?text=SN';
-                }
-                const sliderTelegramChannelLink = document.getElementById('sliderTelegramChannelLink');
-                if (sliderTelegramChannelLink) sliderTelegramChannelLink.href = window.siteConfig.telegramChannelLink || 'https://t.me/';
-                const sliderTelegramGroupLink = document.getElementById('sliderTelegramGroupLink');
-                if (sliderTelegramGroupLink) sliderTelegramGroupLink.href = window.siteConfig.telegramGroupLink || 'https://t.me/';
-                const sliderRequestCoursesLink = document.getElementById('sliderRequestCoursesLink');
-                if (sliderRequestCoursesLink) sliderRequestCoursesLink.href = window.siteConfig.requestCoursesLink || '#';
-
-                // Apply to dynamically loaded lecture items (PW Logo)
-                // This will re-render existing ones and apply to new ones.
-                document.querySelectorAll('.pw-logo').forEach(img => {
-                    img.src = window.siteConfig.pwLogoUrl || 'https://via.placeholder.com/50x50/000000/ffffff?text=PW';
-                    img.onerror = function() { this.src='https://via.placeholder.com/50x50/000000/ffffff?text=PW'; };
-                });
-
-                console.log("Site configuration applied:", window.siteConfig);
-
-            }, (error) => {
-                console.error("Error loading site config:", error);
-                msg(`Error loading site configuration: ${error.message}`, 'danger');
-            });
+                window.siteConfig = { ...window.siteConfig, ...config };
+                document.getElementById('skillNeastLogo').src = window.siteConfig.skillNeastLogoUrl;
+                document.querySelector('.top-navbar .telegram-icon').onclick = () => window.open(window.siteConfig.telegramGroupLink, '_blank');
+                document.getElementById('aboutMeProfilePic').src = window.siteConfig.profilePictureUrl;
+                document.getElementById('aboutMeTelegramGroupLink').href = window.siteConfig.telegramGroupLink;
+                document.getElementById('aboutMeInstagramLink').href = window.siteConfig.instagramLink;
+                document.getElementById('aboutMeYoutubeLink').href = window.siteConfig.youtubeLink;
+                document.getElementById('sliderHeaderLogo').src = window.siteConfig.sliderHeaderPictureUrl;
+                document.getElementById('sliderTelegramChannelLink').href = window.siteConfig.telegramChannelLink;
+                document.getElementById('sliderTelegramGroupLink').href = window.siteConfig.telegramGroupLink;
+                document.getElementById('sliderRequestCoursesLink').href = window.siteConfig.requestCoursesLink;
+                console.log("Site configuration applied.");
+            }, (error) => console.error("Error loading site config:", error));
         };
 
         function renderCategories() {
             const homeView = document.getElementById('home-view');
-            if (!homeView) return;
-
-            // Remove only dynamically added category items, keep static elements within home-view
             Array.from(homeView.querySelectorAll('.course-category-item')).forEach(el => el.remove());
-
             const loadingMessage = document.getElementById('loadingCategoriesMessage');
-            if (loadingMessage) loadingMessage.remove(); // Remove initial loading message for categories
+            if (loadingMessage) loadingMessage.remove();
 
-            if (Object.keys(allCategoriesData).length === 0) {
-                // Only add "No categories" message if it doesn't exist and there are no categories
-                const noCategoriesMessage = document.getElementById('noCategoriesMessage');
-                if (!noCategoriesMessage) {
-                    homeView.insertAdjacentHTML('afterbegin', '<p class="text-center text-muted col-span-full" id="noCategoriesMessage">No categories found. Please add courses via the admin panel.</p>');
-                }
-            } else {
-                 // Ensure noCategoriesMessage is removed if categories are found
-                 const noCategoriesMessage = document.getElementById('noCategoriesMessage');
-                 if(noCategoriesMessage) noCategoriesMessage.remove();
-            }
-
-            // Dynamically add category items
             Object.entries(allCategoriesData).forEach(([catId, category]) => {
                 const categoryItem = document.createElement('div');
                 categoryItem.className = 'course-category-item hidden-on-scroll';
                 categoryItem.onclick = () => window.showNewBatchesView(catId);
-
-                const firstBatch = category.batches ? Object.values(category.batches)[0] : null;
-                const imageUrl = category.imageUrl || (firstBatch && firstBatch.thumbnail ? firstBatch.thumbnail : 'https://via.placeholder.com/90x90/00ADB5/1A2B3C?text=Category');
-                
-                // Log the image URL to console for debugging
-                console.log(`Category ID: ${catId}, Image URL: ${imageUrl}`);
-
-                const isNewCategory = firstBatch && firstBatch.isNew;
-
+                const imageUrl = category.imageUrl || 'https://via.placeholder.com/180x180/00ADB5/1A2B3C?text=Course';
                 categoryItem.innerHTML = `
                     <div class="image-container">
-                        <img src="${imageUrl}" alt="${category.name}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/90x90/00ADB5/1A2B3C?text=Category'; console.error('Image failed to load:', this.src);">
+                        <img src="${imageUrl}" alt="${category.name}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/180x180/00ADB5/1A2B3C?text=No+Img';">
                     </div>
                     <div class="content-overlay">
                         <span class="category-name">${category.name}</span>
                     </div>
-                    ${isNewCategory ? '<span class="new-tag">NEW</span>' : ''}
                 `;
-                homeView.prepend(categoryItem); /* Prepend to show categories first */
+                homeView.prepend(categoryItem);
                 observer.observe(categoryItem);
-            });
-
-            // Re-observe static elements in home-view to ensure they animate correctly
-            document.querySelectorAll('#home-view .favorites-section-home-card, #home-view .telegram-card, #home-view .share-app-button, #home-view .surprise-button').forEach(item => {
-                // Only add hidden-on-scroll if it's not already observed or visible (prevents re-adding class)
-                if (!item.classList.contains('hidden-on-scroll') && !item.classList.contains('visible-on-scroll')) {
-                    item.classList.add('hidden-on-scroll');
-                }
-                observer.observe(item);
             });
         }
 
-
         window.showNewBatchesView = function(categoryId = 'all') {
             hideAllViews();
-            const newBatchesView = document.getElementById('new-batches-view');
-            if (newBatchesView) newBatchesView.style.display = 'block';
-            
+            document.getElementById('new-batches-view').style.display = 'block';
             currentView = 'new-batches-view';
-            window.lastCategoryViewed = categoryId; // Use window.lastCategoryViewed
-            
-            const batchesContainer = document.getElementById('batches-container');
-            if (batchesContainer) batchesContainer.innerHTML = '<p class="text-center text-muted" id="loadingBatchesMessage">Loading batches...</p>';
+            window.lastCategoryViewed = categoryId;
+            document.getElementById('batches-container').innerHTML = '';
 
             let batchesToDisplay = [];
             if (categoryId === 'all') {
-                const newBatchesTitle = document.getElementById('new-batches-title');
-                if (newBatchesTitle) newBatchesTitle.textContent = 'All Courses';
+                document.getElementById('new-batches-title').textContent = 'All Courses';
                 Object.values(allCategoriesData).forEach(category => {
                     if (category.batches) {
-                        batchesToDisplay = batchesToDisplay.concat(Object.keys(category.batches).map(key => ({ id: key, ...category.batches[key] })));
+                        batchesToDisplay.push(...Object.keys(category.batches).map(key => ({ id: key, ...category.batches[key] })));
                     }
                 });
             } else {
                 const selectedCategory = allCategoriesData[categoryId];
-                const newBatchesTitle = document.getElementById('new-batches-title');
-                if (newBatchesTitle) newBatchesTitle.textContent = selectedCategory ? selectedCategory.name + ' Courses' : 'Courses';
+                document.getElementById('new-batches-title').textContent = selectedCategory ? selectedCategory.name + ' Courses' : 'Courses';
                 if (selectedCategory && selectedCategory.batches) {
                     batchesToDisplay = Object.keys(selectedCategory.batches).map(key => ({ id: key, ...selectedCategory.batches[key] }));
                 }
             }
-            
-            const loadingMsg = document.getElementById('loadingBatchesMessage');
-            if(loadingMsg) loadingMsg.remove();
-            
             displayBatches(batchesToDisplay);
             window.highlightBottomNav('courses-nav');
             window.scrollTo(0, 0);
@@ -3128,190 +2705,99 @@
 
         function displayBatches(batchesToDisplay) {
             const batchesContainer = document.getElementById('batches-container');
-            if (!batchesContainer) return;
-
             batchesContainer.innerHTML = '';
-
             if (batchesToDisplay.length === 0) {
-                batchesContainer.innerHTML = '<p style="text-align: center; color: var(--text-light);">No batches found matching your search or category.</p>';
+                batchesContainer.innerHTML = '<p style="text-align: center; color: var(--text-light);">No batches found.</p>';
                 return;
             }
-
             batchesToDisplay.forEach(batch => {
                 const batchCard = document.createElement('div');
                 batchCard.className = 'batch-card hidden-on-scroll';
-                const isFavorited = window.favorites.includes(batch.id); /* Use window.favorites */
+                const isFavorited = window.favorites.includes(batch.id);
                 const heartIconClass = isFavorited ? 'fas fa-heart' : 'far fa-heart';
-
-                // Log the batch thumbnail URL to console for debugging
-                console.log(`Batch ID: ${batch.id}, Thumbnail URL: ${batch.thumbnail}`);
-
                 batchCard.innerHTML = `
-                    <div class="batch-card-header" style="background-color: ${batch.headerColor || 'var(--accent-teal)'};">
+                    <div class="batch-card-header">
                         <span>${batch.title}</span>
                         <div class="icons">
                             <i class="${heartIconClass}" onclick="event.stopPropagation(); window.toggleFavorite('${batch.id}', this);"></i>
-                            <i class="fas fa-share-alt share-batch-btn" data-batch-id="${batch.id}" data-batch-title="${encodeURIComponent(batch.title || '')}" data-batch-desc="${encodeURIComponent(batch.description || '')}" onclick="event.stopPropagation();"></i>
                         </div>
                     </div>
                     <div class="batch-card-body">
                         <div class="batch-image-container">
-                            <img src="${batch.thumbnail}" alt="${batch.title}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=Batch+Image'; console.error('Image failed to load:', this.src);">
+                            <img src="${batch.thumbnail}" alt="${batch.title}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=No+Img';">
                         </div>
                         <div class="batch-title">${batch.title}</div>
-                        <p class="batch-description">${batch.description || 'No detailed description available.'}</p>
+                        <p class="batch-description">${batch.description || 'No description available.'}</p>
                         <button class="lets-roar-button" data-batch-id="${batch.id}">LET'S ROAR 🚀🔥</button>
-                    </div>
-                `;
+                    </div>`;
                 batchesContainer.appendChild(batchCard);
-
-                // Attach event listener for the share button on batches
-                const shareButton = batchCard.querySelector('.share-batch-btn');
-                if (shareButton) {
-                    shareButton.addEventListener('click', (e) => {
-                        const batchTitle = decodeURIComponent(e.target.dataset.batchTitle);
-                        const batchDesc = decodeURIComponent(e.target.dataset.batchDesc);
-                        window.shareBatch(batchTitle, batchDesc);
-                    });
-                }
-                
-                // Attach event listener to the lets-roar button
-                const letsRoarButton = batchCard.querySelector('.lets-roar-button');
-                if (letsRoarButton) {
-                    letsRoarButton.addEventListener('click', () => {
-                        const clickedBatchId = letsRoarButton.dataset.batchId;
-                        window.showSectionsView(clickedBatchId); // Navigate to sections view
-                    });
-                }
+                batchCard.querySelector('.lets-roar-button').onclick = () => window.showSectionsView(batch.id);
                 observer.observe(batchCard);
             });
         }
 
         window.filterBatches = function() {
-            const searchTerm = document.getElementById('batchSearchInput');
-            if (!searchTerm) return;
-            
+            const searchTerm = document.getElementById('batchSearchInput').value.toLowerCase();
             let currentCategoryBatches = [];
-
-            if (window.lastCategoryViewed === 'all') { // Use window.lastCategoryViewed
-                Object.values(allCategoriesData).forEach(category => {
-                    if (category.batches) {
-                        currentCategoryBatches = currentCategoryBatches.concat(Object.keys(category.batches).map(key => ({ id: key, ...category.batches[key] })));
-                    }
+            if (window.lastCategoryViewed === 'all') {
+                Object.values(allCategoriesData).forEach(cat => {
+                    if (cat.batches) currentCategoryBatches.push(...Object.keys(cat.batches).map(key => ({ id: key, ...cat.batches[key] })));
                 });
             } else {
-                const selectedCategory = allCategoriesData[window.lastCategoryViewed]; // Use window.lastCategoryViewed
-                if (selectedCategory && selectedCategory.batches) {
-                    currentCategoryBatches = Object.keys(selectedCategory.batches).map(key => ({ id: key, ...selectedCategory.batches[key] }));
-                }
+                const cat = allCategoriesData[window.lastCategoryViewed];
+                if (cat && cat.batches) currentCategoryBatches = Object.keys(cat.batches).map(key => ({ id: key, ...cat.batches[key] }));
             }
-
-            const filteredBatches = currentCategoryBatches.filter(batch => 
-                batch.title.toLowerCase().includes(searchTerm.value.toLowerCase())
-            );
-            displayBatches(filteredBatches);
+            const filtered = currentCategoryBatches.filter(b => b.title.toLowerCase().includes(searchTerm));
+            displayBatches(filtered);
         }
 
-        // --- Favorites Logic ---
         window.toggleFavorite = function(batchId, iconElement) {
-            if (window.favorites.includes(batchId)) { // Use window.favorites
-                window.favorites = window.favorites.filter(id => id !== batchId); // Use window.favorites
-                if (iconElement) {
-                    iconElement.classList.remove('fas');
-                    iconElement.classList.add('far');
-                }
+            const index = window.favorites.indexOf(batchId);
+            if (index > -1) {
+                window.favorites.splice(index, 1);
+                iconElement.classList.replace('fas', 'far');
             } else {
-                window.favorites.push(batchId); // Use window.favorites
-                if (iconElement) {
-                    iconElement.classList.remove('far');
-                    iconElement.classList.add('fas');
-                }
+                window.favorites.push(batchId);
+                iconElement.classList.replace('far', 'fas');
             }
-            localStorage.setItem('favorites', JSON.stringify(window.favorites)); // Use window.favorites
+            localStorage.setItem('favorites', JSON.stringify(window.favorites));
             renderFavoritesSectionHomeCard();
-            if (currentView === 'favorites-view') {
-                window.showFavoritesView();
-            }
+            if (currentView === 'favorites-view') window.showFavoritesView();
         }
 
         function renderFavoritesSectionHomeCard() {
-            const favoritesCountSpan = document.getElementById('favorites-count');
-            if (favoritesCountSpan) favoritesCountSpan.textContent = `${window.favorites.length} Batches`; // Use window.favorites
+            document.getElementById('favorites-count').textContent = `${window.favorites.length} Batches`;
         }
 
         window.showFavoritesView = function() {
             hideAllViews();
-            const favoritesView = document.getElementById('favorites-view');
-            if (favoritesView) favoritesView.style.display = 'block';
-            
+            document.getElementById('favorites-view').style.display = 'block';
             currentView = 'favorites-view';
             window.highlightBottomNav('home-nav');
-
-            const favoriteBatchesContainer = document.getElementById('favorite-batches-container');
-            const noFavoritesMessageView = document.getElementById('no-favorites-message-view');
-
-            if (!favoriteBatchesContainer || !noFavoritesMessageView) return;
-
-            favoriteBatchesContainer.innerHTML = '';
-            if (window.favorites.length === 0) { // Use window.favorites
-                noFavoritesMessageView.style.display = 'block';
-                favoriteBatchesContainer.style.display = 'none';
+            const container = document.getElementById('favorite-batches-container');
+            const msgView = document.getElementById('no-favorites-message-view');
+            container.innerHTML = '';
+            if (window.favorites.length === 0) {
+                msgView.style.display = 'block';
             } else {
-                noFavoritesMessageView.style.display = 'none';
-                favoriteBatchesContainer.style.display = 'flex';
-
-                window.favorites.forEach(favId => { // Use window.favorites
-                    let batch = null;
+                msgView.style.display = 'none';
+                let favBatches = [];
+                window.favorites.forEach(favId => {
                     for (const catId in allCategoriesData) {
                         if (allCategoriesData[catId].batches && allCategoriesData[catId].batches[favId]) {
-                            batch = { id: favId, ...allCategoriesData[catId].batches[favId] };
+                            favBatches.push({ id: favId, ...allCategoriesData[catId].batches[favId] });
                             break;
                         }
                     }
-
-                    if (batch) {
-                        const isFavorited = window.favorites.includes(batch.id); // Use window.favorites
-                        const heartIconClass = isFavorited ? 'fas fa-heart' : 'far fa-heart';
-
-                        const favBatchCard = document.createElement('div');
-                        favBatchCard.className = 'batch-card hidden-on-scroll';
-                        favBatchCard.innerHTML = `
-                            <div class="batch-card-header" style="background-color: ${batch.headerColor || 'var(--accent-teal)'};">
-                                <span>${batch.title}</span>
-                                <div class="icons">
-                                    <i class="${heartIconClass}" onclick="event.stopPropagation(); window.toggleFavorite('${batch.id}', this);"></i>
-                                    <i class="fas fa-share-alt share-batch-btn" data-batch-id="${batch.id}" data-batch-title="${encodeURIComponent(batch.title || '')}" data-batch-desc="${encodeURIComponent(batch.description || '')}" onclick="event.stopPropagation();"></i>
-                                </div>
-                            </div>
-                            <div class="batch-card-body">
-                                 <div class="batch-image-container">
-                                    <img src="${batch.thumbnail}" alt="${batch.title}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=Batch+Image'; console.error('Image failed to load:', this.src);">
-                                </div>
-                                <div class="batch-title">${batch.title}</div>
-                                <p class="batch-description">${batch.description || 'No detailed description available.'}</p>
-                                <button class="lets-roar-button" data-batch-id="${batch.id}">LET'S ROAR 🚀🔥</button>
-                            </div>
-                        `;
-                        favoriteBatchesContainer.appendChild(favBatchCard);
-                        const letsRoarButton = favBatchCard.querySelector('.lets-roar-button');
-                        if (letsRoarButton) {
-                            letsRoarButton.addEventListener('click', () => {
-                                const clickedBatchId = letsRoarButton.dataset.batchId;
-                                window.showSectionsView(clickedBatchId); // Navigate to sections view
-                            });
-                        }
-                        observer.observe(favBatchCard);
-                    }
                 });
+                displayBatches(favBatches);
             }
             window.scrollTo(0, 0);
         }
 
-        // --- Show Sections (Folders) for a Batch ---
         window.showSectionsView = function(batchId) {
             hideAllViews();
             currentBatchId = batchId;
-            
             let selectedBatch = null;
             let currentCategoryId = null;
             for (const catId in allCategoriesData) {
@@ -3321,288 +2807,186 @@
                     break;
                 }
             }
-
-            const sectionsContainer = document.getElementById('sections-container');
-            const sectionsTitle = document.getElementById('sections-title');
-            if (!sectionsContainer || !sectionsTitle) return;
-
-            sectionsContainer.innerHTML = '';
-
+            const container = document.getElementById('sections-container');
+            const titleEl = document.getElementById('sections-title');
+            container.innerHTML = '';
             if (selectedBatch && selectedBatch.modules && Object.keys(selectedBatch.modules).length > 0) {
-                sectionsTitle.textContent = selectedBatch.title + ' Modules';
-                Object.entries(selectedBatch.modules).forEach(([moduleId, module], index) => {
-                    // Count lectures within this module
+                titleEl.textContent = selectedBatch.title + ' Modules';
+                Object.entries(selectedBatch.modules).forEach(([moduleId, module]) => {
                     const lectureCount = module.lectures ? Object.keys(module.lectures).length : 0;
                     const sectionItem = document.createElement('div');
                     sectionItem.className = 'section-item hidden-on-scroll';
                     sectionItem.onclick = () => window.showLessonsInSectionsView(currentCategoryId, batchId, moduleId);
-    
-                    // Updated HTML structure for module item to match screenshot 200107.jpg
                     sectionItem.innerHTML = `
                         <span class="section-name">${module.name}</span>
                         <div class="section-counts">
-                            <span>${lectureCount} Videos</span>,
-                            <span>0 Notes</span>, <!-- Placeholder for Notes Count -->
-                            <span>0 Exercises</span> <!-- Placeholder for Exercises Count -->
+                            <span>${lectureCount} Videos</span>, <span>0 Notes</span>, <span>0 Exercises</span>
                         </div>
-                        <i class="fas fa-chevron-right section-arrow"></i>
-                    `;
-                    sectionsContainer.appendChild(sectionItem);
+                        <i class="fas fa-chevron-right section-arrow"></i>`;
+                    container.appendChild(sectionItem);
                     observer.observe(sectionItem);
                 });
             } else {
-                sectionsTitle.textContent = selectedBatch ? selectedBatch.title + ' Modules' : 'Modules';
-                sectionsContainer.innerHTML = '<p style="text-align: center; color: var(--text-light);">No modules found for this batch.</p>';
+                titleEl.textContent = selectedBatch ? selectedBatch.title + ' Modules' : 'Modules';
+                container.innerHTML = '<p style="text-align: center; color: var(--text-light);">No modules found.</p>';
             }
-
-            const sectionsView = document.getElementById('sections-view');
-            if (sectionsView) sectionsView.style.display = 'block';
+            document.getElementById('sections-view').style.display = 'block';
             currentView = 'sections-view';
             window.scrollTo(0, 0);
         }
 
-        // --- Show Lessons within a Section (Folder) ---
         window.showLessonsInSectionsView = function(categoryId, batchId, moduleId) {
             hideAllViews();
             currentBatchId = batchId;
             currentSectionIndex = moduleId;
 
-            const selectedCategory = allCategoriesData[categoryId];
-            const selectedBatch = selectedCategory && selectedCategory.batches ? selectedCategory.batches[batchId] : null;
-            const selectedModule = selectedBatch && selectedBatch.modules ? selectedBatch.modules[moduleId] : null;
-
-            const lessonsContainer = document.getElementById('lessons-in-sections-container');
-            const lessonsTitle = document.getElementById('lessons-in-sections-title');
-            if (!lessonsContainer || !lessonsTitle) return;
-
-            lessonsContainer.innerHTML = '';
+            const selectedModule = allCategoriesData[categoryId]?.batches?.[batchId]?.modules?.[moduleId];
+            const container = document.getElementById('lessons-in-sections-container');
+            const titleEl = document.getElementById('lessons-in-sections-title');
+            container.innerHTML = '';
 
             if (selectedModule && selectedModule.lectures && Object.keys(selectedModule.lectures).length > 0) {
-                lessonsTitle.textContent = selectedModule.name + ' (' + selectedBatch.title + ')';
-                Object.entries(selectedModule.lectures).forEach(([lectureId, lecture], lessonIndex) => {
+                titleEl.textContent = selectedModule.name;
+                Object.entries(selectedModule.lectures).forEach(([lectureId, lecture]) => {
                     const lessonItem = document.createElement('div');
                     lessonItem.className = 'lesson-list-item hidden-on-scroll';
                     lessonItem.onclick = () => window.showVideoPlayerView(categoryId, batchId, moduleId, lectureId);
-                   
-                    // Implement UI from Screenshot_20250613-191010.jpg (simplified to remove unnecessary elements)
+                    // --- FIX --- Use fallback for name to prevent "undefined" text
                     lessonItem.innerHTML = `
                         <div class="lesson-list-item-right">
-                            <h3 class="lesson-list-item-title">${lecture.name}</h3>
+                            <h3 class="lesson-list-item-title">${lecture.name || 'Untitled Lecture'}</h3>
                         </div>
-                        <div class="video-icon-overlay">
-                            <i class="fas fa-video"></i>
-                        </div>
-                    `;
-                    lessonsContainer.appendChild(lessonItem);
+                        <div class="video-icon-overlay"><i class="fas fa-video"></i></div>`;
+                    container.appendChild(lessonItem);
                     observer.observe(lessonItem);
                 });
             } else {
-                lessonsTitle.textContent = selectedModule ? selectedModule.name : 'Lessons';
-                lessonsContainer.innerHTML = '<p style="text-align: center; color: var(--text-light);">No lectures found in this module.</p>';
+                titleEl.textContent = selectedModule ? selectedModule.name : 'Lessons';
+                container.innerHTML = '<p style="text-align: center; color: var(--text-light);">No lectures found.</p>';
             }
-
-            const lessonsInSectionsView = document.getElementById('lessons-in-sections-view');
-            if (lessonsInSectionsView) lessonsInSectionsView.style.display = 'block';
+            document.getElementById('lessons-in-sections-view').style.display = 'block';
             currentView = 'lessons-in-sections-view';
             window.scrollTo(0, 0);
         }
 
-        // --- Video Player View (For individual lessons) ---
+        // --- FIX --- This is the fully corrected function
         window.showVideoPlayerView = function(categoryId, batchId, moduleId, lectureId) {
             hideAllViews();
             currentBatchId = batchId;
             currentSectionIndex = moduleId;
-            window.currentPlayingLectureId = lectureId; // Set current playing lecture ID
+            window.currentPlayingLectureId = lectureId;
 
-            const selectedCategory = allCategoriesData[categoryId];
-            const selectedBatch = selectedCategory && selectedCategory.batches ? selectedCategory.batches[batchId] : null;
-            const selectedModule = selectedBatch && selectedBatch.modules ? selectedBatch.modules[moduleId] : null;
-            const selectedLecture = selectedModule && selectedModule.lectures ? selectedModule.lectures[lectureId] : null;
+            const selectedLecture = allCategoriesData[categoryId]?.batches?.[batchId]?.modules?.[moduleId]?.lectures?.[lectureId];
 
-            if (!selectedCategory || !selectedBatch || !selectedModule || !selectedLecture) {
-                alert('Lesson details not found! Please check the data structure or Firebase data.');
+            if (!selectedLecture) {
+                alert('Error: Lecture details could not be found. It might have been deleted.');
                 window.goBackFromPlayerView();
                 return;
             }
             
-            const playerViewTitle = document.getElementById('player-view-title');
-            if (playerViewTitle) playerViewTitle.textContent = selectedLecture.name;
-            
-            const playerLessonSubTitle = document.getElementById('player-lesson-sub-title');
-            if (playerLessonSubTitle) playerLessonSubTitle.textContent = selectedLecture.name; // Can be improved if subtitle is in Firebase
+            document.getElementById('player-view-title').textContent = selectedLecture.name || 'Untitled Lecture';
+            document.getElementById('player-lesson-sub-title').textContent = selectedLecture.name || 'Untitled Lecture';
 
             const mainVideoPlayer = document.getElementById('main-video-player');
-            if (mainVideoPlayer) {
-                mainVideoPlayer.innerHTML = '';
+            mainVideoPlayer.innerHTML = '';
+            
+            // Check if the link exists and is a string before processing
+            if (selectedLecture.link && typeof selectedLecture.link === 'string') {
                 const videoInfo = extractGdriveId(selectedLecture.link);
                 if (videoInfo) {
                     let embedUrl = '';
                     if (videoInfo.type === 'gdrive') {
-                        embedUrl = `https://www.youtube.com/embed/videoseries?list=${videoInfo.id}&autoplay=1`; // Attempt to embed a playlist for GDrive as videos
+                        // Correct GDrive embed for a single file is the preview URL
+                        embedUrl = `https://drive.google.com/file/d/${videoInfo.id}/preview`;
                     } else if (videoInfo.type === 'youtube') {
                         embedUrl = `https://www.youtube-nocookie.com/embed/${videoInfo.id}?autoplay=1`;
                     }
                     
-                    console.log("Embedding video with URL:", embedUrl); // Debugging
                     if (embedUrl) {
                         mainVideoPlayer.innerHTML = `<iframe src="${embedUrl}" allowfullscreen draggable="false" allow="autoplay; encrypted-media"></iframe>`;
                     } else {
-                        mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">Error: Could not construct embed URL for this video type.</p>`;
+                        mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">Error: Could not construct embed URL.</p>`;
                     }
                 } else {
-                    mainVideoPlayer.innerHTML = `
-                        <p style="color: white; text-align: center; padding: 20px; background-color: rgba(0,0,0,0.5); border-radius: 10px;">
-                            Video Not Found or Link Invalid.<br><br>
-                            To play videos, ensure:<br>
-                            1. It's a Google Drive video with 'Anyone with the link' access (use 'preview' link).<br>
-                            2. You copy the ID correctly from a URL like:
-                            <code>https://drive.google.com/file/d/<b>YOUR_VIDEO_ID</b>/view</code><br>
-                            Then paste the full preview link: <code>https://drive.google.com/file/d/<b>YOUR_VIDEO_ID</b>/preview</code><br>
-                            (YouTube links are also supported, e.g., <code>https://www.youtube.com/watch?v=<b>VIDEO_ID</b></code>)
-                        </p>
-                    `;
+                    mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">Video link is not a valid Google Drive or YouTube URL.</p>`;
                 }
+            } else {
+                // This message shows if the link is missing from Firebase
+                mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">No video link found for this lecture.</p>`;
             }
 
             const lessonsForPlayerBatch = document.getElementById('lessons-for-player-batch');
-            if (lessonsForPlayerBatch) {
-                lessonsForPlayerBatch.innerHTML = '';
-                if (selectedModule && selectedModule.lectures) {
-                    Object.entries(selectedModule.lectures).forEach(([otherLectureId, otherLecture]) => {
-                        const lessonItem = document.createElement('li');
-                        lessonItem.className = 'lesson-item hidden-on-scroll';
-                        lessonItem.onclick = () => window.showVideoPlayerView(categoryId, batchId, moduleId, otherLectureId);
-                        
-                        // Re-use the simplified lesson-list-item structure from showLessonsInSectionsView
-                        lessonItem.innerHTML = `
-                            <div class="lesson-list-item-right">
-                                <h3 class="lesson-list-item-title">${otherLecture.name}</h3>
-                            </div>
-                            <div class="video-icon-overlay">
-                                <i class="fas fa-video"></i>
-                            </div>
-                        `;
-                        lessonsForPlayerBatch.appendChild(lessonItem);
-                        observer.observe(lessonItem);
-                    });
-                } else {
-                     lessonsForPlayerBatch.innerHTML = '<p style="text-align: center; color: var(--text-light);">No other lectures in this module.</p>';
-                }
-            }
+            lessonsForPlayerBatch.innerHTML = '';
+            const allLecturesInModule = allCategoriesData[categoryId]?.batches?.[batchId]?.modules?.[moduleId]?.lectures || {};
+            Object.entries(allLecturesInModule).forEach(([otherLectureId, otherLecture]) => {
+                const lessonItem = document.createElement('li');
+                lessonItem.className = 'lesson-item hidden-on-scroll';
+                lessonItem.onclick = () => window.showVideoPlayerView(categoryId, batchId, moduleId, otherLectureId);
+                lessonItem.innerHTML = `<div class="lesson-list-item-right"><h3>${otherLecture.name || 'Untitled Lecture'}</h3></div>`;
+                lessonsForPlayerBatch.appendChild(lessonItem);
+                observer.observe(lessonItem);
+            });
 
-            const videoPlayerView = document.getElementById('video-player-view');
-            if (videoPlayerView) videoPlayerView.style.display = 'block';
+            document.getElementById('video-player-view').style.display = 'block';
             currentView = 'video-player-view';
             window.scrollTo(0, 0);
         }
 
-        // --- Back Button Logic from Player View ---
         window.goBackFromPlayerView = function() {
             if (currentBatchId && currentSectionIndex !== null) {
-                let categoryId = null;
-                for (const catId in allCategoriesData) {
-                    if (allCategoriesData[catId].batches && allCategoriesData[catId].batches[currentBatchId]) {
-                        categoryId = catId;
-                        break;
-                    }
-                }
+                let categoryId = Object.keys(allCategoriesData).find(catId => allCategoriesData[catId].batches?.[currentBatchId]);
                 if (categoryId) {
                     window.showLessonsInSectionsView(categoryId, currentBatchId, currentSectionIndex);
                     return;
                 }
             } 
-            window.showNewBatchesView(window.lastCategoryViewed); // Go back to the last viewed category
+            window.showNewBatchesView(window.lastCategoryViewed);
         }
 
-        // --- Back Button Logic from Lessons In Sections View ---
-        window.goBackFromLessonsList = function() {
-            if (currentBatchId) {
-                window.showSectionsView(currentBatchId);
-            } else {
-                window.showNewBatchesView(window.lastCategoryViewed); // Go back to the last viewed category
-            }
-        }
+        window.goBackFromLessonsList = () => window.showSectionsView(currentBatchId);
 
-        // --- Video ID Extraction Logic (Handles Google Drive and YouTube) ---
         function extractGdriveId(url) {
-            const gdriveRegex = /(?:drive\.google\.com\/(?:file\/d\/|open\?id=)|docs\.google\.com\/file\/d\/|drive\.google\.com\/uc\?id=)([a-zA-Z0-9_-]+)(?:\/preview|\/view|\/edit)?/;
+            const gdriveRegex = /(?:drive\.google\.com\/(?:file\/d\/|open\?id=)|docs\.google\.com\/file\/d\/|drive\.google\.com\/uc\?id=)([a-zA-Z0-9_-]+)/;
             const gdriveMatch = url.match(gdriveRegex);
-            if (gdriveMatch) {
-                return { type: 'gdrive', id: gdriveMatch[1] };
-            }
+            if (gdriveMatch) return { type: 'gdrive', id: gdriveMatch[1] };
 
             const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
             const youtubeMatch = url.match(youtubeRegex);
-            if (youtubeMatch) {
-                return { type: 'youtube', id: youtubeMatch[1] };
-            }
+            if (youtubeMatch) return { type: 'youtube', id: youtubeMatch[1] };
 
             return null;
         }
 
-        // --- Bottom Navigation Highlight ---
         window.highlightBottomNav = function(activeId) {
-            document.querySelectorAll('.bottom-navbar .nav-item').forEach(item => {
-                if (item) item.classList.remove('active');
-            });
-            const activeItem = document.getElementById(activeId);
-            if (activeItem) activeItem.classList.add('active');
+            document.querySelectorAll('.bottom-navbar .nav-item').forEach(item => item.classList.remove('active'));
+            document.getElementById(activeId).classList.add('active');
         }
 
-        // --- Comments Popup Logic (using Firestore) ---
         window.showCommentsPopup = function() {
-            const commentsPopupOverlay = document.getElementById('commentsPopupOverlay');
-            const commentsHeader = document.getElementById('commentsHeader');
-            if (!commentsPopupOverlay || !commentsHeader) return;
-
-            commentsPopupOverlay.classList.add('active');
-            const playerViewTitle = document.getElementById('player-view-title');
-            if (playerViewTitle) {
-                commentsHeader.textContent = `Comments for ${playerViewTitle.textContent}`;
-            } else {
-                commentsHeader.textContent = `SR Comments`;
-            }
-            renderComments(window.currentPlayingLectureId); // Render comments for the current lecture
+            document.getElementById('commentsPopupOverlay').classList.add('active');
+            const lectureName = document.getElementById('player-view-title').textContent;
+            document.getElementById('commentsHeader').textContent = `Comments for ${lectureName}`;
+            renderComments(window.currentPlayingLectureId);
         }
 
         window.closeCommentsPopup = function() {
-            const commentsPopupOverlay = document.getElementById('commentsPopupOverlay');
-            if (commentsPopupOverlay) commentsPopupOverlay.classList.remove('active');
-            // Unsubscribe from Firestore listener when closing popup
-            if (window.unsubscribeComments) {
-                window.unsubscribeComments();
-                window.unsubscribeComments = null;
-            }
+            document.getElementById('commentsPopupOverlay').classList.remove('active');
+            if (window.unsubscribeComments) window.unsubscribeComments();
         }
 
-        // Firestore listener for comments
-        window.unsubscribeComments = null; // Made global to manage subscription
+        window.unsubscribeComments = null;
 
-        async function renderComments(lectureId) {
+        function renderComments(lectureId) {
             const commentsDisplayArea = document.getElementById('commentsDisplayArea');
-            if (!commentsDisplayArea) return;
-
-            commentsDisplayArea.innerHTML = '<p class="no-comments-message">Loading comments...</p>'; // Show loading message
-
-            // Unsubscribe from previous listener if active
-            if (window.unsubscribeComments) {
-                window.unsubscribeComments();
-            }
-
-            // Correctly access __app_id within the module scope
-            const currentAppId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
+            commentsDisplayArea.innerHTML = '<p class="no-comments-message">Loading comments...</p>';
+            if (window.unsubscribeComments) window.unsubscribeComments();
             if (!lectureId) {
-                commentsDisplayArea.innerHTML = '<p class="no-comments-message">No lecture selected for comments.</p>';
+                commentsDisplayArea.innerHTML = '<p class="no-comments-message">No lecture selected.</p>';
                 return;
             }
-
-            // Reference to Firestore collection
-            const commentsCollectionRef = collection(firestore, `artifacts/${currentAppId}/public/comments/${lectureId}/userComments`);
-            const q = query(commentsCollectionRef); // You can add orderBy here if needed, but Firestore needs indexes.
-
-            window.unsubscribeComments = onSnapshot(q, (snapshot) => { // Assign to global
-                commentsDisplayArea.innerHTML = ''; // Clear existing comments
+            const q = query(collection(firestore, `artifacts/${appId}/public/comments/${lectureId}/userComments`));
+            window.unsubscribeComments = onSnapshot(q, (snapshot) => {
+                commentsDisplayArea.innerHTML = '';
                 if (snapshot.empty) {
                     commentsDisplayArea.innerHTML = '<p class="no-comments-message">No comments yet. Be the first to comment!</p>';
                 } else {
@@ -3610,168 +2994,87 @@
                         const comment = doc.data();
                         const commentItem = document.createElement('div');
                         commentItem.className = 'comment-item';
-                        const timestamp = comment.timestamp && comment.timestamp.seconds ? new Date(comment.timestamp.seconds * 1000).toLocaleTimeString() : 'Unknown Time';
-                        commentItem.innerHTML = `
-                            <strong>${comment.userDisplayName || 'Anonymous'}</strong> <span>(${timestamp})</span><br>
-                            ${comment.commentText}
-                        `;
+                        const timestamp = comment.timestamp?.seconds ? new Date(comment.timestamp.seconds * 1000).toLocaleTimeString() : '';
+                        commentItem.innerHTML = `<strong>${comment.userDisplayName || 'Anonymous'}</strong> <span>(${timestamp})</span><br>${comment.commentText}`;
                         commentsDisplayArea.appendChild(commentItem);
                     });
+                    commentsDisplayArea.scrollTop = commentsDisplayArea.scrollHeight;
                 }
-                commentsDisplayArea.scrollTop = commentsDisplayArea.scrollHeight; // Scroll to bottom
             }, (error) => {
                 console.error("Error fetching comments:", error);
-                commentsDisplayArea.innerHTML = `<p class="no-comments-message" style="color:red;">Error loading comments: ${error.message}</p>`;
+                commentsDisplayArea.innerHTML = `<p class="no-comments-message" style="color:red;">Error loading comments.</p>`;
             });
         }
 
         window.postComment = async function() {
-            const commentInput = document.getElementById('commentInput');
-            if (!commentInput) return;
-            const commentText = commentInput.value.trim();
+            const commentText = document.getElementById('commentInput').value.trim();
             const userName = localStorage.getItem('userName') || 'Guest';
-            
-            if (!commentText) {
-                alert('Please write something before posting!');
-                return;
-            }
-
-            if (!window.currentPlayingLectureId) {
-                alert('Cannot post comment: No lecture selected.');
-                return;
-            }
-            if (!currentUserId) {
-                 alert('Cannot post comment: User not authenticated.');
-                 return;
-            }
-
-            const currentAppId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
-
+            if (!commentText || !window.currentPlayingLectureId || !currentUserId) return;
             try {
-                await addDoc(collection(firestore, `artifacts/${currentAppId}/public/comments/${window.currentPlayingLectureId}/userComments`), {
+                await addDoc(collection(firestore, `artifacts/${appId}/public/comments/${window.currentPlayingLectureId}/userComments`), {
                     userDisplayName: userName,
                     userId: currentUserId,
                     commentText: commentText,
-                    timestamp: serverTimestamp() // Use Firestore server timestamp
+                    timestamp: serverTimestamp()
                 });
-                commentInput.value = ''; // Clear input after posting
-                console.log("Comment posted successfully!");
+                document.getElementById('commentInput').value = '';
             } catch (error) {
                 console.error("Error posting comment:", error);
                 alert(`Failed to post comment: ${error.message}`);
             }
         }
 
-        // --- New: Show Coming Soon Views ---
         window.showComingSoonView = function(type) {
             hideAllViews();
-            let targetView = null;
-            if (type === 'bundles') {
-                targetView = document.getElementById('bundles-coming-soon-view');
-            } else if (type === 'pdfs') {
-                targetView = document.getElementById('pdfs-coming-soon-view');
-            } else if (type === 'ai-chatbot') {
-                targetView = document.getElementById('ai-chatbot-coming-soon-view');
-            } else if (type === 'timeline') { /* Added for Timeline button */
-                targetView = document.getElementById('timeline-coming-soon-view');
-            } else if (type === 'watch-later') { /* Added for Watch Later button */
-                targetView = document.getElementById('watch-later-coming-soon-view');
-            }
-
-
-            if (targetView) targetView.style.display = 'flex';
+            document.getElementById(`${type}-coming-soon-view`).style.display = 'flex';
             currentView = `${type}-coming-soon-view`;
             window.scrollTo(0, 0);
         }
 
-        // --- Today's Surprise Function ---
-        window.openSurpriseLink = function() {
-            window.open(surpriseLink, '_blank');
-        }
-
-        // --- About Me View Logic ---
         window.showAboutMeView = function() {
             hideAllViews();
-            const aboutMeView = document.getElementById('about-me-view');
-            if (aboutMeView) aboutMeView.style.display = 'flex';
+            document.getElementById('about-me-view').style.display = 'flex';
             currentView = 'about-me-view';
             window.highlightBottomNav('about-me-nav');
             window.scrollTo(0, 0);
         }
 
-        // --- New: How to use the App View Logic ---
         window.showHowToUseAppView = function() {
             hideAllViews();
-            const howToUseAppView = document.getElementById('how-to-use-app-view');
-            if (howToUseAppView) howToUseAppView.style.display = 'flex';
+            document.getElementById('how-to-use-app-view').style.display = 'flex';
             currentView = 'how-to-use-app-view';
             window.scrollTo(0, 0);
         }
 
-        // --- Slider Menu Functions ---
         window.openSliderMenu = function() {
-            const sliderMenuOverlay = document.getElementById('sliderMenuOverlay');
-            const sliderMenu = document.getElementById('sliderMenu');
-            if (sliderMenuOverlay) sliderMenuOverlay.classList.add('active');
-            if (sliderMenu) sliderMenu.classList.add('active');
+            document.getElementById('sliderMenuOverlay').classList.add('active');
+            document.getElementById('sliderMenu').classList.add('active');
         }
 
         window.closeSliderMenu = function() {
-            const sliderMenuOverlay = document.getElementById('sliderMenuOverlay');
-            const sliderMenu = document.getElementById('sliderMenu');
-            if (sliderMenuOverlay) sliderMenuOverlay.classList.remove('active');
-            if (sliderMenu) sliderMenu.classList.remove('active');
+            document.getElementById('sliderMenuOverlay').classList.remove('active');
+            document.getElementById('sliderMenu').classList.remove('active');
         }
 
-        // --- Share App Function (for specific batches) ---
         window.shareApp = function() {
             if (navigator.share) {
                 navigator.share({
-                    title: `Check out this course: ${window.location.hostname} on SkillNeast! 🚀`, // Use hostname or a generic app title
-                    text: `Master new skills with SkillNeast - your ultimate learning hub! Engaging courses, expert instructors, and a vibrant community. Dive in and unlock your full potential! 🌟 More exciting features coming soon! 🚀`, // Generic description
+                    title: `Check out SkillNeast! 🚀`,
+                    text: `Master new skills with SkillNeast - your ultimate learning hub!`,
                     url: window.location.href 
-                }).then(() => {
-                    console.log('Thanks for sharing!');
-                }).catch((error) => {
-                    console.error('Error sharing:', error);
-                    alert(`Share feature not fully supported or allowed on this device/browser. You can copy the link and share: ${window.location.href}`);
-                });
+                }).catch(err => console.error('Share failed:', err));
             } else {
-                alert(`Share feature not supported on this browser. You can copy the link and share: ${window.location.href}`);
+                alert(`Share feature not supported. Copy the link: ${window.location.href}`);
             }
         }
 
-        // --- Share Individual Batch Function ---
-        window.shareBatch = function(title, description) {
-            if (navigator.share) {
-                navigator.share({
-                    title: `Check out this course: ${title} on SkillNeast! 🚀`,
-                    text: `${description}\n\nLearn more at SkillNeast!`,
-                    url: window.location.href // Shares the current app URL, as deep linking for batches is complex
-                }).then(() => {
-                    console.log('Thanks for sharing!');
-                }).catch((error) => {
-                    console.error('Error sharing batch:', error);
-                    alert(`Share feature not fully supported or allowed on this device/browser for this batch. You can copy the link and share:\n\nTitle: ${title}\nDescription: ${description}\nLink: ${window.location.href}`);
-                });
-            } else {
-                alert(`Share feature not supported on this browser for this batch. You can copy the link and share:\n\nTitle: ${title}\nDescription: ${description}\nLink: ${window.location.href}`);
-            }
-        }
-
-
-        // --- Dark Mode Toggle Functionality ---
         window.toggleDarkMode = function() {
-            const body = document.body;
-            body.classList.toggle('light-mode'); 
-            
-            const isLightMode = body.classList.contains('light-mode');
+            document.body.classList.toggle('light-mode'); 
+            const isLightMode = document.body.classList.contains('light-mode');
             localStorage.setItem('lightModeEnabled', isLightMode);
-            
-            const darkModeToggleSwitch = document.getElementById('darkModeToggleSwitch');
-            if (darkModeToggleSwitch) darkModeToggleSwitch.checked = !isLightMode;
+            document.getElementById('darkModeToggleSwitch').checked = !isLightMode;
         }
     </script>
 </body>
 </html>
+```
