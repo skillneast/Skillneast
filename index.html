@@ -2198,9 +2198,16 @@
             <div class="favorites-section-home-card" onclick="window.showFavoritesView()" id="favorites-section-home-card">
                 <i class="fas fa-heart fav-icon"></i>
                 <h2>My Favorite Batches</h2>
-                <p>Explore SkillNeast! Your ultimate hub for mastering new skills with engaging courses, expert instructors, and a vibrant community. Dive into learning, track your progress, and unlock your full potential! 🌟 More exciting features coming soon! 🚀</p>
+                <p>
+                    <span style="font-weight: bold; color: var(--highlight-gold);">@skillneast_official @skillneast_updates</span><br>
+                    Disclaimer: We believe learning is for everyone, always! Enjoy incredible insights and master skills with our amazing content—grab yours before it's too late! 🎉
+                </p>
                 <span class="fav-count" id="favorites-count">0 Batches</span>
             </div>
+
+            <button class="surprise-button" onclick="window.openTodaySurpriseLink()">
+                <i class="fas fa-gift"></i> Today's Surprise! 🎉
+            </button>
 
             <div class="telegram-card" onclick="window.open(window.siteConfig.telegramGroupLink || 'https://t.me/', '_blank');">
                 <i class="fab fa-telegram-plane telegram-icon-large"></i>
@@ -2430,7 +2437,9 @@
             profilePictureUrl: 'https://via.placeholder.com/120x120/00ADB5/ffffff?text=Fahad',
             skillNeastLogoUrl: 'https://via.placeholder.com/40x40/00ADB5/ffffff?text=SN',
             sliderHeaderPictureUrl: 'https://via.placeholder.com/50x50/00ADB5/ffffff?text=SN',
-            pwLogoUrl: 'https://via.placeholder.com/50x50/000000/ffffff?text=PW'
+            pwLogoUrl: 'https://via.placeholder.com/50x50/000000/ffffff?text=PW',
+            // NEW: Surprise button link
+            surpriseButtonLink: '#' 
         };
 
         const authenticateFirebase = async () => {
@@ -2645,6 +2654,15 @@
                 document.getElementById('sliderTelegramChannelLink').href = window.siteConfig.telegramChannelLink;
                 document.getElementById('sliderTelegramGroupLink').href = window.siteConfig.telegramGroupLink;
                 document.getElementById('sliderRequestCoursesLink').href = window.siteConfig.requestCoursesLink;
+                // NEW: Apply surprise button link
+                window.openTodaySurpriseLink = () => {
+                    const link = window.siteConfig.surpriseButtonLink || '#';
+                    if (link !== '#') {
+                        window.open(link, '_blank');
+                    } else {
+                        alert('No surprise link available yet! Check back later. 🎉');
+                    }
+                };
                 console.log("Site configuration applied.");
             }, (error) => console.error("Error loading site config:", error));
         };
@@ -2882,7 +2900,7 @@
             // --- DEBUGGING LOGS ---
             console.log("--- showVideoPlayerView DEBUG ---");
             console.log("Called with:", { categoryId, batchId, moduleId, lectureId });
-            console.log("Selected Lecture Data (from allCategoriesData):", selectedLecture);
+            console.log("Selected Lecture Data (from allCategoriesData):", selectedLecture); // This will show if 'title' and 'url' are present
             // --- END DEBUGGING LOGS ---
 
             if (!selectedLecture) {
