@@ -118,6 +118,8 @@
             box-shadow: var(--shadow-medium);
             position: sticky;
             top: 0;
+            left: 0; /* Ensure it sticks across full width */
+            width: 100%; /* Ensure it sticks across full width */
             z-index: 1000;
             border-bottom-left-radius: var(--border-radius-main);
             border-bottom-right-radius: var(--border-radius-main);
@@ -366,6 +368,14 @@
             padding: 0px;
         }
         
+        /* Container for dynamically loaded categories */
+        #dynamic-categories-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            grid-column: 1 / -1; /* Ensure it takes full width of home-view */
+        }
+
         .course-category-item {
             background-color: #333333;
             border-radius: 18px;
@@ -484,8 +494,38 @@
             animation: bounce 1s infinite alternate;
         }
 
+        /* Styling for the strikethrough price */
+        .original-price-strikethrough {
+            text-decoration: line-through;
+            color: var(--text-light);
+            font-size: 0.9em;
+            margin-left: 8px;
+        }
+        /* Styling for the free price */
+        .free-price {
+            font-weight: 700;
+            color: var(--success-green);
+        }
+        /* Styling for description features */
+        .batch-description-feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 5px; /* Spacing between lines */
+            color: var(--text-light); /* Inherit text color from parent */
+        }
+        .batch-description-feature i {
+            margin-right: 8px;
+            color: var(--success-green);
+            font-size: 1.1em;
+            line-height: inherit; /* Align with text */
+        }
+
         @media (max-width: 600px) {
             #home-view {
+                grid-template-columns: 1fr;
+            }
+            /* Adjust dynamic categories container for small screens */
+            #dynamic-categories-container {
                 grid-template-columns: 1fr;
             }
             .surprise-button {
@@ -948,11 +988,11 @@
             color: var(--accent-teal);
         }
         .section-item .section-arrow {
-            position: absolute; /* Position arrow to the right */
+            position: absolute;
             right: 15px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 1.5em; /* Larger arrow */
+            font-size: 1.5em;
             color: var(--accent-teal);
             transition: color 0.3s ease;
         }
@@ -1245,10 +1285,12 @@
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
+
         .popup-overlay.active {
             opacity: 1;
             visibility: visible;
         }
+
         .name-popup {
             background-color: #222222;
             padding: 40px;
@@ -1262,10 +1304,12 @@
             position: relative;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
+
         .popup-overlay.active .name-popup {
             transform: translateY(-50px);
             opacity: 1;
         }
+
         .name-popup h2 {
             font-family: 'Montserrat', sans-serif;
             font-size: 2em;
@@ -1274,12 +1318,14 @@
             font-weight: 700;
             transition: color 0.3s ease;
         }
+
         .name-popup p {
             font-size: 1.1em;
             color: var(--text-light);
             margin-bottom: 30px;
             transition: color 0.3s ease;
         }
+
         .name-popup .input-container {
             border: 2px solid var(--border-color);
             border-radius: var(--border-radius-input);
@@ -1289,9 +1335,11 @@
             background-color: #383838;
             transition: border-color 0.2s ease, background-color 0.3s ease;
         }
+
         .name-popup .input-container:focus-within {
             border-color: var(--accent-teal);
         }
+
         .name-popup input[type="text"] {
             width: 100%;
             padding: 10px 0;
@@ -1304,12 +1352,14 @@
             outline: none;
             transition: color 0.3s ease;
         }
+
          .name-popup input[type="text"]:focus + label,
          .name-popup input[type="text"]:not(:placeholder-shown) + label {
             top: 5px;
             font-size: 0.7em;
             color: var(--accent-teal);
         }
+
         .name-popup .char-count {
             font-size: 0.85em;
             color: var(--text-light);
@@ -1318,6 +1368,7 @@
             margin-bottom: 25px;
             transition: color 0.3s ease;
         }
+
         .name-popup .role-selection {
             display: flex;
             flex-wrap: wrap;
@@ -1326,6 +1377,7 @@
             margin-bottom: 20px;
             font-family: 'Open Sans', sans-serif;
         }
+
         .name-popup .role-option {
             display: flex;
             align-items: center;
@@ -1337,13 +1389,16 @@
             font-size: 0.9em;
             color: var(--text-light);
         }
+
         .name-popup .role-option:hover {
             background-color: #555;
         }
+
         .name-popup input[type="radio"] {
             margin-right: 8px;
             accent-color: var(--accent-teal);
         }
+
         .name-popup button {
             background-color: var(--accent-teal);
             color: white;
@@ -1357,10 +1412,12 @@
             transition: background-color 0.2s ease, transform 0.2s ease, color 0.3s ease;
             box-shadow: var(--shadow-light);
         }
+
         .name-popup button:hover {
             background-color: #00939b;
             transform: translateY(-3px);
         }
+
         .popup-close-button {
             position: absolute;
             top: 15px;
@@ -1372,6 +1429,7 @@
             cursor: pointer;
             transition: color 0.2s ease;
         }
+
         .popup-close-button:hover {
             color: var(--text-dark);
         }
@@ -1391,10 +1449,12 @@
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
+
         .comments-popup-overlay.active {
             opacity: 1;
             visibility: visible;
         }
+
         .comments-popup {
             background-color: #222222;
             padding: 25px;
@@ -1410,10 +1470,12 @@
             flex-direction: column;
             max-height: 80vh;
         }
+
         .comments-popup-overlay.active .comments-popup {
             transform: translateY(0);
             opacity: 1;
         }
+
         .comments-popup h2 {
             font-family: 'Montserrat', sans-serif;
             font-size: 1.8em;
@@ -1423,12 +1485,14 @@
             text-align: center;
             transition: color 0.3s ease;
         }
+
         .comments-input-area {
             display: flex;
             flex-direction: column;
             gap: 10px;
             margin-bottom: 20px;
         }
+
         .comments-input-area textarea {
             width: 100%;
             padding: 10px;
@@ -1443,9 +1507,11 @@
             background-color: #383838;
             color: var(--text-dark);
         }
+
         .comments-input-area textarea:focus {
             border-color: var(--comments-btn-bg);
         }
+
         .comments-input-area button {
             background-color: var(--comments-btn-bg);
             color: var(--white);
@@ -1456,15 +1522,18 @@
             cursor: pointer;
             transition: background-color 0.2s ease, color 0.3s ease;
         }
+
         .comments-input-area button:hover {
             background-color: #0056b3;
         }
+
         .comments-display-area {
             flex-grow: 1;
             overflow-y: auto;
             padding-right: 10px;
             margin-bottom: 10px;
         }
+
         .comment-item {
             background-color: #383838;
             border-radius: var(--border-radius-input);
@@ -1475,11 +1544,13 @@
             color: var(--text-dark);
             transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
+
         .comment-item strong {
             color: var(--primary-dark);
             margin-right: 5px;
             transition: color 0.3s ease;
         }
+
         .no-comments-message {
             text-align: center;
             color: var(--text-light);
@@ -1503,6 +1574,7 @@
             color: var(--text-dark);
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
+
         .coming-soon-section h2 {
             font-family: 'Montserrat', sans-serif;
             font-size: 2.5em;
@@ -1511,6 +1583,7 @@
             margin-bottom: 20px;
             transition: color 0.3s ease;
         }
+
         .coming-soon-section p {
             font-size: 1.3em;
             color: var(--text-light);
@@ -1518,6 +1591,7 @@
             line-height: 1.5;
             transition: color 0.3s ease;
         }
+
         .coming-soon-section .emoji {
             font-size: 3em;
             margin-top: 20px;
@@ -1593,19 +1667,23 @@
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
+
         .offline-overlay.active {
             opacity: 1;
             visibility: visible;
         }
+
         .offline-overlay i {
             font-size: 3em;
             margin-bottom: 20px;
             color: #FFC107;
         }
+
         .offline-overlay p {
             margin: 0;
             padding: 0 20px;
         }
+
         .offline-overlay .reload-button {
             background-color: var(--accent-teal);
             color: var(--white);
@@ -1618,6 +1696,7 @@
             font-weight: 600;
             transition: background-color 0.2s ease;
         }
+
         .offline-overlay .reload-button:hover {
             background-color: #00939b;
         }
@@ -1628,16 +1707,16 @@
             padding: 20px;
             min-height: calc(100vh - 90px);
             background-color: var(--secondary-light);
-            align-items: center;
-            text-align: center;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
         #about-me-view .section-header {
             display: flex;
             align-items: center;
             width: 100%;
             margin-bottom: 25px;
         }
+
         #about-me-view .back-button {
             background-color: transparent;
             border: none;
@@ -1647,10 +1726,12 @@
             margin-right: 18px;
             transition: color 0.2s ease, transform 0.2s ease;
         }
+
         #about-me-view .back-button:hover {
             color: var(--accent-teal);
             transform: translateX(-5px);
         }
+
         #about-me-view h2 {
             font-family: 'Montserrat', sans-serif;
             font-size: 2.2em;
@@ -1660,6 +1741,7 @@
             flex-grow: 1;
             transition: color 0.3s ease;
         }
+
         .about-me-card {
             background-color: #333333;
             border-radius: var(--border-radius-main);
@@ -1671,6 +1753,7 @@
             border: 1px solid var(--border-color);
             transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
+
         .about-me-card .profile-pic {
             width: 120px;
             height: 120px;
@@ -1680,6 +1763,7 @@
             border: 4px solid var(--accent-teal);
             box-shadow: 0 0 15px rgba(0,0,0,0.5);
         }
+
         .about-me-card h3 {
             font-family: 'Montserrat', sans-serif;
             font-size: 1.8em;
@@ -1688,6 +1772,7 @@
             margin-bottom: 10px;
             transition: color 0.3s ease;
         }
+
         .about-me-card p {
             font-size: 1.1em;
             color: var(--text-light);
@@ -1695,26 +1780,28 @@
             line-height: 1.6;
             transition: color 0.3s ease;
         }
+
         .social-links {
             display: flex;
             justify-content: center;
             gap: 25px;
             margin-top: 20px;
         }
+
         .social-link {
             font-size: 2.5em;
             color: var(--text-light);
             transition: color 0.2s ease, transform 0.2s ease;
         }
-        .social-link:hover {
-            transform: translateY(-5px);
-        }
+
         .social-link.telegram:hover { color: #0088cc; }
+
         .social-link.instagram:hover {
             background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .social-link.youtube:hover { color: #FF0000; }
 
         #how-to-use-app-view {
@@ -1725,12 +1812,14 @@
             background-color: var(--secondary-light);
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
         #how-to-use-app-view .section-header {
             display: flex;
             align-items: center;
             width: 100%;
             margin-bottom: 25px;
         }
+
         #how-to-use-app-view .back-button {
             background-color: transparent;
             border: none;
@@ -1740,10 +1829,12 @@
             margin-right: 18px;
             transition: color 0.2s ease, transform 0.2s ease;
         }
+
         #how-to-use-app-view .back-button:hover {
             color: var(--accent-teal);
             transform: translateX(-5px);
         }
+
         #how-to-use-app-view h2 {
             font-family: 'Montserrat', sans-serif;
             font-size: 2.2em;
@@ -1753,6 +1844,7 @@
             flex-grow: 1;
             transition: color 0.3s ease;
         }
+
         #how-to-use-app-view .video-container {
             position: relative;
             width: 100%;
@@ -1763,6 +1855,7 @@
             margin-bottom: 20px;
             box-shadow: var(--shadow-medium);
         }
+
         #how-to-use-app-view .video-container iframe {
             position: absolute;
             top: 0;
@@ -1771,6 +1864,7 @@
             height: 100%;
             border: none;
         }
+
         #how-to-use-app-view p {
             font-size: 1.1em;
             color: var(--text-light);
@@ -1835,83 +1929,17 @@
             .course-category-item { min-height: 160px; }
             .course-category-item .image-container img { padding: 5px; }
             .course-category-item .content-overlay { padding: 10px; }
-            .course-category-item .category-name { font-size: 0.95em; }
+            .course-category-item .category-name { font-size: 0.95em;}
 
-            .favorites-section-home-card { padding: 20px; margin-top: 20px; }
-            .favorites-section-home-card h2 { font-size: 1.6em; }
-            .favorites-section-home-card .fav-icon { font-size: 2.5em; }
-            .favorites-section-home-card p { font-size: 0.9em; }
-            .favorites-section-home-card .fav-count { font-size: 1.1em; }
-
-            #new-batches-view .section-header h2 { font-size: 1.8em; }
-            .search-bar-container { padding: 5px 10px; }
-            .search-bar-container input { padding: 6px 8px; }
-            .search-bar-container .search-button { padding: 8px 15px; font-size: 0.8em; }
-            .batch-card-body .batch-title { font-size: 1.4em; }
-            .batch-card-body .lets-roar-button { padding: 12px 20px; font-size: 1em; }
-            .batch-card-body .batch-image-container {
-                height: 160px;
+            .quote-section {
+                padding: 20px;
             }
-
-            #favorites-view .section-header h2 { font-size: 1.8em; }
-            .promotional-banner { padding: 12px 15px; font-size: 0.8em; }
-            .promotional-banner .promo-text { font-size: 1em; }
-
-
-            #video-player-view .section-header h2 { font-size: 1.8em; }
-            .player-card-container { padding: 0 15px 15px 15px; }
-            .player-card { margin-bottom: 15px; }
-            .player-metadata { padding: 15px; }
-            .player-metadata .lesson-sub-title { font-size: 1.5em; text-align: center; }
-            .player-action-buttons { flex-wrap: wrap; justify-content: center;
-            padding: 0 15px 15px 15px; }
-            .player-action-buttons .action-button { flex: unset;
-            width: 48%; margin-bottom: 10px; padding: 10px 8px; font-size: 0.8em; }
-            .player-action-buttons .action-button i { margin-right: 5px; }
-
-
-            .bottom-navbar { padding: 12px 0; }
-            .nav-item { font-size: 0.8em; }
-            .nav-item i { font-size: 1.6em; }
-
-            .name-popup { padding: 30px; }
-            .name-popup h2 { font-size: 1.6em; }
-            .name-popup p { font-size: 1em;
-            margin-bottom: 20px;}
-            .name-popup input { font-size: 1.1em; padding-top: 15px; }
-            .name-popup label { top: 6px; font-size: 0.8em; }
-            .name-popup button { font-size: 1.05em; padding: 12px 25px; }
-
-            .comments-popup { max-width: 95%;
-            padding: 20px; }
-            .comments-popup h2 { font-size: 1.5em; }
-
-            .coming-soon-section h2 { font-size: 2em; }
-            .coming-soon-section p { font-size: 1.1em; }
-            .coming-soon-section .emoji { font-size: 2.5em; }
-
-            #about-me-view {
-                padding: 15px;
+            .quote-section .quote-text {
+                font-size: 1.1em;
             }
-            .about-me-card {
-                padding: 25px;
+            .quote-section .quote-author {
+                font-size: 0.95em;
             }
-            .about-me-card .profile-pic {
-                width: 100px;
-                height: 100px;
-            }
-            .about-me-card h3 {
-                font-size: 1.5em;
-            }
-            .about-me-card p {
-                font-size: 1em;
-            }
-            .social-link {
-                font-size: 2em;
-            }
-            
-            #how-to-use-app-view h2 { font-size: 1.8em; }
-            #how-to-use-app-view p { font-size: 0.95em; }
         }
 
         .slider-menu-overlay {
@@ -2193,7 +2221,9 @@
         </div>
 
         <div id="home-view">
-            <p class="text-center text-muted col-span-full" id="loadingCategoriesMessage">Loading categories...</p>
+            <div id="dynamic-categories-container">
+                <p class="text-center text-muted col-span-full" id="loadingCategoriesMessage">Loading categories...</p>
+            </div>
 
             <div class="favorites-section-home-card" onclick="window.showFavoritesView()" id="favorites-section-home-card">
                 <i class="fas fa-heart fav-icon"></i>
@@ -2438,8 +2468,12 @@
             skillNeastLogoUrl: 'https://via.placeholder.com/40x40/00ADB5/ffffff?text=SN',
             sliderHeaderPictureUrl: 'https://via.placeholder.com/50x50/00ADB5/ffffff?text=SN',
             pwLogoUrl: 'https://via.placeholder.com/50x50/000000/ffffff?text=PW',
-            // NEW: Surprise button link
-            surpriseButtonLink: '#' 
+            surpriseButtonLink: '#' // Default value for the surprise button link
+        };
+
+        // Define openTodaySurpriseLink globally so it's always a function
+        window.openTodaySurpriseLink = () => {
+            alert('Loading surprise link... Please wait.'); // Temporary message
         };
 
         const authenticateFirebase = async () => {
@@ -2489,7 +2523,7 @@
         document.addEventListener('DOMContentLoaded', async () => {
             await authenticateFirebase();
             loadAllCategoriesFromFirebase();
-            loadSiteConfigAndApply();
+            loadSiteConfigAndApply(); // This will now update the global openTodaySurpriseLink function
 
             let userName = localStorage.getItem('userName');
             let userRole = localStorage.getItem('userRole');
@@ -2606,6 +2640,7 @@
                 'ai-chatbot-coming-soon-view', 'timeline-coming-soon-view', 'watch-later-coming-soon-view'
             ];
             views.forEach(id => document.getElementById(id).style.display = 'none');
+            // IMPORTANT: Only hide sections within main-content. Do not touch top-navbar or global elements.
             document.querySelector('.welcome-banner').style.display = 'none';
             document.querySelector('.quote-section').style.display = 'none';
         }
@@ -2644,25 +2679,30 @@
             onValue(dbRef(rtdb, 'siteConfig'), (snapshot) => {
                 const config = snapshot.val() || {};
                 window.siteConfig = { ...window.siteConfig, ...config };
+                
+                // Update properties that link to siteConfig values
                 document.getElementById('skillNeastLogo').src = window.siteConfig.skillNeastLogoUrl;
-                document.querySelector('.top-navbar .telegram-icon').onclick = () => window.open(window.siteConfig.telegramGroupLink, '_blank');
-                document.getElementById('aboutMeProfilePic').src = window.siteConfig.profilePictureUrl;
-                document.getElementById('aboutMeTelegramGroupLink').href = window.siteConfig.telegramGroupLink;
-                document.getElementById('aboutMeInstagramLink').href = window.siteConfig.instagramLink;
-                document.getElementById('aboutMeYoutubeLink').href = window.siteConfig.youtubeLink;
-                document.getElementById('sliderHeaderLogo').src = window.siteConfig.sliderHeaderPictureUrl;
-                document.getElementById('sliderTelegramChannelLink').href = window.siteConfig.telegramChannelLink;
-                document.getElementById('sliderTelegramGroupLink').href = window.siteConfig.telegramGroupLink;
-                document.getElementById('sliderRequestCoursesLink').href = window.siteConfig.requestCoursesLink;
-                // NEW: Apply surprise button link
+                // This is the important part: update the openTodaySurpriseLink function's behavior
                 window.openTodaySurpriseLink = () => {
                     const link = window.siteConfig.surpriseButtonLink || '#';
-                    if (link !== '#') {
+                    if (link && link !== '#') {
                         window.open(link, '_blank');
                     } else {
                         alert('No surprise link available yet! Check back later. 🎉');
                     }
                 };
+
+                // Update other elements dependent on siteConfig
+                document.querySelector('.top-navbar .telegram-icon').onclick = () => window.open(window.siteConfig.telegramGroupLink, '_blank');
+                document.getElementById('aboutMeProfilePic').src = window.siteConfig.profilePictureUrl;
+                document.getElementById('aboutMeTelegramGroupLink').href = window.siteConfig.telegramGroupLink;
+                document.getElementById('aboutMeInstagramLink').href = window.siteConfig.instagramLink;
+                document.getElementById('aboutMeYoutubeLink').href = window.siteConfig.youtubeLink;
+                document.getElementById('sliderHeaderLogo').src = window.siteConfig.sliderHeaderPictureUrl; // This will now properly link to a specific image URL
+                document.getElementById('sliderTelegramChannelLink').href = window.siteConfig.telegramChannelLink;
+                document.getElementById('sliderTelegramGroupLink').href = window.siteConfig.telegramGroupLink;
+                document.getElementById('sliderRequestCoursesLink').href = window.siteConfig.requestCoursesLink;
+
                 console.log("Site configuration applied.");
             }, (error) => console.error("Error loading site config:", error));
         };
@@ -2730,6 +2770,47 @@
                 batchCard.className = 'batch-card hidden-on-scroll';
                 const isFavorited = window.favorites.includes(batch.id);
                 const heartIconClass = isFavorited ? 'fas fa-heart' : 'far fa-heart';
+
+                // Price Display Logic
+                let priceHtml = '';
+                if (batch.isFree) {
+                    priceHtml = `<span class="free-price">FREE</span>`;
+                    if (batch.originalPrice && batch.originalPrice > 0) {
+                        priceHtml += `<span class="original-price-strikethrough"> ₹${batch.originalPrice}</span>`;
+                    }
+                } else {
+                    if (batch.discountedPrice && batch.originalPrice && batch.discountedPrice < batch.originalPrice) {
+                        priceHtml = `<span class="original-price-strikethrough">₹${batch.originalPrice}</span> <span style="font-weight: bold;">₹${batch.discountedPrice}</span>`;
+                    } else if (batch.discountedPrice) {
+                        priceHtml = `<span style="font-weight: bold;">₹${batch.discountedPrice}</span>`;
+                    } else if (batch.originalPrice) {
+                        priceHtml = `<span style="font-weight: bold;">₹${batch.originalPrice}</span>`;
+                    } else {
+                        priceHtml = `Price N/A`;
+                    }
+                }
+
+                // Description with Checkmark Emojis
+                let descriptionHtml = '';
+                if (batch.description) {
+                    const lines = batch.description.split('\n').filter(line => line.trim() !== '');
+                    descriptionHtml = lines.map(line => `<div class="batch-description-feature"><i class="fas fa-check-circle"></i> ${line.trim()}</div>`).join('');
+                } else {
+                    descriptionHtml = `<div class="batch-description-feature"><i class="fas fa-check-circle"></i> No description available.</div>`;
+                }
+                
+                // Conditional "LET'S ROAR" button action
+                let letsRoarAction;
+                let letsRoarButtonText;
+
+                if (batch.isFree) {
+                    letsRoarAction = `window.showSectionsView('${batch.id}')`;
+                    letsRoarButtonText = "LET'S ROAR 🚀🔥";
+                } else {
+                    letsRoarAction = `window.open(window.siteConfig.telegramGroupLink || 'https://t.me/', '_blank')`;
+                    letsRoarButtonText = "JOIN TELEGRAM 📞";
+                }
+
                 batchCard.innerHTML = `
                     <div class="batch-card-header">
                         <span>${batch.title}</span>
@@ -2742,11 +2823,11 @@
                             <img src="${batch.thumbnail}" alt="${batch.title}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=No+Img';">
                         </div>
                         <div class="batch-title">${batch.title}</div>
-                        <p class="batch-description">${batch.description || 'No description available.'}</p>
-                        <button class="lets-roar-button" data-batch-id="${batch.id}">LET'S ROAR 🚀🔥</button>
+                        <p class="batch-price" style="margin-bottom: 15px;">${priceHtml}</p>
+                        <div class="batch-description">${descriptionHtml}</div>
+                        <button class="lets-roar-button" onclick="${letsRoarAction}">${letsRoarButtonText}</button>
                     </div>`;
                 batchesContainer.appendChild(batchCard);
-                batchCard.querySelector('.lets-roar-button').onclick = () => window.showSectionsView(batch.id);
                 observer.observe(batchCard);
             });
         }
@@ -2766,7 +2847,7 @@
                     currentCategoryBatches = Object.keys(cat.batches).map(key => ({ id: key, ...cat.batches[key] }));
                 }
             }
-            const filtered = currentCategoryBatches.filter(b => b.title.toLowerCase().includes(searchTerm));
+            const filtered = currentCategoryBatches.filter(b => b.title.toLowerCase().includes(searchTerm) || (b.description && b.description.toLowerCase().includes(searchTerm)));
             displayBatches(filtered);
         }
 
@@ -2865,12 +2946,11 @@
             container.innerHTML = '';
 
             if (selectedModule && selectedModule.lectures && Object.keys(selectedModule.lectures).length > 0) {
-                titleEl.textContent = selectedModule.name; // Assuming module name is 'name'
+                titleEl.textContent = selectedModule.name;
                 Object.entries(selectedModule.lectures).forEach(([lectureId, lecture]) => {
                     const lessonItem = document.createElement('div');
                     lessonItem.className = 'lesson-list-item hidden-on-scroll';
                     lessonItem.onclick = () => window.showVideoPlayerView(categoryId, batchId, moduleId, lectureId);
-                    // FIX: Changed lecture.name to lecture.title
                     lessonItem.innerHTML = `
                         <div class="lesson-list-item-right">
                             <h3 class="lesson-list-item-title">${lecture.title || 'Untitled Lecture'}</h3>
@@ -2888,7 +2968,6 @@
             window.scrollTo(0, 0);
         }
 
-        // --- FIX: This is the updated and debugged showVideoPlayerView function ---
         window.showVideoPlayerView = function(categoryId, batchId, moduleId, lectureId) {
             hideAllViews();
             currentBatchId = batchId;
@@ -2897,11 +2976,9 @@
 
             const selectedLecture = allCategoriesData[categoryId]?.batches?.[batchId]?.modules?.[moduleId]?.lectures?.[lectureId];
 
-            // --- DEBUGGING LOGS ---
             console.log("--- showVideoPlayerView DEBUG ---");
             console.log("Called with:", { categoryId, batchId, moduleId, lectureId });
-            console.log("Selected Lecture Data (from allCategoriesData):", selectedLecture); // This will show if 'title' and 'url' are present
-            // --- END DEBUGGING LOGS ---
+            console.log("Selected Lecture Data (from allCategoriesData):", selectedLecture);
 
             if (!selectedLecture) {
                 alert('Error: Lecture details could not be found. It might have been deleted.');
@@ -2910,28 +2987,22 @@
                 return;
             }
             
-            // FIX: Changed selectedLecture.name to selectedLecture.title
             document.getElementById('player-view-title').textContent = selectedLecture.title || 'Untitled Lecture';
             document.getElementById('player-lesson-sub-title').textContent = selectedLecture.title || 'Untitled Lecture';
 
             const mainVideoPlayer = document.getElementById('main-video-player');
-            mainVideoPlayer.innerHTML = ''; // Clear previous video
+            mainVideoPlayer.innerHTML = '';
 
-            // FIX: Change selectedLecture.link to selectedLecture.url
             if (selectedLecture.url && typeof selectedLecture.url === 'string') {
-                const videoInfo = extractVideoId(selectedLecture.url); // Changed to .url
+                const videoInfo = extractVideoId(selectedLecture.url);
                 
-                // --- DEBUGGING LOG ---
                 console.log("Video Info extracted by extractVideoId:", videoInfo);
-                // --- END DEBUGGING LOG ---
 
                 if (videoInfo) {
                     let embedUrl = '';
                     if (videoInfo.type === 'gdrive') {
-                        // Correct Google Drive embed URL
                         embedUrl = `https://drive.google.com/embed?id=${videoInfo.id}`;
                     } else if (videoInfo.type === 'youtube') {
-                        // YouTube no-cookie embed with autoplay
                         embedUrl = `https://www.youtube-nocookie.com/embed/${videoInfo.id}?autoplay=1`;
                     }
                     
@@ -2942,32 +3013,28 @@
                         console.error("Failed to construct embed URL:", videoInfo);
                     }
                 } else {
-                    mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">Video link is not a valid Google Drive or YouTube URL. Provided link: <strong>${selectedLecture.url}</strong></p>`; // Changed to .url
-                    console.warn("Invalid video link format detected by extractVideoId:", selectedLecture.url); // Changed to .url
+                    mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">Video link is not a valid Google Drive or YouTube URL. Provided link: <strong>${selectedLecture.url}</strong></p>`;
+                    console.warn("Invalid video link format detected by extractVideoId:", selectedLecture.url);
                 }
             } else {
-                mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">No video link found for this lecture. Link was: <strong>${selectedLecture.url || 'undefined/null'}</strong></p>`; // Changed to .url
-                console.warn("Lecture link is missing or not a string:", selectedLecture.url); // Changed to .url
+                mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">No video link found for this lecture. Link was: <strong>${selectedLecture.url || 'undefined/null'}</strong></p>`;
+                console.warn("Lecture link is missing or not a string:", selectedLecture.url);
             }
 
-            // Populate the list of lessons for the current module below the player
             const lessonsForPlayerBatch = document.getElementById('lessons-for-player-batch');
             lessonsForPlayerBatch.innerHTML = '';
             const allLecturesInModule = allCategoriesData[categoryId]?.batches?.[batchId]?.modules?.[moduleId]?.lectures || {};
             
-            // Convert lectures object to an array and sort by Firebase key (usually creation order)
             const sortedLectures = Object.entries(allLecturesInModule).sort(([idA], [idB]) => idA.localeCompare(idB));
 
             sortedLectures.forEach(([otherLectureId, otherLecture]) => {
                 const lessonItem = document.createElement('li');
                 lessonItem.className = 'lesson-item hidden-on-scroll';
                 lessonItem.onclick = () => window.showVideoPlayerView(categoryId, batchId, moduleId, otherLectureId);
-                // Highlight the currently playing lecture
                 if (otherLectureId === window.currentPlayingLectureId) {
-                    lessonItem.style.backgroundColor = 'rgba(0, 173, 181, 0.2)'; // Accent color
+                    lessonItem.style.backgroundColor = 'rgba(0, 173, 181, 0.2)';
                     lessonItem.style.border = '1px solid var(--accent-teal)';
                 }
-                // FIX: Changed otherLecture.name to otherLecture.title
                 lessonItem.innerHTML = `<div class="lesson-list-item-right"><h3>${otherLecture.title || 'Untitled Lecture'}</h3></div>`; 
                 lessonsForPlayerBatch.appendChild(lessonItem);
                 observer.observe(lessonItem);
@@ -2975,12 +3042,11 @@
 
             document.getElementById('video-player-view').style.display = 'block';
             currentView = 'video-player-view';
-            window.scrollTo(0, 0); // Scroll to top of the video player view
+            window.scrollTo(0, 0);
         }
 
         window.goBackFromPlayerView = function() {
             if (currentBatchId && currentSectionIndex !== null) {
-                // Find the categoryId based on currentBatchId
                 let categoryId = null;
                 for (const catKey in allCategoriesData) {
                     if (allCategoriesData[catKey].batches && allCategoriesData[catKey].batches[currentBatchId]) {
@@ -2993,12 +3059,10 @@
                     return;
                 }
             } 
-            // Fallback if batch or module context is lost
             window.showNewBatchesView(window.lastCategoryViewed);
         }
 
         window.goBackFromLessonsList = function() {
-            // No direct batch ID stored with the section. Need to find it.
             let categoryId = null;
             let batchIdForSection = null;
             outerLoop:
@@ -3016,34 +3080,24 @@
             if (categoryId && batchIdForSection) {
                 window.showSectionsView(batchIdForSection);
             } else {
-                window.showNewBatchesView(window.lastCategoryViewed); // Fallback
+                window.showNewBatchesView(window.lastCategoryViewed);
             }
         }
 
-        // --- FIX: Updated and more robust extractVideoId function ---
         function extractVideoId(url) {
-            // YouTube regex: Matches common YouTube URL formats
             const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([\w-]{11})(?:\S+)?/;
             const youtubeMatch = url.match(youtubeRegex);
             if (youtubeMatch && youtubeMatch[1]) {
                 return { type: 'youtube', id: youtubeMatch[1] };
             }
 
-            // Google Drive regex: Matches various Google Drive file share/embed URLs
-            // This covers:
-            // - drive.google.com/file/d/FILE_ID/view
-            // - drive.google.com/file/d/FILE_ID/preview
-            // - drive.google.com/embed?id=FILE_ID
-            // - drive.google.com/open?id=FILE_ID
-            // - docs.google.com/file/d/FILE_ID
-            // - drive.google.com/uc?id=FILE_ID (universal content, often used for direct downloads/embeds)
             const gdriveRegex = /(?:https?:\/\/)?(?:drive\.google\.com\/(?:file\/d\/|open\?id=|embed\?id=|uc\?id=)|docs\.google\.com\/file\/d\/)([a-zA-Z0-9_-]+)(?:[\/\?].*)?/;
             const gdriveMatch = url.match(gdriveRegex);
             if (gdriveMatch && gdriveMatch[1]) {
                 return { type: 'gdrive', id: gdriveMatch[1] };
             }
             
-            return null; // No valid ID found for either YouTube or Google Drive
+            return null;
         }
 
 
@@ -3139,11 +3193,13 @@
         window.openSliderMenu = function() {
             document.getElementById('sliderMenuOverlay').classList.add('active');
             document.getElementById('sliderMenu').classList.add('active');
+            document.body.style.overflow = 'hidden'; /* Prevent scrolling of main content when slider is open */
         }
 
         window.closeSliderMenu = function() {
             document.getElementById('sliderMenuOverlay').classList.remove('active');
             document.getElementById('sliderMenu').classList.remove('active');
+            document.body.style.overflow = 'auto'; /* Restore scrolling */
         }
 
         window.shareApp = function() {
