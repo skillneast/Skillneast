@@ -111,15 +111,15 @@
 
         .top-navbar {
             display: flex;
-            justify-content: space-between; 
+            justify-content: space-between;
             align-items: center;
-            padding: 18px 25px; /* Adjusted padding */
+            padding: 18px 25px;
             background: linear-gradient(to right, var(--dark-bg-gradient-start), var(--dark-bg-gradient-end));
             box-shadow: var(--shadow-medium);
             position: relative; /* Changed to relative to position children absolutely */
             top: 0;
-            left: 0; 
-            width: 100%; 
+            left: 0;
+            width: 100%;
             z-index: 1000;
             border-bottom-left-radius: var(--border-radius-main);
             border-bottom-right-radius: var(--border-radius-main);
@@ -130,8 +130,8 @@
             color: var(--white);
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            width: 52px; 
-            height: 52px; 
+            width: 52px;
+            height: 52px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -156,56 +156,56 @@
         }
         .top-navbar .app-logo {
             display: flex;
-            flex-direction: row; 
+            flex-direction: row;
             align-items: center;
-            padding: 8px 18px; 
-            background-color: var(--primary-dark); 
+            padding: 8px 18px;
+            background-color: var(--primary-dark);
             border-radius: var(--border-radius-button);
             box-shadow: var(--shadow-light);
             cursor: pointer;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
             position: absolute; /* Absolute positioning for precise centering */
-            left: 50%; 
-            transform: translateX(-50%); 
-            overflow: hidden; 
-            flex-grow: 0; 
-            margin: 0; 
-            justify-content: center; 
-            z-index: 1; 
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: hidden;
+            flex-grow: 0;
+            margin: 0;
+            justify-content: center;
+            z-index: 1;
         }
         .top-navbar .app-logo:hover {
-            background-color: #2F4156; 
+            background-color: #2F4156;
         }
         .top-navbar .app-logo img#skillNeastLogo {
-            height: 34px; 
-            margin-right: 8px; 
-            margin-bottom: 0; 
-            transition: transform 1s linear; 
+            height: 34px;
+            margin-right: 8px;
+            margin-bottom: 0;
+            transition: transform 1s linear;
         }
         .top-navbar .app-logo img#skillNeastLogo.rotating {
-            animation: rotate360 1s linear forwards; 
+            animation: rotate360 1s linear forwards;
         }
         @keyframes rotate360 {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-        .top-navbar .app-logo .text-wrapper { 
+        .top-navbar .app-logo .text-wrapper {
             display: flex;
             flex-direction: column;
-            align-items: flex-start; 
+            align-items: flex-start;
         }
         .top-navbar .app-logo .main-title {
             font-family: 'Poppins', sans-serif;
             font-weight: 800;
-            font-size: 1.5em; 
-            letter-spacing: 1.2px; 
+            font-size: 1.5em;
+            letter-spacing: 1.2px;
             background: linear-gradient(90deg, #FF6F61, #FFD700, #4CAF50, #00ADB5, #3F51B5, #9C27B0);
             -webkit-background-clip: text;
             color: transparent;
             display: inline-block;
             animation: rainbowText 5s linear infinite;
             background-size: 200% 100%;
-            line-height: 1; 
+            line-height: 1;
         }
 
         @keyframes rainbowText {
@@ -215,14 +215,14 @@
         /* New Tagline Styles */
         .top-navbar .app-logo .tagline {
             font-family: 'Open Sans', sans-serif;
-            font-size: 0.65em; 
+            font-size: 0.65em;
             font-weight: 600;
-            color: var(--text-light); 
-            text-align: left; 
-            animation: floatUpDown 2s infinite ease-in-out; 
-            white-space: nowrap; 
+            color: var(--text-light);
+            text-align: left;
+            animation: floatUpDown 2s infinite ease-in-out;
+            white-space: nowrap;
             transition: color 0.3s ease;
-            line-height: 1; 
+            line-height: 1;
         }
 
         /* --- Main Content Area --- */
@@ -875,6 +875,10 @@
         .batch-card-body .access-content-button:hover {
             background-color: #138496;
             transform: translateY(-2px);
+        }
+        .batch-card-body .access-content-button i {
+            font-size: 1.2em; /* For icon size */
+            animation: pulse 1s infinite alternate; /* Example animation */
         }
 
 
@@ -1592,10 +1596,6 @@
             color: var(--text-dark);
         }
 
-        .comments-input-area textarea:focus {
-            border-color: var(--comments-btn-bg);
-        }
-
         .comments-input-area button {
             background-color: var(--comments-btn-bg);
             color: var(--white);
@@ -1786,10 +1786,9 @@
         }
 
         #about-me-view {
-            display: flex; 
+            display: none;
             flex-direction: column;
-            align-items: center; /* Center children horizontally */
-            padding: 30px 20px; /* Consistent padding */
+            padding: 20px;
             min-height: calc(100vh - 90px);
             background-color: var(--secondary-light);
             transition: background-color 0.3s ease, color 0.3s ease;
@@ -1834,13 +1833,9 @@
             padding: 30px;
             width: 100%;
             max-width: 500px;
-            margin: 20px auto; /* Centered horizontally */
+            margin-top: 20px;
             border: 1px solid var(--border-color);
             transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-            display: flex; /* Make it a flex container */
-            flex-direction: column; /* Stack content vertically */
-            align-items: center; /* Center content horizontally */
-            text-align: center; /* Center text content */
         }
 
         .about-me-card .profile-pic {
@@ -1993,21 +1988,19 @@
 
         @media (max-width: 768px) {
             .top-navbar { padding: 12px 15px; }
-            /* Logo already centrally positioned with absolute positioning */
-            .top-navbar .app-logo .main-title { font-size: 1.3em; text-align: center; } 
-            .top-navbar .app-logo .tagline { font-size: 0.6em; text-align: center; } 
-            .top-navbar .app-logo img#skillNeastLogo { height: 30px; } 
+            .top-navbar .app-logo .main-title { font-size: 1.3em; } /* Adjusted for mobile */
+            .top-navbar .app-logo .tagline { font-size: 0.6em; } /* Adjusted for mobile */
+            .top-navbar .app-logo img#skillNeastLogo { height: 30px; } /* Adjusted for mobile */
             .top-navbar .menu-icon, .top-navbar .telegram-icon {
-                width: 44px; 
-                height: 44px; 
+                width: 44px; /* Smaller for mobile */
+                height: 44px; /* Smaller for mobile */
                 font-size: 1.6em;
             }
-            /* Margins removed at top level, handled by flexbox space-between */
-            .top-navbar .menu-icon { margin-right: 0; } 
-            .top-navbar .telegram-icon { margin-left: 0; } 
+            .top-navbar .menu-icon { margin-right: 5px; }
+            .top-navbar .telegram-icon { margin-left: 5px; }
             .top-navbar .app-logo {
-                padding: 5px 10px; 
-                /* Margin 0 set already */
+                padding: 5px 10px; /* Adjusted padding for mobile */
+                margin: 0 5px; /* Smaller margin for mobile */
             }
 
 
@@ -2056,7 +2049,7 @@
             top: 0;
             left: -250px;
             width: 250px;
-            height: 100vh; /* Changed to 100vh for consistent height and scroll */
+            height: 100%;
             background-color: var(--slider-bg);
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
             z-index: 1600;
@@ -2065,7 +2058,7 @@
             flex-direction: column;
             padding-top: 20px;
             box-sizing: border-box;
-            overflow-y: auto; /* Enable vertical scrolling if content overflows */
+            overflow-y: auto;
             padding-bottom: 20px;
         }
 
@@ -2150,9 +2143,6 @@
         .slider-menu-item .item-text {
             flex-grow: 1;
             font-weight: 500;
-            white-space: nowrap; /* Prevent text wrapping */
-            overflow: hidden; /* Hide overflow content */
-            text-overflow: ellipsis; /* Add ellipsis for overflowed text */
         }
 
         .slider-menu-item .coming-soon-tag {
@@ -2164,7 +2154,6 @@
             border-radius: 10px;
             margin-left: 10px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-            flex-shrink: 0; /* Prevent tag from shrinking */
         }
 
         .slider-footer {
@@ -2419,37 +2408,55 @@
         </div>
 
         <div id="timeline-coming-soon-view" class="coming-soon-section" style="display: none;">
+            <div class="section-header">
+                <button class="back-button" onclick="window.goBackFromPlayerView()"><i class="fas fa-arrow-left"></i></button>
+                <h2>Timeline Coming Soon!</h2>
+            </div>
             <i class="emoji">⏳</i>
-            <h2>Timeline Coming Soon!</h2>
             <p>We're building advanced timeline features to help you navigate lectures seamlessly. Stay tuned! 🚀</p>
         </div>
         <div id="watch-later-coming-soon-view" class="coming-soon-section" style="display: none;">
+            <div class="section-header">
+                <button class="back-button" onclick="window.goBackFromPlayerView()"><i class="fas fa-arrow-left"></i></button>
+                <h2>Watch Later Coming Soon!</h2>
+            </div>
             <i class="emoji">⏰</i>
-            <h2>Watch Later Coming Soon!</h2>
             <p>Save lectures to watch later and organize your study schedule. This feature is in the works! ✨</p>
         </div>
         
         <div id="comments-coming-soon-view" class="coming-soon-section" style="display: none;">
+            <div class="section-header">
+                <button class="back-button" onclick="window.goBackFromPlayerView()"><i class="fas fa-arrow-left"></i></button>
+                <h2>Comments Section Coming Soon!</h2>
+            </div>
             <i class="emoji">💬</i>
-            <h2>Comments Section Coming Soon!</h2>
             <p>We're working on an interactive comments feature to enhance your learning experience. Stay tuned! ✨</p>
         </div>
 
         <div id="bundles-coming-soon-view" class="coming-soon-section" style="display: none;">
+            <div class="section-header">
+                <button class="back-button" onclick="window.showHomeView()"><i class="fas fa-arrow-left"></i></button>
+                <h2>Bundles Coming Soon!</h2>
+            </div>
             <i class="emoji">🎁</i>
-            <h2>Bundles Coming Soon!</h2>
             <p>Exciting new course bundles are on their way. Stay tuned for amazing deals and curated learning paths!</p>
         </div>
 
         <div id="pdfs-coming-soon-view" class="coming-soon-section" style="display: none;">
+            <div class="section-header">
+                <button class="back-button" onclick="window.showHomeView()"><i class="fas fa-arrow-left"></i></button>
+                <h2>PDFs Coming Soon!</h2>
+            </div>
             <i class="emoji">📄</i>
-            <h2>PDFs Coming Soon!</h2>
             <p>We're preparing a comprehensive library of downloadable PDFs and study materials for you. Check back soon!</p>
         </div>
 
         <div id="ai-chatbot-coming-soon-view" class="coming-soon-section" style="display: none;">
+            <div class="section-header">
+                <button class="back-button" onclick="window.showHomeView()"><i class="fas fa-arrow-left"></i></button>
+                <h2>Neast Bro (AI Chatbot) Coming Soon!</h2>
+            </div>
             <i class="emoji">🤖</i>
-            <h2>Neast Bro (AI Chatbot) Coming Soon!</h2>
             <p>Get ready for personalized assistance! Our AI Chatbot, Neast Bro, is under development to help you with your learning journey. Stay tuned for its launch! 🚀</p>
         </div>
 
@@ -2631,9 +2638,8 @@
 
         document.addEventListener('DOMContentLoaded', async () => {
             await authenticateFirebase();
-            loadSiteConfigAndApply(); 
             loadAllCategoriesFromFirebase();
-            loadHowToUseVideosForWebsite(); 
+            loadSiteConfigAndApply(); // This will now update the global openTodaySurpriseLink function
 
             let userName = localStorage.getItem('userName');
             let userRole = localStorage.getItem('userRole');
@@ -2692,7 +2698,9 @@
                     }, 1000);
                 }
             });
-
+            
+            // Call loadHowToUseVideosForWebsite here after Firebase config is loaded
+            loadHowToUseVideosForWebsite(); 
             setupLikeButton(); // Initialize like button functionality
         });
 
@@ -2750,12 +2758,26 @@
                 'lessons-in-sections-view', 'video-player-view', 'bundles-coming-soon-view', 
                 'pdfs-coming-soon-view', 'about-me-view', 'how-to-use-app-view', 
                 'ai-chatbot-coming-soon-view', 'timeline-coming-soon-view', 'watch-later-coming-soon-view',
-                'comments-coming-soon-view' // Add this new view
+                'comments-coming-soon-view' // This is now a regular "coming soon" view
             ];
-            views.forEach(id => document.getElementById(id).style.display = 'none');
+            // Explicitly ensure comments popup overlay is always hidden by default on view change
+            const commentsPopupOverlay = document.getElementById('commentsPopupOverlay');
+            if (commentsPopupOverlay) {
+                commentsPopupOverlay.classList.remove('active');
+                commentsPopupOverlay.style.display = 'none'; // Ensure it's hidden.
+            }
+            
+            views.forEach(id => {
+                const viewElement = document.getElementById(id);
+                if (viewElement) {
+                    viewElement.style.display = 'none';
+                }
+            });
             // IMPORTANT: Only hide sections within main-content. Do not touch top-navbar or global elements.
-            document.querySelector('.welcome-banner').style.display = 'none';
-            document.querySelector('.quote-section').style.display = 'none';
+            const welcomeBanner = document.querySelector('.welcome-banner');
+            if (welcomeBanner) welcomeBanner.style.display = 'none';
+            const quoteSection = document.querySelector('.quote-section');
+            if (quoteSection) quoteSection.style.display = 'none';
         }
 
         window.showHomeView = function() {
@@ -2794,7 +2816,7 @@
                 window.siteConfig = { ...window.siteConfig, ...config };
                 
                 // Update properties that link to siteConfig values
-                document.getElementById('skillNeastLogo').src = window.siteConfig.skillNeastLogoUrl;
+                document.getElementById('skillNeastLogo').src = window.siteConfig.skillNeastLogoUrl || 'https://via.placeholder.com/40x40/00ADB5/ffffff?text=SN';
                 // This is the important part: update the openTodaySurpriseLink function's behavior
                 window.openTodaySurpriseLink = () => {
                     const link = window.siteConfig.surpriseButtonLink || '#';
@@ -2806,34 +2828,36 @@
                 };
 
                 // Update other elements dependent on siteConfig
-                document.querySelector('.top-navbar .telegram-icon').onclick = () => window.open(window.siteConfig.telegramGroupLink, '_blank');
-                document.getElementById('aboutMeProfilePic').src = window.siteConfig.profilePictureUrl;
-                document.getElementById('aboutMeTelegramGroupLink').href = window.siteConfig.telegramGroupLink;
-                document.getElementById('aboutMeInstagramLink').href = window.siteConfig.instagramLink;
-                document.getElementById('aboutMeYoutubeLink').href = window.siteConfig.youtubeLink;
-                document.getElementById('sliderHeaderLogo').src = window.siteConfig.sliderHeaderPictureUrl; 
-                document.getElementById('sliderTelegramChannelLink').href = window.siteConfig.telegramChannelLink;
-                document.getElementById('sliderTelegramGroupLink').href = window.siteConfig.telegramGroupLink;
-                document.getElementById('sliderRequestCoursesLink').href = window.siteConfig.requestCoursesLink;
+                document.querySelector('.top-navbar .telegram-icon').onclick = () => window.open(window.siteConfig.telegramGroupLink || 'https://t.me/', '_blank');
+                document.getElementById('aboutMeProfilePic').src = window.siteConfig.profilePictureUrl || 'https://via.placeholder.com/120x120/00ADB5/ffffff?text=Fahad';
+                document.getElementById('aboutMeTelegramGroupLink').href = window.siteConfig.telegramGroupLink || 'https://t.me/';
+                document.getElementById('aboutMeInstagramLink').href = window.siteConfig.instagramLink || 'https://instagram.com/';
+                document.getElementById('aboutMeYoutubeLink').href = window.siteConfig.youtubeLink || 'https://www.youtube.com/';
+                document.getElementById('sliderHeaderLogo').src = window.siteConfig.sliderHeaderPictureUrl || 'https://via.placeholder.com/50x50/00ADB5/ffffff?text=SN';
+                document.getElementById('sliderTelegramChannelLink').href = window.siteConfig.telegramChannelLink || 'https://t.me/';
+                document.getElementById('sliderTelegramGroupLink').href = window.siteConfig.telegramGroupLink || 'https://t.me/';
+                document.getElementById('sliderRequestCoursesLink').href = window.siteConfig.requestCoursesLink || '#';
 
                 console.log("Site configuration applied.");
             }, (error) => console.error("Error loading site config:", error));
         };
 
         function loadHowToUseVideosForWebsite() {
-            /* Corrected Firebase path to read from siteConfig/howToUseVideos as per Firebase screenshot */
-            onValue(dbRef(rtdb, 'siteConfig/howToUseVideos'), (snapshot) => { /*  */
+            onValue(dbRef(rtdb, 'siteConfig/howToUseVideos'), (snapshot) => {
                 const howToUseAppView = document.getElementById('how-to-use-app-view');
                 const videoContainer = howToUseAppView.querySelector('.video-container');
+                // Select the first p tag specifically for dynamic description
                 const descriptionParagraph = howToUseAppView.querySelector('p:first-of-type'); 
 
-                videoContainer.innerHTML = '';
+                videoContainer.innerHTML = ''; // Clear previous content
                 if (descriptionParagraph) {
-                    descriptionParagraph.textContent = ''; 
+                    descriptionParagraph.textContent = ''; // Clear previous text
                 }
 
                 const videos = snapshot.val();
                 if (videos) {
+                    // Assuming only one main tutorial video for simplicity.
+                    // If multiple videos, you might iterate or pick a specific one.
                     const firstVideoId = Object.keys(videos)[0];
                     const firstVideo = videos[firstVideoId];
 
@@ -2844,10 +2868,10 @@
                             if (videoInfo.type === 'gdrive') {
                                 embedUrl = `https://drive.google.com/embed?id=${videoInfo.id}`;
                             } else if (videoInfo.type === 'youtube') {
-                                embedUrl = `https://www.youtube-nocookie.com/embed/${videoInfo.id}?autoplay=0`; 
+                                embedUrl = `https://www.youtube-nocookie.com/embed/${videoInfo.id}?autoplay=0`; // Autoplay set to 0
                             }
                             if (embedUrl) {
-                                videoContainer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>`; /* Added fullscreen to allow attribute */
+                                videoContainer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
                             }
                         }
                     }
@@ -2866,44 +2890,61 @@
                 console.error("Error loading how-to-use videos for website:", error);
                 const howToUseAppView = document.getElementById('how-to-use-app-view');
                 const videoContainer = howToUseAppView.querySelector('.video-container');
-                videoContainer.innerHTML = `<p style="color: red; text-align: center; padding: 20px;">Error loading tutorial video.</p>`;
+                if (videoContainer) videoContainer.innerHTML = `<p style="color: red; text-align: center; padding: 20px;">Error loading tutorial video.</p>`;
             });
         }
 
         function renderCategories() {
             const homeView = document.getElementById('home-view');
-            Array.from(homeView.querySelectorAll('.course-category-item')).forEach(el => el.remove());
-            const loadingMessage = document.getElementById('loadingCategoriesMessage');
-            if (loadingMessage) loadingMessage.remove();
+            const dynamicCategoriesContainer = homeView.querySelector('#dynamic-categories-container');
+            
+            // Remove existing category items to prevent duplicates on data update
+            Array.from(dynamicCategoriesContainer.querySelectorAll('.course-category-item')).forEach(el => el.remove());
+            
+            const loadingMessage = dynamicCategoriesContainer.querySelector('#loadingCategoriesMessage');
+            if (loadingMessage) loadingMessage.remove(); // Remove loading message once data loads
 
-            Object.entries(allCategoriesData).forEach(([catId, category]) => {
-                const categoryItem = document.createElement('div');
-                categoryItem.className = 'course-category-item hidden-on-scroll';
-                categoryItem.onclick = () => window.showNewBatchesView(catId);
-                const imageUrl = category.imageUrl || 'https://via.placeholder.com/180x180/00ADB5/1A2B3C?text=Course';
-                categoryItem.innerHTML = `
-                    <div class="image-container">
-                        <img src="${imageUrl}" alt="${category.name}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/180x180/00ADB5/1A2B3C?text=No+Img';">
-                    </div>
-                    <div class="content-overlay">
-                        <span class="category-name">${category.name}</span>
-                    </div>
-                `;
-                homeView.prepend(categoryItem);
-                observer.observe(categoryItem);
-            });
+            if (allCategoriesData) {
+                // Sort categories by name alphabetically
+                const sortedCategories = Object.entries(allCategoriesData).sort(([, catA], [, catB]) => {
+                    const nameA = catA.name ? catA.name.toLowerCase() : '';
+                    const nameB = catB.name ? catB.name.toLowerCase() : '';
+                    return nameA.localeCompare(nameB);
+                });
+
+                sortedCategories.forEach(([catId, category]) => {
+                    const categoryItem = document.createElement('div');
+                    categoryItem.className = 'course-category-item hidden-on-scroll';
+                    categoryItem.onclick = () => window.showNewBatchesView(catId);
+                    const imageUrl = category.imageUrl || 'https://via.placeholder.com/180x180/00ADB5/1A2B3C?text=Course';
+                    categoryItem.innerHTML = `
+                        <div class="image-container">
+                            <img src="${imageUrl}" alt="${category.name}" draggable="false" onerror="this.onerror=null;this.src='https://via.placeholder.com/180x180/00ADB5/1A2B3C?text=No+Img';">
+                        </div>
+                        <div class="content-overlay">
+                            <span class="category-name">${category.name}</span>
+                        </div>
+                    `;
+                    dynamicCategoriesContainer.appendChild(categoryItem); // Append to the dynamic container
+                    observer.observe(categoryItem);
+                });
+            } else {
+                dynamicCategoriesContainer.innerHTML = `<p class="text-center text-muted col-span-full">No categories available.</p>`;
+            }
         }
+
 
         window.showNewBatchesView = function(categoryId = 'all') {
             hideAllViews();
             document.getElementById('new-batches-view').style.display = 'block';
             currentView = 'new-batches-view';
             window.lastCategoryViewed = categoryId;
-            document.getElementById('batches-container').innerHTML = '';
+            document.getElementById('batches-container').innerHTML = ''; // Clear previous batches
 
             let batchesToDisplay = [];
             if (categoryId === 'all') {
                 document.getElementById('new-batches-title').textContent = 'All Courses';
+                // Loop through all categories to collect all batches
                 Object.values(allCategoriesData).forEach(category => {
                     if (category.batches) {
                         batchesToDisplay.push(...Object.keys(category.batches).map(key => ({ id: key, ...category.batches[key] })));
@@ -2916,6 +2957,8 @@
                     batchesToDisplay = Object.keys(selectedCategory.batches).map(key => ({ id: key, ...selectedCategory.batches[key] }));
                 }
             }
+            // Sort batches alphabetically by title
+            batchesToDisplay.sort((a, b) => a.title.localeCompare(b.title));
             displayBatches(batchesToDisplay);
             window.highlightBottomNav('courses-nav');
             window.scrollTo(0, 0);
@@ -2943,10 +2986,10 @@
                     }
                 } else {
                     if (batch.discountedPrice && batch.originalPrice && batch.discountedPrice < batch.originalPrice) {
-                        priceHtml = `<span class="original-price-strikethrough">₹${batch.originalPrice}</span> <span style="font-weight: bold;">₹${batch.discountedPrice}</span>`;
-                    } else if (batch.discountedPrice) {
+                        priceHtml = `<span style="font-weight: bold;">₹${batch.discountedPrice}</span> <span class="original-price-strikethrough">₹${batch.originalPrice}</span>`;
+                    } else if (batch.discountedPrice !== undefined && batch.discountedPrice !== null) { // Check for explicit discounted price
                         priceHtml = `<span style="font-weight: bold;">₹${batch.discountedPrice}</span>`;
-                    } else if (batch.originalPrice) {
+                    } else if (batch.originalPrice !== undefined && batch.originalPrice !== null) { // Fallback to original price
                         priceHtml = `<span style="font-weight: bold;">₹${batch.originalPrice}</span>`;
                     } else {
                         priceHtml = `Price N/A`;
@@ -2965,9 +3008,8 @@
                 // NEW: Conditional button logic based on isContentDirectLink
                 let actionButtonHtml = '';
                 if (batch.isContentDirectLink && batch.contentDirectLink) { 
-                    actionButtonHtml = `<button class="access-content-button" onclick="window.open('${batch.contentDirectLink}', '_blank')">ACCESS HERE (CONTENT) <i class="fas fa-external-link-alt"></i></button>`;
+                    actionButtonHtml = `<button class="access-content-button" onclick="window.open('${batch.contentDirectLink}', '_blank')">ACCESS HERE (CONTENT) <i class="fas fa-arrow-alt-circle-right"></i></button>`; 
                 } else {
-                    // Existing logic for "LET'S ROAR" or "JOIN TELEGRAM"
                     let letsRoarAction;
                     let letsRoarButtonText;
 
@@ -3081,9 +3123,18 @@
             const container = document.getElementById('sections-container');
             const titleEl = document.getElementById('sections-title');
             container.innerHTML = '';
-            if (selectedBatch && selectedBatch.modules && Object.keys(selectedBatch.modules).length > 0) {
+            // If it's a direct content link batch, we shouldn't show modules.
+            // This is a safety check; ideally, showSectionsView wouldn't be called for such batches.
+            if (selectedBatch && selectedBatch.isContentDirectLink) {
+                 titleEl.textContent = selectedBatch.title + ' Content';
+                 container.innerHTML = `<p style="text-align: center; color: var(--text-light);">This is a direct content link batch. Please use the 'ACCESS HERE (CONTENT)' button.</p>`;
+            } else if (selectedBatch && selectedBatch.modules && Object.keys(selectedBatch.modules).length > 0) {
                 titleEl.textContent = selectedBatch.title + ' Modules';
-                Object.entries(selectedBatch.modules).forEach(([moduleId, module]) => {
+                Object.entries(selectedBatch.modules).sort(([,modA], [,modB]) => { // Sort modules by name
+                    const nameA = modA.name ? modA.name.toLowerCase() : '';
+                    const nameB = modB.name ? modB.name.toLowerCase() : '';
+                    return nameA.localeCompare(nameB);
+                }).forEach(([moduleId, module]) => {
                     const lectureCount = module.lectures ? Object.keys(module.lectures).length : 0;
                     const sectionItem = document.createElement('div');
                     sectionItem.className = 'section-item hidden-on-scroll';
@@ -3118,8 +3169,12 @@
 
             if (selectedModule && selectedModule.lectures && Object.keys(selectedModule.lectures).length > 0) {
                 titleEl.textContent = selectedModule.name;
-                Object.entries(selectedModule.lectures).forEach(([lectureId, lecture]) => {
-                    const lessonItem = document.createElement('div');
+                Object.entries(selectedModule.lectures).sort(([,lecA], [,lecB]) => { // Sort lectures by title
+                    const titleA = lecA.title ? lecA.title.toLowerCase() : '';
+                    const titleB = lecB.title ? lecB.title.toLowerCase() : '';
+                    return titleA.localeCompare(titleB);
+                }).forEach(([lectureId, lecture]) => {
+                    const lessonItem = document.createElement('div'); // Changed from li to div to match consistent styling
                     lessonItem.className = 'lesson-list-item hidden-on-scroll';
                     lessonItem.onclick = () => window.showVideoPlayerView(categoryId, batchId, moduleId, lectureId);
                     lessonItem.innerHTML = `
@@ -3178,7 +3233,6 @@
                     }
                     
                     if (embedUrl) {
-                        /* Used videoInfo.allow for iframe allow attribute for robust fullscreen */
                         mainVideoPlayer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allowfullscreen draggable="false" allow="${videoInfo.allow}"></iframe>`; 
                     } else {
                         mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">Error: Could not construct embed URL from extracted ID. (Type: ${videoInfo.type}, ID: ${videoInfo.id})</p>`;
@@ -3197,6 +3251,7 @@
             const likeButton = document.getElementById('likeButton');
             if (likeButton) {
                 const lectureLikesRef = dbRef(rtdb, `likes/${lectureId}`);
+                // Use onValue to keep the like count updated in real-time
                 onValue(lectureLikesRef, (snapshot) => {
                     const currentLikes = snapshot.val() || 0;
                     window.updateLikeButtonState(lectureId, currentLikes);
@@ -3283,14 +3338,12 @@
             const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([\w-]{11})(?:\S+)?/;
             const youtubeMatch = url.match(youtubeRegex);
             if (youtubeMatch && youtubeMatch[1]) {
-                // Added fullscreen to allow attributes for screen orientation hint
                 return { type: 'youtube', id: youtubeMatch[1], allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen' }; 
             }
 
             const gdriveRegex = /(?:https?:\/\/)?(?:drive\.google\.com\/(?:file\/d\/|open\?id=|embed\?id=|uc\?id=)|docs\.google\.com\/file\/d\/)([a-zA-Z0-9_-]+)(?:[\/\?].*)?/;
             const gdriveMatch = url.match(gdriveRegex);
             if (gdriveMatch && gdriveMatch[1]) {
-                // Added fullscreen to allow attributes for screen orientation hint
                 return { type: 'gdrive', id: gdriveMatch[1], allow: 'autoplay; encrypted-media; fullscreen' }; 
             }
             
