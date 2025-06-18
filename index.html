@@ -2132,7 +2132,6 @@
         <button class="reload-button" onclick="location.reload()">Retry 🔁</button>
     </div>
 
-    <!-- Name Popup (for first-time users) -->
     <div class="popup-overlay" id="namePopupOverlay">
         <div class="name-popup">
             <button class="popup-close-button" onclick="window.closeNamePopup()">×</button>
@@ -2194,7 +2193,6 @@
         </div>
 
         <div id="home-view">
-            <!-- Categories will be loaded here dynamically from Firebase -->
             <p class="text-center text-muted col-span-full" id="loadingCategoriesMessage">Loading categories...</p>
 
             <div class="favorites-section-home-card" onclick="window.showFavoritesView()" id="favorites-section-home-card">
@@ -2350,7 +2348,6 @@
         <a href="#" class="nav-item" id="about-me-nav" onclick="window.showAboutMeView(); window.highlightBottomNav('about-me-nav');"><i class="fas fa-user-circle"></i> About Me</a>
     </div>
 
-    <!-- Slider Menu -->
     <div class="slider-menu-overlay" id="sliderMenuOverlay" onclick="window.closeSliderMenu()"></div>
     <div class="slider-menu" id="sliderMenu">
         <div class="slider-header">
@@ -2741,11 +2738,15 @@
             let currentCategoryBatches = [];
             if (window.lastCategoryViewed === 'all') {
                 Object.values(allCategoriesData).forEach(cat => {
-                    if (cat.batches) currentCategoryBatches.push(...Object.keys(cat.batches).map(key => ({ id: key, ...cat.batches[key] })));
+                    if (cat.batches) {
+                        currentCategoryBatches.push(...Object.keys(cat.batches).map(key => ({ id: key, ...cat.batches[key] })));
+                    }
                 });
             } else {
                 const cat = allCategoriesData[window.lastCategoryViewed];
-                if (cat && cat.batches) currentCategoryBatches = Object.keys(cat.batches).map(key => ({ id: key, ...cat.batches[key] }));
+                if (cat && cat.batches) {
+                    currentCategoryBatches = Object.keys(cat.batches).map(key => ({ id: key, ...cat.batches[key] }));
+                }
             }
             const filtered = currentCategoryBatches.filter(b => b.title.toLowerCase().includes(searchTerm));
             displayBatches(filtered);
@@ -2846,15 +2847,15 @@
             container.innerHTML = '';
 
             if (selectedModule && selectedModule.lectures && Object.keys(selectedModule.lectures).length > 0) {
-                titleEl.textContent = selectedModule.name;
+                titleEl.textContent = selectedModule.name; // Assuming module name is 'name'
                 Object.entries(selectedModule.lectures).forEach(([lectureId, lecture]) => {
                     const lessonItem = document.createElement('div');
                     lessonItem.className = 'lesson-list-item hidden-on-scroll';
                     lessonItem.onclick = () => window.showVideoPlayerView(categoryId, batchId, moduleId, lectureId);
-                    // --- FIX --- Use fallback for name to prevent "undefined" text
+                    // FIX: Changed lecture.name to lecture.title
                     lessonItem.innerHTML = `
                         <div class="lesson-list-item-right">
-                            <h3 class="lesson-list-item-title">${lecture.name || 'Untitled Lecture'}</h3>
+                            <h3 class="lesson-list-item-title">${lecture.title || 'Untitled Lecture'}</h3>
                         </div>
                         <div class="video-icon-overlay"><i class="fas fa-video"></i></div>`;
                     container.appendChild(lessonItem);
@@ -2869,7 +2870,7 @@
             window.scrollTo(0, 0);
         }
 
-        // --- FIX --- This is the fully corrected function
+        // --- FIX: This is the updated and debugged showVideoPlayerView function ---
         window.showVideoPlayerView = function(categoryId, batchId, moduleId, lectureId) {
             hideAllViews();
             currentBatchId = batchId;
@@ -2878,84 +2879,155 @@
 
             const selectedLecture = allCategoriesData[categoryId]?.batches?.[batchId]?.modules?.[moduleId]?.lectures?.[lectureId];
 
+            // --- DEBUGGING LOGS ---
+            console.log("--- showVideoPlayerView DEBUG ---");
+            console.log("Called with:", { categoryId, batchId, moduleId, lectureId });
+            console.log("Selected Lecture Data (from allCategoriesData):", selectedLecture);
+            // --- END DEBUGGING LOGS ---
+
             if (!selectedLecture) {
                 alert('Error: Lecture details could not be found. It might have been deleted.');
+                console.error('Error: selectedLecture is null/undefined for:', { categoryId, batchId, moduleId, lectureId });
                 window.goBackFromPlayerView();
                 return;
             }
             
-            document.getElementById('player-view-title').textContent = selectedLecture.name || 'Untitled Lecture';
-            document.getElementById('player-lesson-sub-title').textContent = selectedLecture.name || 'Untitled Lecture';
+            // FIX: Changed selectedLecture.name to selectedLecture.title
+            document.getElementById('player-view-title').textContent = selectedLecture.title || 'Untitled Lecture';
+            document.getElementById('player-lesson-sub-title').textContent = selectedLecture.title || 'Untitled Lecture';
 
             const mainVideoPlayer = document.getElementById('main-video-player');
-            mainVideoPlayer.innerHTML = '';
-            
-            // Check if the link exists and is a string before processing
-            if (selectedLecture.link && typeof selectedLecture.link === 'string') {
-                const videoInfo = extractGdriveId(selectedLecture.link);
+            mainVideoPlayer.innerHTML = ''; // Clear previous video
+
+            // FIX: Change selectedLecture.link to selectedLecture.url
+            if (selectedLecture.url && typeof selectedLecture.url === 'string') {
+                const videoInfo = extractVideoId(selectedLecture.url); // Changed to .url
+                
+                // --- DEBUGGING LOG ---
+                console.log("Video Info extracted by extractVideoId:", videoInfo);
+                // --- END DEBUGGING LOG ---
+
                 if (videoInfo) {
                     let embedUrl = '';
                     if (videoInfo.type === 'gdrive') {
-                        // Correct GDrive embed for a single file is the preview URL
-                        embedUrl = `https://drive.google.com/file/d/${videoInfo.id}/preview`;
+                        // Correct Google Drive embed URL
+                        embedUrl = `https://drive.google.com/embed?id=${videoInfo.id}`;
                     } else if (videoInfo.type === 'youtube') {
+                        // YouTube no-cookie embed with autoplay
                         embedUrl = `https://www.youtube-nocookie.com/embed/${videoInfo.id}?autoplay=1`;
                     }
                     
                     if (embedUrl) {
                         mainVideoPlayer.innerHTML = `<iframe src="${embedUrl}" allowfullscreen draggable="false" allow="autoplay; encrypted-media"></iframe>`;
                     } else {
-                        mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">Error: Could not construct embed URL.</p>`;
+                        mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">Error: Could not construct embed URL from extracted ID. (Type: ${videoInfo.type}, ID: ${videoInfo.id})</p>`;
+                        console.error("Failed to construct embed URL:", videoInfo);
                     }
                 } else {
-                    mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">Video link is not a valid Google Drive or YouTube URL.</p>`;
+                    mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">Video link is not a valid Google Drive or YouTube URL. Provided link: <strong>${selectedLecture.url}</strong></p>`; // Changed to .url
+                    console.warn("Invalid video link format detected by extractVideoId:", selectedLecture.url); // Changed to .url
                 }
             } else {
-                // This message shows if the link is missing from Firebase
-                mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">No video link found for this lecture.</p>`;
+                mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">No video link found for this lecture. Link was: <strong>${selectedLecture.url || 'undefined/null'}</strong></p>`; // Changed to .url
+                console.warn("Lecture link is missing or not a string:", selectedLecture.url); // Changed to .url
             }
 
+            // Populate the list of lessons for the current module below the player
             const lessonsForPlayerBatch = document.getElementById('lessons-for-player-batch');
             lessonsForPlayerBatch.innerHTML = '';
             const allLecturesInModule = allCategoriesData[categoryId]?.batches?.[batchId]?.modules?.[moduleId]?.lectures || {};
-            Object.entries(allLecturesInModule).forEach(([otherLectureId, otherLecture]) => {
+            
+            // Convert lectures object to an array and sort by Firebase key (usually creation order)
+            const sortedLectures = Object.entries(allLecturesInModule).sort(([idA], [idB]) => idA.localeCompare(idB));
+
+            sortedLectures.forEach(([otherLectureId, otherLecture]) => {
                 const lessonItem = document.createElement('li');
                 lessonItem.className = 'lesson-item hidden-on-scroll';
                 lessonItem.onclick = () => window.showVideoPlayerView(categoryId, batchId, moduleId, otherLectureId);
-                lessonItem.innerHTML = `<div class="lesson-list-item-right"><h3>${otherLecture.name || 'Untitled Lecture'}</h3></div>`;
+                // Highlight the currently playing lecture
+                if (otherLectureId === window.currentPlayingLectureId) {
+                    lessonItem.style.backgroundColor = 'rgba(0, 173, 181, 0.2)'; // Accent color
+                    lessonItem.style.border = '1px solid var(--accent-teal)';
+                }
+                // FIX: Changed otherLecture.name to otherLecture.title
+                lessonItem.innerHTML = `<div class="lesson-list-item-right"><h3>${otherLecture.title || 'Untitled Lecture'}</h3></div>`; 
                 lessonsForPlayerBatch.appendChild(lessonItem);
                 observer.observe(lessonItem);
             });
 
             document.getElementById('video-player-view').style.display = 'block';
             currentView = 'video-player-view';
-            window.scrollTo(0, 0);
+            window.scrollTo(0, 0); // Scroll to top of the video player view
         }
 
         window.goBackFromPlayerView = function() {
             if (currentBatchId && currentSectionIndex !== null) {
-                let categoryId = Object.keys(allCategoriesData).find(catId => allCategoriesData[catId].batches?.[currentBatchId]);
+                // Find the categoryId based on currentBatchId
+                let categoryId = null;
+                for (const catKey in allCategoriesData) {
+                    if (allCategoriesData[catKey].batches && allCategoriesData[catKey].batches[currentBatchId]) {
+                        categoryId = catKey;
+                        break;
+                    }
+                }
                 if (categoryId) {
                     window.showLessonsInSectionsView(categoryId, currentBatchId, currentSectionIndex);
                     return;
                 }
             } 
+            // Fallback if batch or module context is lost
             window.showNewBatchesView(window.lastCategoryViewed);
         }
 
-        window.goBackFromLessonsList = () => window.showSectionsView(currentBatchId);
-
-        function extractGdriveId(url) {
-            const gdriveRegex = /(?:drive\.google\.com\/(?:file\/d\/|open\?id=)|docs\.google\.com\/file\/d\/|drive\.google\.com\/uc\?id=)([a-zA-Z0-9_-]+)/;
-            const gdriveMatch = url.match(gdriveRegex);
-            if (gdriveMatch) return { type: 'gdrive', id: gdriveMatch[1] };
-
-            const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-            const youtubeMatch = url.match(youtubeRegex);
-            if (youtubeMatch) return { type: 'youtube', id: youtubeMatch[1] };
-
-            return null;
+        window.goBackFromLessonsList = function() {
+            // No direct batch ID stored with the section. Need to find it.
+            let categoryId = null;
+            let batchIdForSection = null;
+            outerLoop:
+            for (const catKey in allCategoriesData) {
+                if (allCategoriesData[catKey].batches) {
+                    for (const batchKey in allCategoriesData[catKey].batches) {
+                        if (allCategoriesData[catKey].batches[batchKey].modules && allCategoriesData[catKey].batches[batchKey].modules[currentSectionIndex]) {
+                            categoryId = catKey;
+                            batchIdForSection = batchKey;
+                            break outerLoop;
+                        }
+                    }
+                }
+            }
+            if (categoryId && batchIdForSection) {
+                window.showSectionsView(batchIdForSection);
+            } else {
+                window.showNewBatchesView(window.lastCategoryViewed); // Fallback
+            }
         }
+
+        // --- FIX: Updated and more robust extractVideoId function ---
+        function extractVideoId(url) {
+            // YouTube regex: Matches common YouTube URL formats
+            const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([\w-]{11})(?:\S+)?/;
+            const youtubeMatch = url.match(youtubeRegex);
+            if (youtubeMatch && youtubeMatch[1]) {
+                return { type: 'youtube', id: youtubeMatch[1] };
+            }
+
+            // Google Drive regex: Matches various Google Drive file share/embed URLs
+            // This covers:
+            // - drive.google.com/file/d/FILE_ID/view
+            // - drive.google.com/file/d/FILE_ID/preview
+            // - drive.google.com/embed?id=FILE_ID
+            // - drive.google.com/open?id=FILE_ID
+            // - docs.google.com/file/d/FILE_ID
+            // - drive.google.com/uc?id=FILE_ID (universal content, often used for direct downloads/embeds)
+            const gdriveRegex = /(?:https?:\/\/)?(?:drive\.google\.com\/(?:file\/d\/|open\?id=|embed\?id=|uc\?id=)|docs\.google\.com\/file\/d\/)([a-zA-Z0-9_-]+)(?:[\/\?].*)?/;
+            const gdriveMatch = url.match(gdriveRegex);
+            if (gdriveMatch && gdriveMatch[1]) {
+                return { type: 'gdrive', id: gdriveMatch[1] };
+            }
+            
+            return null; // No valid ID found for either YouTube or Google Drive
+        }
+
 
         window.highlightBottomNav = function(activeId) {
             document.querySelectorAll('.bottom-navbar .nav-item').forEach(item => item.classList.remove('active'));
@@ -2985,7 +3057,7 @@
                 return;
             }
             const q = query(collection(firestore, `artifacts/${appId}/public/comments/${lectureId}/userComments`));
-            window.unsubscribeComments = onSnapshot(q, (snapshot) => {
+            onSnapshot(q, (snapshot) => {
                 commentsDisplayArea.innerHTML = '';
                 if (snapshot.empty) {
                     commentsDisplayArea.innerHTML = '<p class="no-comments-message">No comments yet. Be the first to comment!</p>';
