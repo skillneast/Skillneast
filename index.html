@@ -839,7 +839,6 @@
             font-size: 1.1em;
             font-weight: 700;
             cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.2s ease, color 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -853,6 +852,29 @@
         }
         .batch-card-body .lets-roar-button i {
             font-size: 1.2em;
+        }
+
+        /* Added for direct content link button styling */
+        .batch-card-body .access-content-button {
+            background-color: #17a2b8; /* Example color for distinction */
+            color: var(--white);
+            padding: 15px 25px;
+            border-radius: var(--border-radius-button);
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: var(--shadow-light);
+            margin-top: 15px;
+        }
+        .batch-card-body .access-content-button:hover {
+            background-color: #138496;
+            transform: translateY(-2px);
         }
 
 
@@ -1120,6 +1142,59 @@
             margin: 0;
             flex-grow: 1;
             transition: color 0.3s ease;
+        }
+
+        /* Style for the like button in the player */
+        .player-card-header-actions { /* New container for icons/buttons in player header */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .player-card-header-actions .icon-button {
+            font-size: 1.5em; /* Match fullscreen button size */
+            color: var(--text-light); /* Default color */
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+            position: relative; /* For like count positioning */
+        }
+        .player-card-header-actions .like-button.liked {
+            color: var(--error-red); /* Red when liked */
+            transform: scale(1.1); /* Slight pulse when liked */
+        }
+        .player-card-header-actions .like-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        .like-count-display {
+            position: absolute;
+            bottom: -8px; /* Position below heart */
+            right: -8px; /* Position to the right */
+            background-color: var(--highlight-gold);
+            color: var(--primary-dark);
+            font-size: 0.6em;
+            font-weight: 700;
+            padding: 2px 5px;
+            border-radius: 10px;
+            min-width: 20px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+        /* Animation for like button click */
+        @keyframes popAndPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        .like-button.animating {
+            animation: popAndPulse 0.3s ease-out;
         }
 
         .player-card-container {
@@ -2201,7 +2276,7 @@
         </div>
     </div>
 
-    <div class="comments-popup-overlay" id="commentsPopupOverlay">
+    <div class="comments-popup-overlay" id="commentsPopupOverlay" style="display: none;"> 
         <div class="comments-popup">
             <button class="popup-close-button" onclick="window.closeCommentsPopup()">×</button>
             <h2 id="commentsHeader">SR Comments</h2>
@@ -2214,6 +2289,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="top-navbar">
         <div class="menu-icon" onclick="window.openSliderMenu()"><i class="fas fa-bars"></i></div>
@@ -2316,6 +2392,10 @@
             <div class="section-header">
                 <button class="back-button" onclick="window.goBackFromPlayerView()"><i class="fas fa-arrow-left"></i></button>
                 <h2 id="player-view-title"></h2>
+                <div class="player-card-header-actions">
+                    <button class="icon-button like-button" id="likeButton"><i class="fas fa-heart"></i><span class="like-count-display" id="likeCountDisplay">0</span></button>
+                    <button class="icon-button" id="fullscreenButton" onclick="window.toggleFullScreen()"><i class="fas fa-expand"></i></button>
+                </div>
             </div>
             
             <div class="player-card-container">
@@ -2330,7 +2410,7 @@
 
             <div class="player-action-buttons">
                 <button class="action-button timeline" onclick="window.showComingSoonView('timeline')"><i class="fas fa-stream"></i> Timeline</button>
-                <button class="action-button comments" onclick="window.showCommentsPopup()"><i class="fas fa-comments"></i> SR Comments</button>
+                <button class="action-button comments" onclick="window.showComingSoonView('comments-coming-soon')"><i class="fas fa-comments"></i> SR Comments</button>
                 <button class="action-button watch-later" onclick="window.showComingSoonView('watch-later')"><i class="fas fa-bookmark"></i> Watch Later</button>
             </div>
             
@@ -2347,6 +2427,12 @@
             <i class="emoji">⏰</i>
             <h2>Watch Later Coming Soon!</h2>
             <p>Save lectures to watch later and organize your study schedule. This feature is in the works! ✨</p>
+        </div>
+        
+        <div id="comments-coming-soon-view" class="coming-soon-section" style="display: none;">
+            <i class="emoji">💬</i>
+            <h2>Comments Section Coming Soon!</h2>
+            <p>We're working on an interactive comments feature to enhance your learning experience. Stay tuned! ✨</p>
         </div>
 
         <div id="bundles-coming-soon-view" class="coming-soon-section" style="display: none;">
@@ -2477,6 +2563,9 @@
 
         let isAuthenticated = false;
         let currentUserId = null;
+        window.userLikes = JSON.parse(localStorage.getItem('userLikes')) || []; // Store user's liked lecture IDs
+        const likesRef = dbRef(rtdb, 'likes'); // Reference to a new 'likes' node in Firebase RTDB
+
 
         window.siteConfig = {
             telegramChannelLink: 'https://t.me/default_channel',
@@ -2603,6 +2692,8 @@
                     }, 1000);
                 }
             });
+
+            setupLikeButton(); // Initialize like button functionality
         });
 
         window.updateQuote = function() {
@@ -2658,7 +2749,8 @@
                 'home-view', 'new-batches-view', 'favorites-view', 'sections-view', 
                 'lessons-in-sections-view', 'video-player-view', 'bundles-coming-soon-view', 
                 'pdfs-coming-soon-view', 'about-me-view', 'how-to-use-app-view', 
-                'ai-chatbot-coming-soon-view', 'timeline-coming-soon-view', 'watch-later-coming-soon-view'
+                'ai-chatbot-coming-soon-view', 'timeline-coming-soon-view', 'watch-later-coming-soon-view',
+                'comments-coming-soon-view' // Add this new view
             ];
             views.forEach(id => document.getElementById(id).style.display = 'none');
             // IMPORTANT: Only hide sections within main-content. Do not touch top-navbar or global elements.
@@ -2729,7 +2821,7 @@
         };
 
         function loadHowToUseVideosForWebsite() {
-            /* Changed Firebase path to correctly read from siteConfig/howToUseVideos */
+            /* Corrected Firebase path to read from siteConfig/howToUseVideos as per Firebase screenshot */
             onValue(dbRef(rtdb, 'siteConfig/howToUseVideos'), (snapshot) => { /*  */
                 const howToUseAppView = document.getElementById('how-to-use-app-view');
                 const videoContainer = howToUseAppView.querySelector('.video-container');
@@ -2755,7 +2847,7 @@
                                 embedUrl = `https://www.youtube-nocookie.com/embed/${videoInfo.id}?autoplay=0`; 
                             }
                             if (embedUrl) {
-                                videoContainer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                                videoContainer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>`; /* Added fullscreen to allow attribute */
                             }
                         }
                     }
@@ -2870,18 +2962,26 @@
                     descriptionHtml = `<div class="batch-description-feature"><i class="fas fa-check-circle"></i> No description available.</div>`;
                 }
                 
-                // Conditional "LET'S ROAR" button action
-                let letsRoarAction;
-                let letsRoarButtonText;
-
-                if (batch.isFree) {
-                    letsRoarAction = `window.showSectionsView('${batch.id}')`;
-                    letsRoarButtonText = "LET'S ROAR 🚀🔥";
+                // NEW: Conditional button logic based on isContentDirectLink
+                let actionButtonHtml = '';
+                if (batch.isContentDirectLink && batch.contentDirectLink) { 
+                    actionButtonHtml = `<button class="access-content-button" onclick="window.open('${batch.contentDirectLink}', '_blank')">ACCESS HERE (CONTENT) <i class="fas fa-external-link-alt"></i></button>`;
                 } else {
-                    // Changed to use batch.telegramCourseLink if available, otherwise fallback to group link 
-                    letsRoarAction = `window.open('${batch.telegramCourseLink || window.siteConfig.telegramGroupLink || 'https://t.me/'}', '_blank')`; 
-                    letsRoarButtonText = "JOIN TELEGRAM 📞"; // Name changed as per request
+                    // Existing logic for "LET'S ROAR" or "JOIN TELEGRAM"
+                    let letsRoarAction;
+                    let letsRoarButtonText;
+
+                    if (batch.isFree) {
+                        letsRoarAction = `window.showSectionsView('${batch.id}')`;
+                        letsRoarButtonText = "LET'S ROAR 🚀🔥";
+                    } else {
+                        // Use batch.telegramCourseLink if available, otherwise fallback to siteConfig.telegramGroupLink
+                        letsRoarAction = `window.open('${batch.telegramCourseLink || window.siteConfig.telegramGroupLink || 'https://t.me/'}', '_blank')`; 
+                        letsRoarButtonText = "JOIN TELEGRAM 📞"; 
+                    }
+                    actionButtonHtml = `<button class="lets-roar-button" onclick="${letsRoarAction}">${letsRoarButtonText}</button>`;
                 }
+
 
                 batchCard.innerHTML = `
                     <div class="batch-card-header">
@@ -2897,8 +2997,7 @@
                         <div class="batch-title">${batch.title}</div>
                         <p class="batch-price" style="margin-bottom: 15px;">${priceHtml}</p>
                         <div class="batch-description">${descriptionHtml}</div>
-                        <button class="lets-roar-button" onclick="${letsRoarAction}">${letsRoarButtonText}</button>
-                    </div>`;
+                        ${actionButtonHtml} </div>`;
                 batchesContainer.appendChild(batchCard);
                 observer.observe(batchCard);
             });
@@ -3079,7 +3178,8 @@
                     }
                     
                     if (embedUrl) {
-                        mainVideoPlayer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allow="accelerometer; encrypted-media"></iframe>`;
+                        /* Used videoInfo.allow for iframe allow attribute for robust fullscreen */
+                        mainVideoPlayer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allowfullscreen draggable="false" allow="${videoInfo.allow}"></iframe>`; 
                     } else {
                         mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">Error: Could not construct embed URL from extracted ID. (Type: ${videoInfo.type}, ID: ${videoInfo.id})</p>`;
                         console.error("Failed to construct embed URL:", videoInfo);
@@ -3092,6 +3192,17 @@
                 mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">No video link found for this lecture. Link was: <strong>${selectedLecture.url || 'undefined/null'}</strong></p>`;
                 console.warn("Lecture link is missing or not a string:", selectedLecture.url);
             }
+            
+            // Set up like button state and start listening for likes for this lecture
+            const likeButton = document.getElementById('likeButton');
+            if (likeButton) {
+                const lectureLikesRef = dbRef(rtdb, `likes/${lectureId}`);
+                onValue(lectureLikesRef, (snapshot) => {
+                    const currentLikes = snapshot.val() || 0;
+                    window.updateLikeButtonState(lectureId, currentLikes);
+                });
+            }
+
 
             const lessonsForPlayerBatch = document.getElementById('lessons-for-player-batch');
             lessonsForPlayerBatch.innerHTML = '';
@@ -3100,8 +3211,8 @@
             const sortedLectures = Object.entries(allLecturesInModule).sort(([idA], [idB]) => idA.localeCompare(idB));
 
             sortedLectures.forEach(([otherLectureId, otherLecture]) => {
-                const lessonItem = document.createElement('li');
-                lessonItem.className = 'lesson-item hidden-on-scroll';
+                const lessonItem = document.createElement('div'); // Changed from li to div to match style
+                lessonItem.className = 'lesson-list-item hidden-on-scroll';
                 lessonItem.onclick = () => window.showVideoPlayerView(categoryId, batchId, moduleId, otherLectureId);
                 if (otherLectureId === window.currentPlayingLectureId) {
                     lessonItem.style.backgroundColor = 'rgba(0, 173, 181, 0.2)';
@@ -3118,6 +3229,18 @@
         }
 
         window.goBackFromPlayerView = function() {
+            // Reset like button state when leaving player view
+            const likeButton = document.getElementById('likeButton');
+            const likeCountDisplay = document.getElementById('likeCountDisplay');
+            if (likeButton) {
+                likeButton.classList.remove('liked', 'animating');
+                likeButton.style.display = 'none'; // Hide it when not in player view
+            }
+            if (likeCountDisplay) {
+                likeCountDisplay.textContent = '0'; // Reset count
+            }
+
+
             if (currentBatchId && currentSectionIndex !== null) {
                 let categoryId = null;
                 for (const catKey in allCategoriesData) {
@@ -3160,17 +3283,62 @@
             const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([\w-]{11})(?:\S+)?/;
             const youtubeMatch = url.match(youtubeRegex);
             if (youtubeMatch && youtubeMatch[1]) {
-                return { type: 'youtube', id: youtubeMatch[1] };
+                // Added fullscreen to allow attributes for screen orientation hint
+                return { type: 'youtube', id: youtubeMatch[1], allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen' }; 
             }
 
             const gdriveRegex = /(?:https?:\/\/)?(?:drive\.google\.com\/(?:file\/d\/|open\?id=|embed\?id=|uc\?id=)|docs\.google\.com\/file\/d\/)([a-zA-Z0-9_-]+)(?:[\/\?].*)?/;
             const gdriveMatch = url.match(gdriveRegex);
             if (gdriveMatch && gdriveMatch[1]) {
-                return { type: 'gdrive', id: gdriveMatch[1] };
+                // Added fullscreen to allow attributes for screen orientation hint
+                return { type: 'gdrive', id: gdriveMatch[1], allow: 'autoplay; encrypted-media; fullscreen' }; 
             }
             
             return null;
         }
+
+        // Fullscreen toggle logic with orientation hint
+        window.toggleFullScreen = function() {
+            const iframe = document.querySelector('#main-video-player iframe');
+            if (iframe) {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                    // After exiting fullscreen, try to set back to portrait (optional)
+                    if (screen.orientation && screen.orientation.unlock) {
+                        screen.orientation.unlock();
+                    } else if (screen.orientation && screen.orientation.lock) {
+                        screen.orientation.lock('portrait').catch(e => console.log('Could not lock to portrait:', e));
+                    }
+                } else {
+                    if (iframe.requestFullscreen) {
+                        iframe.requestFullscreen();
+                    } else if (iframe.mozRequestFullScreen) { /* Firefox */
+                        iframe.mozRequestFullScreen();
+                    } else if (iframe.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                        iframe.webkitRequestFullscreen();
+                    } else if (iframe.msRequestFullscreen) { /* IE/Edge */
+                        iframe.msRequestFullscreen();
+                    }
+
+                    // Attempt to request landscape orientation when entering fullscreen
+                    if (screen.orientation && screen.orientation.lock) {
+                        screen.orientation.lock('landscape').catch(e => console.log('Could not lock to landscape:', e));
+                    }
+                }
+            }
+        };
+
+        // Listen for fullscreen change events to update icon (optional, but good UX)
+        document.addEventListener('fullscreenchange', () => {
+            const fullscreenBtn = document.getElementById('fullscreenButton');
+            if (fullscreenBtn) { // Ensure button exists
+                if (document.fullscreenElement) {
+                    fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>'; // Change to minimize icon
+                } else {
+                    fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>'; // Change back to expand icon
+                }
+            }
+        });
 
 
         window.highlightBottomNav = function(activeId) {
@@ -3178,67 +3346,84 @@
             document.getElementById(activeId).classList.add('active');
         }
 
-        window.showCommentsPopup = function() {
-            document.getElementById('commentsPopupOverlay').classList.add('active');
-            const lectureName = document.getElementById('player-view-title').textContent;
-            document.getElementById('commentsHeader').textContent = `Comments for ${lectureName}`;
-            renderComments(window.currentPlayingLectureId);
-        }
+        // Removed showCommentsPopup, closeCommentsPopup, renderComments, postComment
+        // as the button now shows a "Coming Soon" view directly.
+        // If these functions are used elsewhere, they should be retained.
 
-        window.closeCommentsPopup = function() {
-            document.getElementById('commentsPopupOverlay').classList.remove('active');
-            if (window.unsubscribeComments) window.unsubscribeComments();
-        }
+        function setupLikeButton() {
+            const likeButton = document.getElementById('likeButton');
+            const likeCountDisplay = document.getElementById('likeCountDisplay');
 
-        window.unsubscribeComments = null;
+            if (likeButton && likeCountDisplay) {
+                // Function to update the like button's state and count display
+                window.updateLikeButtonState = (lectureId, currentLikes) => {
+                    if (!lectureId) { // If no lecture is playing
+                        likeButton.classList.remove('liked');
+                        likeCountDisplay.textContent = '0';
+                        likeButton.style.display = 'none'; // Hide if no lecture is selected
+                        return;
+                    } else {
+                        likeButton.style.display = 'flex'; // Show if lecture is selected
+                    }
 
-        function renderComments(lectureId) {
-            const commentsDisplayArea = document.getElementById('commentsDisplayArea');
-            commentsDisplayArea.innerHTML = '<p class="no-comments-message">Loading comments...</p>';
-            if (window.unsubscribeComments) window.unsubscribeComments();
-            if (!lectureId) {
-                commentsDisplayArea.innerHTML = '<p class="no-comments-message">No lecture selected.</p>';
-                return;
+                    const isLikedByUser = window.userLikes.includes(lectureId);
+                    if (isLikedByUser) {
+                        likeButton.classList.add('liked');
+                    } else {
+                        likeButton.classList.remove('liked');
+                    }
+                    likeCountDisplay.textContent = currentLikes || 0;
+                };
+
+                // Event listener for the like button
+                likeButton.onclick = async () => {
+                    if (!isAuthenticated) {
+                        alert('Please sign in to like content!');
+                        return;
+                    }
+                    if (!window.currentPlayingLectureId) {
+                        console.warn('No lecture selected to like.');
+                        return;
+                    }
+
+                    const lectureId = window.currentPlayingLectureId;
+                    const isLikedByUser = window.userLikes.includes(lectureId);
+                    const lectureLikesRef = dbRef(rtdb, `likes/${lectureId}`);
+
+                    likeButton.classList.add('animating');
+                    likeButton.addEventListener('animationend', () => {
+                        likeButton.classList.remove('animating');
+                    }, { once: true });
+
+                    try {
+                        let currentLikes = 0;
+                        // Fetch current like count first
+                        await onValue(lectureLikesRef, (snapshot) => {
+                            currentLikes = snapshot.val() || 0;
+                        }, { onlyOnce: true }); // Use onlyOnce to avoid continuous listening here
+
+                        if (isLikedByUser) {
+                            // User is unliking
+                            await set(lectureLikesRef, Math.max(0, currentLikes - 1));
+                            window.userLikes = window.userLikes.filter(id => id !== lectureId);
+                        } else {
+                            // User is liking
+                            await set(lectureLikesRef, currentLikes + 1);
+                            window.userLikes.push(lectureId);
+                        }
+                        localStorage.setItem('userLikes', JSON.stringify(window.userLikes));
+
+                        // Update UI immediately after successful Firebase update
+                        window.updateLikeButtonState(lectureId, isLikedByUser ? Math.max(0, currentLikes - 1) : currentLikes + 1);
+
+                    } catch (error) {
+                        console.error("Error toggling like:", error);
+                        alert("Failed to update like. Please try again.");
+                    }
+                };
             }
-            const q = query(collection(firestore, `artifacts/${appId}/public/comments/${lectureId}/userComments`));
-            onSnapshot(q, (snapshot) => {
-                commentsDisplayArea.innerHTML = '';
-                if (snapshot.empty) {
-                    commentsDisplayArea.innerHTML = '<p class="no-comments-message">No comments yet. Be the first to comment!</p>';
-                } else {
-                    snapshot.forEach(doc => {
-                        const comment = doc.data();
-                        const commentItem = document.createElement('div');
-                        commentItem.className = 'comment-item';
-                        const timestamp = comment.timestamp?.seconds ? new Date(comment.timestamp.seconds * 1000).toLocaleTimeString() : '';
-                        commentItem.innerHTML = `<strong>${comment.userDisplayName || 'Anonymous'}</strong> <span>(${timestamp})</span><br>${comment.commentText}`;
-                        commentsDisplayArea.appendChild(commentItem);
-                    });
-                    commentsDisplayArea.scrollTop = commentsDisplayArea.scrollHeight;
-                }
-            }, (error) => {
-                console.error("Error fetching comments:", error);
-                commentsDisplayArea.innerHTML = `<p class="no-comments-message" style="color:red;">Error loading comments.</p>`;
-            });
         }
 
-        window.postComment = async function() {
-            const commentText = document.getElementById('commentInput').value.trim();
-            const userName = localStorage.getItem('userName') || 'Guest';
-            if (!commentText || !window.currentPlayingLectureId || !currentUserId) return;
-            try {
-                await addDoc(collection(firestore, `artifacts/${appId}/public/comments/${window.currentPlayingLectureId}/userComments`), {
-                    userDisplayName: userName,
-                    userId: currentUserId,
-                    commentText: commentText,
-                    timestamp: serverTimestamp()
-                });
-                document.getElementById('commentInput').value = '';
-            } catch (error) {
-                console.error("Error posting comment:", error);
-                alert(`Failed to post comment: ${error.message}`);
-            }
-        }
 
         window.showComingSoonView = function(type) {
             hideAllViews();
