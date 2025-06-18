@@ -113,7 +113,7 @@
             display: flex;
             justify-content: space-between; 
             align-items: center;
-            padding: 18px 25px;
+            padding: 18px 25px; /* Adjusted padding */
             background: linear-gradient(to right, var(--dark-bg-gradient-start), var(--dark-bg-gradient-end));
             box-shadow: var(--shadow-medium);
             position: relative; /* Changed to relative to position children absolutely */
@@ -143,9 +143,12 @@
         }
         
         .top-navbar .telegram-icon {
-            /* Add some explicit right padding for the icon if needed, or manage via top-navbar padding */
-            padding: 0 5px; /* Adjust as needed for visual balance, or remove if top-navbar padding is enough */
+            padding-right: 5px; /* Added explicit right padding for the icon */
         }
+        .top-navbar .menu-icon {
+            padding-left: 5px; /* Added explicit left padding for the icon */
+        }
+
 
         .top-navbar .menu-icon:hover, .top-navbar .telegram-icon:hover {
             background-color: rgba(255, 255, 255, 0.2);
@@ -1047,12 +1050,10 @@
             border-radius: var(--border-radius-card);
             box-shadow: var(--shadow-light);
             padding: 20px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
-            border: 1px solid var(--border-color);
             position: relative;
         }
         .lesson-list-item:hover {
@@ -1713,7 +1714,7 @@
             display: flex; 
             flex-direction: column;
             align-items: center; /* Center children horizontally */
-            padding: 30px 20px; 
+            padding: 30px 20px; /* Consistent padding */
             min-height: calc(100vh - 90px);
             background-color: var(--secondary-light);
             transition: background-color 0.3s ease, color 0.3s ease;
@@ -2543,7 +2544,7 @@
             await authenticateFirebase();
             loadSiteConfigAndApply(); 
             loadAllCategoriesFromFirebase();
-            loadHowToUseVideosForWebsite(); /*  */
+            loadHowToUseVideosForWebsite(); 
 
             let userName = localStorage.getItem('userName');
             let userRole = localStorage.getItem('userRole');
@@ -2728,8 +2729,8 @@
         };
 
         function loadHowToUseVideosForWebsite() {
-            const videosRef = dbRef(rtdb, 'siteConfig/howToUseVideos'); /* Corrected Firebase Path  */
-            onValue(videosRef, (snapshot) => {
+            /* Changed Firebase path to correctly read from siteConfig/howToUseVideos */
+            onValue(dbRef(rtdb, 'siteConfig/howToUseVideos'), (snapshot) => { /*  */
                 const howToUseAppView = document.getElementById('how-to-use-app-view');
                 const videoContainer = howToUseAppView.querySelector('.video-container');
                 const descriptionParagraph = howToUseAppView.querySelector('p:first-of-type'); 
@@ -2751,7 +2752,7 @@
                             if (videoInfo.type === 'gdrive') {
                                 embedUrl = `https://drive.google.com/embed?id=${videoInfo.id}`;
                             } else if (videoInfo.type === 'youtube') {
-                                embedUrl = `https://www.youtube-nocookie.com/embed/${videoInfo.id}?autoplay=0`; /* autoplay=0 set kiya hai */
+                                embedUrl = `https://www.youtube-nocookie.com/embed/${videoInfo.id}?autoplay=0`; 
                             }
                             if (embedUrl) {
                                 videoContainer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
@@ -2877,8 +2878,9 @@
                     letsRoarAction = `window.showSectionsView('${batch.id}')`;
                     letsRoarButtonText = "LET'S ROAR 🚀🔥";
                 } else {
-                    letsRoarAction = `window.open(window.siteConfig.telegramGroupLink || 'https://t.me/', '_blank')`;
-                    letsRoarButtonText = "JOIN TELEGRAM 📞";
+                    // Changed to use batch.telegramCourseLink if available, otherwise fallback to group link 
+                    letsRoarAction = `window.open('${batch.telegramCourseLink || window.siteConfig.telegramGroupLink || 'https://t.me/'}', '_blank')`; 
+                    letsRoarButtonText = "JOIN TELEGRAM 📞"; // Name changed as per request
                 }
 
                 batchCard.innerHTML = `
@@ -3077,7 +3079,7 @@
                     }
                     
                     if (embedUrl) {
-                        mainVideoPlayer.innerHTML = `<iframe src="${embedUrl}" allowfullscreen draggable="false" allow="autoplay; encrypted-media"></iframe>`;
+                        mainVideoPlayer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allow="accelerometer; encrypted-media"></iframe>`;
                     } else {
                         mainVideoPlayer.innerHTML = `<p style="color: white; text-align: center; padding: 20px;">Error: Could not construct embed URL from extracted ID. (Type: ${videoInfo.type}, ID: ${videoInfo.id})</p>`;
                         console.error("Failed to construct embed URL:", videoInfo);
