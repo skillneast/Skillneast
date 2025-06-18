@@ -111,15 +111,15 @@
 
         .top-navbar {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-between; 
             align-items: center;
             padding: 18px 25px;
             background: linear-gradient(to right, var(--dark-bg-gradient-start), var(--dark-bg-gradient-end));
             box-shadow: var(--shadow-medium);
-            position: sticky;
+            position: relative; /* Changed to relative to position children absolutely */
             top: 0;
-            left: 0; /* Ensure it sticks across full width */
-            width: 100%; /* Ensure it sticks across full width */
+            left: 0; 
+            width: 100%; 
             z-index: 1000;
             border-bottom-left-radius: var(--border-radius-main);
             border-bottom-right-radius: var(--border-radius-main);
@@ -130,17 +130,22 @@
             color: var(--white);
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            width: 52px; /* Adjusted size for better tap target */
-            height: 52px; /* Adjusted size for better tap target */
+            width: 52px; 
+            height: 52px; 
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: background-color 0.2s ease, transform 0.2s ease, color 0.3s ease;
+            margin: 0; /* Remove specific margins */
+            flex-shrink: 0; /* Prevent shrinking on small screens */
         }
-        .top-navbar .menu-icon { margin-right: 8px; } /* Added margin for spacing */
-        .top-navbar .telegram-icon { margin-left: 8px; } /* Added margin for spacing */
+        
+        .top-navbar .telegram-icon {
+            /* Add some explicit right padding for the icon if needed, or manage via top-navbar padding */
+            padding: 0 5px; /* Adjust as needed for visual balance, or remove if top-navbar padding is enough */
+        }
 
         .top-navbar .menu-icon:hover, .top-navbar .telegram-icon:hover {
             background-color: rgba(255, 255, 255, 0.2);
@@ -148,53 +153,56 @@
         }
         .top-navbar .app-logo {
             display: flex;
-            flex-direction: row; /* Changed to row for logo and title on same line */
+            flex-direction: row; 
             align-items: center;
-            padding: 8px 18px; /* Adjusted padding */
-            background-color: var(--primary-dark); /* Changed to dark background */
+            padding: 8px 18px; 
+            background-color: var(--primary-dark); 
             border-radius: var(--border-radius-button);
             box-shadow: var(--shadow-light);
             cursor: pointer;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            position: relative; /* Needed for tagline positioning */
-            overflow: hidden; /* For tagline animation */
-            flex-grow: 1; /* Allow it to take available space */
-            margin: 0 10px; /* Space from icons */
-            justify-content: flex-start; /* Align content to the start */
+            position: absolute; /* Absolute positioning for precise centering */
+            left: 50%; 
+            transform: translateX(-50%); 
+            overflow: hidden; 
+            flex-grow: 0; 
+            margin: 0; 
+            justify-content: center; 
+            z-index: 1; 
         }
         .top-navbar .app-logo:hover {
-            background-color: #2F4156; /* Darker on hover */
+            background-color: #2F4156; 
         }
         .top-navbar .app-logo img#skillNeastLogo {
-            height: 34px; /* Adjusted size */
-            margin-right: 8px; /* Space between logo and text */
-            margin-bottom: 0; /* Remove bottom margin */
-            transition: transform 1s linear; /* Ensure smooth rotation */
+            height: 34px; 
+            margin-right: 8px; 
+            margin-bottom: 0; 
+            transition: transform 1s linear; 
         }
         .top-navbar .app-logo img#skillNeastLogo.rotating {
-            animation: rotate360 1s linear forwards; /* Apply rotation to image only */
+            animation: rotate360 1s linear forwards; 
         }
         @keyframes rotate360 {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-        .top-navbar .app-logo .text-wrapper { /* New wrapper for title and tagline */
+        .top-navbar .app-logo .text-wrapper { 
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* Align text to the start within wrapper */
+            align-items: flex-start; 
         }
         .top-navbar .app-logo .main-title {
             font-family: 'Poppins', sans-serif;
             font-weight: 800;
-            font-size: 1.5em; /* Slightly smaller font for main title */
-            letter-spacing: 1.2px; /* Adjusted spacing */
+            font-size: 1.5em; 
+            letter-spacing: 1.2px; 
             background: linear-gradient(90deg, #FF6F61, #FFD700, #4CAF50, #00ADB5, #3F51B5, #9C27B0);
             -webkit-background-clip: text;
             color: transparent;
             display: inline-block;
             animation: rainbowText 5s linear infinite;
             background-size: 200% 100%;
-            line-height: 1; /* Ensure tight line height */
+            line-height: 1; 
         }
 
         @keyframes rainbowText {
@@ -204,14 +212,14 @@
         /* New Tagline Styles */
         .top-navbar .app-logo .tagline {
             font-family: 'Open Sans', sans-serif;
-            font-size: 0.65em; /* Smaller font for tagline */
+            font-size: 0.65em; 
             font-weight: 600;
-            color: var(--text-light); /* Lighter text for tagline */
-            text-align: left; /* Align to left */
-            animation: floatUpDown 2s infinite ease-in-out; /* Floating animation */
-            white-space: nowrap; /* Prevent wrapping */
+            color: var(--text-light); 
+            text-align: left; 
+            animation: floatUpDown 2s infinite ease-in-out; 
+            white-space: nowrap; 
             transition: color 0.3s ease;
-            line-height: 1; /* Ensure tight line height */
+            line-height: 1; 
         }
 
         /* --- Main Content Area --- */
@@ -1702,9 +1710,10 @@
         }
 
         #about-me-view {
-            display: none;
+            display: flex; 
             flex-direction: column;
-            padding: 20px;
+            align-items: center; /* Center children horizontally */
+            padding: 30px 20px; 
             min-height: calc(100vh - 90px);
             background-color: var(--secondary-light);
             transition: background-color 0.3s ease, color 0.3s ease;
@@ -1749,9 +1758,13 @@
             padding: 30px;
             width: 100%;
             max-width: 500px;
-            margin-top: 20px;
+            margin: 20px auto; /* Centered horizontally */
             border: 1px solid var(--border-color);
             transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex; /* Make it a flex container */
+            flex-direction: column; /* Stack content vertically */
+            align-items: center; /* Center content horizontally */
+            text-align: center; /* Center text content */
         }
 
         .about-me-card .profile-pic {
@@ -1904,19 +1917,21 @@
 
         @media (max-width: 768px) {
             .top-navbar { padding: 12px 15px; }
-            .top-navbar .app-logo .main-title { font-size: 1.3em; } /* Adjusted for mobile */
-            .top-navbar .app-logo .tagline { font-size: 0.6em; } /* Adjusted for mobile */
-            .top-navbar .app-logo img#skillNeastLogo { height: 30px; } /* Adjusted for mobile */
+            /* Logo already centrally positioned with absolute positioning */
+            .top-navbar .app-logo .main-title { font-size: 1.3em; text-align: center; } 
+            .top-navbar .app-logo .tagline { font-size: 0.6em; text-align: center; } 
+            .top-navbar .app-logo img#skillNeastLogo { height: 30px; } 
             .top-navbar .menu-icon, .top-navbar .telegram-icon {
-                width: 44px; /* Smaller for mobile */
-                height: 44px; /* Smaller for mobile */
+                width: 44px; 
+                height: 44px; 
                 font-size: 1.6em;
             }
-            .top-navbar .menu-icon { margin-right: 5px; }
-            .top-navbar .telegram-icon { margin-left: 5px; }
+            /* Margins removed at top level, handled by flexbox space-between */
+            .top-navbar .menu-icon { margin-right: 0; } 
+            .top-navbar .telegram-icon { margin-left: 0; } 
             .top-navbar .app-logo {
-                padding: 5px 10px; /* Adjusted padding for mobile */
-                margin: 0 5px; /* Smaller margin for mobile */
+                padding: 5px 10px; 
+                /* Margin 0 set already */
             }
 
 
@@ -1965,7 +1980,7 @@
             top: 0;
             left: -250px;
             width: 250px;
-            height: 100%;
+            height: 100vh; /* Changed to 100vh for consistent height and scroll */
             background-color: var(--slider-bg);
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
             z-index: 1600;
@@ -1974,7 +1989,7 @@
             flex-direction: column;
             padding-top: 20px;
             box-sizing: border-box;
-            overflow-y: auto;
+            overflow-y: auto; /* Enable vertical scrolling if content overflows */
             padding-bottom: 20px;
         }
 
@@ -2059,6 +2074,9 @@
         .slider-menu-item .item-text {
             flex-grow: 1;
             font-weight: 500;
+            white-space: nowrap; /* Prevent text wrapping */
+            overflow: hidden; /* Hide overflow content */
+            text-overflow: ellipsis; /* Add ellipsis for overflowed text */
         }
 
         .slider-menu-item .coming-soon-tag {
@@ -2070,6 +2088,7 @@
             border-radius: 10px;
             margin-left: 10px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            flex-shrink: 0; /* Prevent tag from shrinking */
         }
 
         .slider-footer {
@@ -2370,9 +2389,9 @@
                 <h2>How to use the App</h2>
             </div>
             <div class="video-container">
-                <iframe src="https://www.youtube-nocookie.com/embed/YOUR_YOUTUBE_TUTORIAL_VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <p>Welcome to SkillNeast! This video will guide you through all the features of our app, from navigating courses to managing your favorites and interacting with our community.</p>
+                </div>
+            <p>
+                </p>
             <p>If you have any further questions, feel free to reach out to us through the Telegram community link in the menu!</p>
         </div>
     </div> 
@@ -2522,8 +2541,9 @@
 
         document.addEventListener('DOMContentLoaded', async () => {
             await authenticateFirebase();
+            loadSiteConfigAndApply(); 
             loadAllCategoriesFromFirebase();
-            loadSiteConfigAndApply(); // This will now update the global openTodaySurpriseLink function
+            loadHowToUseVideosForWebsite(); /*  */
 
             let userName = localStorage.getItem('userName');
             let userRole = localStorage.getItem('userRole');
@@ -2698,7 +2718,7 @@
                 document.getElementById('aboutMeTelegramGroupLink').href = window.siteConfig.telegramGroupLink;
                 document.getElementById('aboutMeInstagramLink').href = window.siteConfig.instagramLink;
                 document.getElementById('aboutMeYoutubeLink').href = window.siteConfig.youtubeLink;
-                document.getElementById('sliderHeaderLogo').src = window.siteConfig.sliderHeaderPictureUrl; // This will now properly link to a specific image URL
+                document.getElementById('sliderHeaderLogo').src = window.siteConfig.sliderHeaderPictureUrl; 
                 document.getElementById('sliderTelegramChannelLink').href = window.siteConfig.telegramChannelLink;
                 document.getElementById('sliderTelegramGroupLink').href = window.siteConfig.telegramGroupLink;
                 document.getElementById('sliderRequestCoursesLink').href = window.siteConfig.requestCoursesLink;
@@ -2706,6 +2726,56 @@
                 console.log("Site configuration applied.");
             }, (error) => console.error("Error loading site config:", error));
         };
+
+        function loadHowToUseVideosForWebsite() {
+            const videosRef = dbRef(rtdb, 'siteConfig/howToUseVideos'); /* Corrected Firebase Path  */
+            onValue(videosRef, (snapshot) => {
+                const howToUseAppView = document.getElementById('how-to-use-app-view');
+                const videoContainer = howToUseAppView.querySelector('.video-container');
+                const descriptionParagraph = howToUseAppView.querySelector('p:first-of-type'); 
+
+                videoContainer.innerHTML = '';
+                if (descriptionParagraph) {
+                    descriptionParagraph.textContent = ''; 
+                }
+
+                const videos = snapshot.val();
+                if (videos) {
+                    const firstVideoId = Object.keys(videos)[0];
+                    const firstVideo = videos[firstVideoId];
+
+                    if (firstVideo && firstVideo.url) {
+                        const videoInfo = extractVideoId(firstVideo.url);
+                        if (videoInfo) {
+                            let embedUrl = '';
+                            if (videoInfo.type === 'gdrive') {
+                                embedUrl = `https://drive.google.com/embed?id=${videoInfo.id}`;
+                            } else if (videoInfo.type === 'youtube') {
+                                embedUrl = `https://www.youtube-nocookie.com/embed/${videoInfo.id}?autoplay=0`; /* autoplay=0 set kiya hai */
+                            }
+                            if (embedUrl) {
+                                videoContainer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                            }
+                        }
+                    }
+                    if (firstVideo && firstVideo.description && descriptionParagraph) {
+                        descriptionParagraph.textContent = firstVideo.description;
+                    } else if (descriptionParagraph) {
+                        descriptionParagraph.textContent = "Welcome to SkillNeast! This video will guide you through all the features of our app, from navigating courses to managing your favorites and interacting with our community.";
+                    }
+                } else {
+                    videoContainer.innerHTML = `<p style="color: var(--text-light); text-align: center; padding: 20px;">No tutorial video available yet.</p>`;
+                    if (descriptionParagraph) {
+                        descriptionParagraph.textContent = "Welcome to SkillNeast! This video will guide you through all the features of our app, from navigating courses to managing your favorites and interacting with our community.";
+                    }
+                }
+            }, (error) => {
+                console.error("Error loading how-to-use videos for website:", error);
+                const howToUseAppView = document.getElementById('how-to-use-app-view');
+                const videoContainer = howToUseAppView.querySelector('.video-container');
+                videoContainer.innerHTML = `<p style="color: red; text-align: center; padding: 20px;">Error loading tutorial video.</p>`;
+            });
+        }
 
         function renderCategories() {
             const homeView = document.getElementById('home-view');
