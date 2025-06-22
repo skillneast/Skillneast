@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkillNeast Courses</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;600;700&family=Comfortaa:wght@700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;600;700&family=Comfortaa:wght@700&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         :root {
@@ -785,7 +785,7 @@
         }
         .course-category-item.long-press {
             transform: scale(0.95) !important;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5) !important;
             transition-duration: 0.1s;
         }
 
@@ -2919,7 +2919,7 @@
                 <button class="back-button" onclick="window.goBackFromPlayerView()"><i class="fas fa-arrow-left"></i></button>
                 <h2 id="player-view-title"></h2>
                 <div class="player-card-header-actions">
-                    <button class="icon-button like-button" id="likeButton"><i class="fas fa-heart"></i><span class="like-count-display" id="likeCountDisplay">0</span></button>
+                    <button class="icon-button like-button" id="likeButton"><i class="fas fa-heart"></i><span class="like-count-display" id="likeCountDisplay">0"></span></button>
                     <button class="icon-button" id="fullscreenButton" onclick="window.toggleFullScreen()"><i class="fas fa-expand"></i></button>
                 </div>
             </div>
@@ -3183,7 +3183,6 @@
         window.lastCategoryViewed = 'all';
 
         function extractVideoId(url) {
-            // Updated to be more robust for Google Drive and YouTube
             let videoId = null;
             let videoType = null;
 
@@ -3194,13 +3193,9 @@
                 videoType = 'youtube';
             }
 
-            // Try Google Drive
-            // Matches: drive.google.com/file/d/FILE_ID/view
-            // Matches: drive.google.com/open?id=FILE_ID
-            // Matches: drive.google.com/embed?id=FILE_ID
-            // Matches: drive.google.com/a/domain.com/file/d/FILE_ID/view (for G Suite/Workplace)
+            // Try Google Drive - more robust regex
             const gdriveMatch = url.match(/(?:drive\.google\.com\/(?:file\/d\/|open\?id=|embed\/|a\/[^/]+\/file\/d\/|a\/[^/]+\/open\?id=))([a-zA-Z0-9_-]+)/);
-            if (!videoId && gdriveMatch && gdriveMatch[1]) { // Only try GDrive if YouTube not found
+            if (!videoId && gdriveMatch && gdriveMatch[1]) { 
                 videoId = gdriveMatch[1];
                 videoType = 'gdrive';
             }
@@ -3223,7 +3218,6 @@
                 if (urlParts.length > 1) {
                     return urlParts.pop().split('?')[0].split('#')[0];
                 }
-                // Specific checks for common video types based on domains (if extension isn't clear)
                 if (url.includes('youtube.com') || url.includes('youtu.be')) {
                     return 'youtube';
                 }
@@ -3287,7 +3281,7 @@
             window.addEventListener('offline', updateOnlineStatus);
             updateOnlineStatus();
 
-            // Removed Dark Mode toggle initialization as per request
+            // Dark Mode toggle initialization is removed
             // const isLightModeEnabled = localStorage.getItem('lightModeEnabled') === 'true';
             // if (isLightModeEnabled) {
             //     document.body.classList.add('light-mode');
@@ -3991,8 +3985,10 @@
             if (videoInfo) {
                 let embedUrl = '';
                 if (videoInfo.type === 'gdrive') {
-                    // Using /embed/ is generally more reliable than /preview/ for direct video play
-                    embedUrl = `https://drive.google.com/embed?id=${videoInfo.id}`;
+                    // Changed to try /preview/ first for better compatibility with sharing settings
+                    embedUrl = `https://drive.google.com/file/d/${videoInfo.id}/preview`; 
+                    // Fallback to /embed/ if preview fails or for specific needs:
+                    // embedUrl = `https://drive.google.com/embed?id=${videoInfo.id}`;
                 } else if (videoInfo.type === 'youtube') {
                     embedUrl = `https://www.youtube-nocookie.com/embed/${videoInfo.id}?autoplay=1`;
                 }
@@ -4053,8 +4049,10 @@
             if (videoInfo) {
                 let embedUrl = '';
                 if (videoInfo.type === 'gdrive') {
-                    // Using /embed/ is generally more reliable than /preview/ for direct video play
-                    embedUrl = `https://drive.google.com/embed?id=${videoInfo.id}`;
+                    // Changed to try /preview/ first for better compatibility with sharing settings
+                    embedUrl = `https://drive.google.com/file/d/${videoInfo.id}/preview`; 
+                    // Fallback to /embed/ if preview fails or for specific needs:
+                    // embedUrl = `https://drive.google.com/embed?id=${videoInfo.id}`;
                 } else if (videoInfo.type === 'youtube') {
                     embedUrl = `https://www.youtube-nocookie.com/embed/${videoInfo.id}?autoplay=1`;
                 }
@@ -4580,6 +4578,7 @@
 
                     let imageUrlHtml = '';
                     if (request.imageUrl) {
+                        // Image click for fullscreen is handled by openFullscreenImage
                         imageUrlHtml = `<div class="post-image-container" onclick="window.openFullscreenImage('${request.imageUrl}')"><img src="${request.imageUrl}" alt="Request Image" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x150/00ADB5/1A2B3C?text=No+Img';"></div>`;
                     }
 
