@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkillNeast Courses</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;600;700&family=Comfortaa:wght@700&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;600;700&family=Comfortaa:wght@700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         :root {
@@ -65,7 +65,7 @@
             --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.1);
             --shadow-medium: 0 10px 30px rgba(0, 0, 0, 0.2);
             --shadow-popup: 0 15px 40px rgba(0, 0, 0, 0.3);
-            
+
             --dark-bg-gradient-start: #FFFFFF;
             --dark-bg-gradient-end: #F0F0F0;
             /* Light mode specific for slider */
@@ -123,7 +123,7 @@
             border-bottom-right-radius: var(--border-radius-main);
             transition: background 0.3s ease, box-shadow 0.3s ease;
         }
-        .top-navbar .menu-icon, .top-navbar .telegram-icon {
+        .top-navbar .menu-icon, .top-navbar .telegram-icon, .top-navbar .notification-icon {
             font-size: 1.8em;
             color: var(--white);
             background-color: rgba(255, 255, 255, 0.1);
@@ -139,16 +139,52 @@
             margin: 0;
             flex-shrink: 0;
         }
-        
+
         .top-navbar .telegram-icon {
             padding-right: 5px;
         }
         .top-navbar .menu-icon {
             padding-left: 5px;
         }
+        .top-navbar .notification-icon {
+            position: relative;
+            margin-left: 10px; /* Space from telegram icon */
+        }
+        .top-navbar .notification-icon .badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: var(--error-red);
+            color: white;
+            border-radius: 50%;
+            padding: 3px 6px;
+            font-size: 0.7em;
+            min-width: 20px;
+            text-align: center;
+            line-height: 1;
+            transform: translate(50%, -50%);
+            display: none; /* Hide by default if count is 0 */
+        }
+        /* NEW: Notification ringing animation */
+        @keyframes ring {
+            0% { transform: rotate(0); }
+            20% { transform: rotate(-25deg); }
+            40% { transform: rotate(25deg); }
+            60% { transform: rotate(-15deg); }
+            80% { transform: rotate(15deg); }
+            100% { transform: rotate(0); }
+        }
 
+        .top-navbar .notification-icon.ringing {
+            animation: ring 1s ease-in-out infinite; /* Continuous ringing */
+        }
 
-        .top-navbar .menu-icon:hover, .top-navbar .telegram-icon:hover {
+        .top-navbar .notification-icon.active {
+            color: var(--accent-teal); /* Blue color on active */
+            box-shadow: 0 0 15px var(--accent-teal); /* Glow effect */
+        }
+
+        .top-navbar .menu-icon:hover, .top-navbar .telegram-icon:hover, .top-navbar .notification-icon:hover {
             background-color: rgba(255, 255, 255, 0.2);
             transform: scale(1.05);
         }
@@ -1547,6 +1583,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
             position: relative;
@@ -1561,18 +1598,17 @@
         }
         .like-count-display {
             position: absolute;
-            bottom: -8px;
-            right: -8px;
+            top: 5px; /* Adjust as needed */
+            right: 5px; /* Adjust as needed */
             background-color: var(--highlight-gold);
             color: var(--primary-dark);
+            border-radius: 50%;
+            padding: 3px 6px; /* Reduced padding */
             font-size: 0.6em;
-            font-weight: 700;
-            padding: 2px 5px;
-            border-radius: 10px;
             min-width: 20px;
             text-align: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-            z-index: 2;
+            line-height: 1;
+            transform: translate(50%, -50%);
         }
         @keyframes popAndPulse {
             0% { transform: scale(1); }
@@ -1631,24 +1667,26 @@
         
         .player-action-buttons {
             display: flex;
-            gap: 10px;
+            gap: 8px; /* Reduced gap for smaller buttons */
             padding: 0 20px 20px 20px;
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
         }
         .player-action-buttons .action-button {
             flex: 1;
+            min-width: 100px; /* Ensure buttons don't get too small */
             background-color: var(--button-primary);
             color: var(--white);
             border: none;
             border-radius: var(--border-radius-button);
-            padding: 12px 10px;
+            padding: 8px 10px; /* Smaller padding */
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.9em;
+            font-size: 0.8em; /* Smaller font size */
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 5px; /* Smaller gap inside button */
             box-shadow: var(--shadow-light);
             transition: background-color 0.2s ease, transform 0.2s ease, color 0.3s ease;
         }
@@ -2102,6 +2140,21 @@
         .popup-overlay.active .name-popup {
             animation: popupEnter 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
+        /* NEW: Notification Popup Animation */
+        @keyframes notificationsPopupEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translate(20px, -20px); /* Start scaled down and offset from top-right */
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translate(0%, 0%); /* End at full size, no offset */
+            }
+        }
+        .notifications-popup-overlay.active .notifications-popup {
+            animation: notificationsPopupEnter 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
 
         .hidden-on-scroll {
             opacity: 0;
@@ -2367,10 +2420,16 @@
             .top-navbar .app-logo .main-title { font-size: 1.3em; }
             .top-navbar .app-logo .tagline { font-size: 0.6em; }
             .top-navbar .app-logo img#skillNeastLogo { height: 30px; }
-            .top-navbar .menu-icon, .top-navbar .telegram-icon {
+            .top-navbar .menu-icon, .top-navbar .telegram-icon, .top-navbar .notification-icon {
                 width: 44px;
                 height: 44px;
                 font-size: 1.6em;
+            }
+            .top-navbar .notification-icon .badge {
+                top: 2px;
+                right: 2px;
+                min-width: 18px;
+                font-size: 0.6em;
             }
             .top-navbar .menu-icon { margin-right: 5px; }
             .top-navbar .telegram-icon { margin-left: 5px; }
@@ -2553,6 +2612,179 @@
         }
         
         /* Dark Mode toggle styles are removed as per request */
+
+        /* Notifications Popup Styles */
+        .notifications-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: none; /* Hidden by default */
+            justify-content: flex-end; /* Align to top-right */
+            align-items: flex-start; /* Align to top-right */
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .notifications-popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .notifications-popup {
+            background-color: rgba(26, 43, 60, 0.95); /* Primary dark with transparency */
+            padding: 20px;
+            border-radius: var(--border-radius-main);
+            box-shadow: var(--shadow-popup);
+            width: 90%;
+            max-width: 350px; /* Reduced max-width for compact size */
+            position: relative;
+            color: var(--text-dark);
+            /* Initial transform for animation, needs to be top-right aligned */
+            transform-origin: top right;
+            transform: scale(0.8) translate(20px, -20px); /* Adjust initial position relative to origin */
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            max-height: 80%; /* Limit height for scrollability */
+            margin-top: 15px; /* Margin from top edge */
+            margin-right: 15px; /* Margin from right edge */
+            border: 1px solid var(--border-color); /* Subtle border */
+        }
+
+        .notifications-popup-overlay.active .notifications-popup {
+            transform: scale(1) translate(0%, 0%); /* Final state */
+            opacity: 1;
+        }
+        /* NEW: Notification Popup Animation (redefined for top-right origin) */
+        @keyframes notificationsPopupEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translate(20px, -20px); /* Start scaled down and offset from top-right */
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translate(0%, 0%); /* End at full size, no offset */
+            }
+        }
+        .notifications-popup-overlay.active .notifications-popup {
+            animation: notificationsPopupEnter 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+
+        .notifications-popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .notifications-popup-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--accent-teal);
+            margin: 0;
+        }
+
+        .notifications-popup-header .mark-read-button {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .notifications-popup-header .mark-read-button:hover {
+            color: var(--highlight-gold);
+        }
+
+        .notifications-popup .notifications-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 10px; /* For scrollbar spacing */
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .notifications-popup .notification-item {
+            background-color: var(--secondary-light);
+            padding: 15px;
+            border-radius: var(--border-radius-card);
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .notifications-popup .notification-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .notifications-popup .notification-item.unread {
+            background-color: rgba(0, 173, 181, 0.1); /* Slight highlight for unread */
+            border-color: var(--accent-teal);
+        }
+        .notifications-popup .notification-item.unread:hover {
+             background-color: rgba(0, 173, 181, 0.15);
+        }
+        .notifications-popup .notification-item.read {
+            opacity: 0.8;
+        }
+
+        .notifications-popup .notification-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .notifications-popup .notification-item-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.1em;
+            color: var(--highlight-gold);
+            margin-bottom: 5px;
+        }
+
+        .notifications-popup .notification-item-body {
+            font-size: 0.95em;
+            color: var(--text-light);
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .notifications-popup .notification-item-time {
+            font-size: 0.8em;
+            color: var(--text-muted);
+            text-align: right;
+            margin-top: 5px;
+        }
+
+        .notifications-popup .notification-item-link {
+            display: inline-block;
+            background-color: var(--accent-teal);
+            color: var(--white);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: background-color 0.2s ease;
+        }
+        .notifications-popup .notification-item-link:hover {
+            background-color: #00939b;
+        }
+
+        .notifications-popup .no-notifications-message {
+            text-align: center;
+            color: var(--text-light);
+            font-style: italic;
+            padding: 20px;
+        }
 
         /* Request Courses View Styles */
         #request-courses-view {
@@ -2790,7 +3022,18 @@
         </div>
     </div>
 
-
+    <div class="notifications-popup-overlay" id="notificationsPopupOverlay">
+        <div class="notifications-popup">
+            <div class="notifications-popup-header">
+                <h2>Notifications</h2>
+                <button class="mark-read-button" onclick="window.markAllNotificationsAsRead()">Mark all as read</button>
+                <button class="popup-close-button" onclick="window.closeNotificationsPopup()">×</button>
+            </div>
+            <div class="notifications-list" id="notificationsList">
+                <p class="no-notifications-message">No new notifications.</p>
+            </div>
+        </div>
+    </div>
     <div class="top-navbar">
         <div class="menu-icon" id="menuIcon"><i class="fas fa-bars"></i></div>
         <div class="app-logo" id="appLogo">
@@ -2801,7 +3044,11 @@
             </div>
         </div>
         <div class="telegram-icon" onclick="window.open(window.siteConfig.telegramGroupLink || 'https://t.me/', '_blank');"><i class="fab fa-telegram-plane"></i></div>
-    </div>
+        <div class="notification-icon" id="notificationIcon" onclick="window.openNotificationsPopup()">
+            <i class="fas fa-bell"></i>
+            <span class="badge" id="notificationBadge">0</span>
+        </div>
+        </div>
 
     <div class="main-content">
 
@@ -2919,7 +3166,7 @@
                 <button class="back-button" onclick="window.goBackFromPlayerView()"><i class="fas fa-arrow-left"></i></button>
                 <h2 id="player-view-title"></h2>
                 <div class="player-card-header-actions">
-                    <button class="icon-button like-button" id="likeButton"><i class="fas fa-heart"></i><span class="like-count-display" id="likeCountDisplay">0"></span></button>
+                    <button class="icon-button like-button" id="likeButton"><i class="fas fa-heart"></i><span class="like-count-display" id="likeCountDisplay">0</span></button>
                     <button class="icon-button" id="fullscreenButton" onclick="window.toggleFullScreen()"><i class="fas fa-expand"></i></button>
                 </div>
             </div>
@@ -2929,7 +3176,11 @@
                     </div>
                     <div class="player-metadata">
                         <h3 class="lesson-sub-title" id="player-lesson-sub-title"></h3>
-                    </div>
+                        <div class="quote-section" style="margin-top: 20px; margin-bottom: 0px;">
+                            <p class="quote-text" id="playerQuoteText"></p>
+                            <p class="quote-author" id="playerQuoteAuthor"></p>
+                        </div>
+                        </div>
                 </div>
             </div>
 
@@ -3109,10 +3360,13 @@
         window.userNoticeReactions = JSON.parse(localStorage.getItem('userNoticeReactions')) || {};
         window.userDiscoverNoticeReactions = JSON.parse(localStorage.getItem('userDiscoverNoticeReactions')) || {};
         window.userRequestReactions = JSON.parse(localStorage.getItem('userRequestReactions')) || {}; 
+        window.userNotifications = JSON.parse(localStorage.getItem('userNotifications')) || {}; // Store individual notification read status
+        let allNotifications = JSON.parse(localStorage.getItem('allNotifications')) || {}; // Store all notifications, including welcome
         const likesRef = dbRef(rtdb, 'likes');
         const globalNoticeRef = dbRef(rtdb, 'notices/globalNotice');
         const discoverNoticeReactionsRef = dbRef(rtdb, 'notices/discoverNoticeReactions');
         const requestCoursesRef = dbRef(rtdb, 'requestCourses'); 
+        const notificationsRef = dbRef(rtdb, 'notifications'); // Firebase ref for notifications
         window.siteConfig = {
             telegramChannelLink: 'https://t.me/default_channel',
             telegramGroupLink: 'https://t.me/default_group',
@@ -3239,10 +3493,13 @@
         };
         document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('menuIcon').addEventListener('click', window.openSliderMenu);
+            document.getElementById('notificationIcon').addEventListener('click', window.openNotificationsPopup); // NEW: Notification icon click
 
             await authenticateFirebase();
             loadAllCategoriesFromFirebase();
             loadSiteConfigAndApply();
+            showWelcomeNotificationOnce(); // NEW: Show welcome notification for new users
+            listenForNewNotifications(); // NEW: Start listening for new notifications from Firebase
 
             let userName = localStorage.getItem('userName');
             let userRole = localStorage.getItem('userRole');
@@ -3281,12 +3538,6 @@
             window.addEventListener('offline', updateOnlineStatus);
             updateOnlineStatus();
 
-            // Dark Mode toggle initialization is removed
-            // const isLightModeEnabled = localStorage.getItem('lightModeEnabled') === 'true';
-            // if (isLightModeEnabled) {
-            //     document.body.classList.add('light-mode');
-            // }
-
             const appLogo = document.getElementById('appLogo');
             const skillNeastLogoImage = document.getElementById('skillNeastLogo');
             appLogo.addEventListener('click', () => {
@@ -3302,6 +3553,7 @@
             setupLikeButton();
 
             openGlobalNoticePopup();
+            updateNotificationBadge(); // NEW: Initial badge update
         });
         window.updateQuote = function() {
             const quoteTextElement = document.getElementById('quoteText');
@@ -3318,6 +3570,13 @@
 
             quoteTextElement.innerHTML = `"${selectedQuote.quote}" <span class="quote-emoji">${randomEmoji}</span>`;
             quoteAuthorElement.textContent = selectedQuote.author;
+            // NEW: Update player quote section as well
+            const playerQuoteTextElement = document.getElementById('playerQuoteText');
+            const playerQuoteAuthorElement = document.getElementById('playerQuoteAuthor');
+            if (playerQuoteTextElement && playerQuoteAuthorElement) {
+                playerQuoteTextElement.innerHTML = `"${selectedQuote.quote}" <span class="quote-emoji">${randomEmoji}</span>`;
+                playerQuoteAuthorElement.textContent = selectedQuote.author;
+            }
         }
 
         window.updateCharCount = function() {
@@ -3363,6 +3622,12 @@
             if (commentsPopupOverlay) {
                 commentsPopupOverlay.classList.remove('active');
                 commentsPopupOverlay.style.display = 'none';
+            }
+            // NEW: Hide notifications popup
+            const notificationsPopupOverlay = document.getElementById('notificationsPopupOverlay');
+            if (notificationsPopupOverlay) {
+                notificationsPopupOverlay.classList.remove('active');
+                notificationsPopupOverlay.style.display = 'none';
             }
             
             views.forEach(id => {
@@ -3439,7 +3704,8 @@
                 };
                 document.querySelector('.surprise-button').onclick = window.openTodaySurpriseLink;
 
-                document.querySelector('.top-navbar .telegram-icon').onclick = () => window.open(window.siteConfig.telegramGroupLink || 'https://t.me/', '_blank');
+                document.querySelector('.top-navbar .telegram-icon').onclick = () => window.open(window.siteConfig.telegramGroupLink ||
+'https://t.me/', '_blank');
                 document.getElementById('aboutMeProfilePic').src = window.siteConfig.profilePictureUrl || 'https://via.placeholder.com/120x120/00ADB5/ffffff?text=Fahad';
                 document.getElementById('aboutMeTelegramGroupLink').href = window.siteConfig.telegramGroupLink || 'https://t.me/';
                 document.getElementById('aboutMeInstagramLink').href = window.siteConfig.instagramLink || 'https://instagram.com/';
@@ -3512,7 +3778,7 @@
                         });
                     } else {
                         discoverNoticePoints.innerHTML = `
-                            <li><span class="emoji-inline">🚫</span>Don't buy this App from AnyOne. This App is Free <span class="emoji-inline">🆓</span> of Cost for EveryOne. Unfortunately, If you Purchased this App, then please report! that user who sold you this App and take your Money Back.</li>
+                            <li><span class="emoji-inline">🚫</span>Don't buy this App from AnyOne. This App is Free 🆓 of Cost for EveryOne. Unfortunately, If you Purchased this App, then please report! that user who sold you this App and take your Money Back.</li>
                             <li><span class="emoji-inline">🤝</span> Join Us on Telegram : Scam se bachne ke liye, Get updates, mentorship, and connect with us.</li>
                         `;
                     }
@@ -3985,9 +4251,9 @@
             if (videoInfo) {
                 let embedUrl = '';
                 if (videoInfo.type === 'gdrive') {
-                    // Changed to try /preview/ first for better compatibility with sharing settings
+                    // Try the /preview/ link, it's often more reliable for embed than /embed/ for non-published files
                     embedUrl = `https://drive.google.com/file/d/${videoInfo.id}/preview`; 
-                    // Fallback to /embed/ if preview fails or for specific needs:
+                    // Fallback option (if preview still gives 403, consider publishing to web from admin):
                     // embedUrl = `https://drive.google.com/embed?id=${videoInfo.id}`;
                 } else if (videoInfo.type === 'youtube') {
                     embedUrl = `https://www.youtube-nocookie.com/embed/${videoInfo.id}?autoplay=1`;
@@ -3995,7 +4261,7 @@
                 if (embedUrl) {
                     videoPlayerContainer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
                 } else {
-                    videoPlayerContainer.innerHTML = `<p style="color: var(--text-light); text-align: center; padding: 20px;">Unsupported video URL for embedding.</p>`;
+                    videoPlayerContainer.innerHTML = `<p style="color: var(--text-light); text-align: center; padding: 20px;">Unsupported video URL for embedding or video not accessible.</p>`;
                 }
             } else {
                 videoPlayerContainer.innerHTML = `<p style="color: var(--text-light); text-align: center; padding: 20px;">Invalid video URL format.</p>`;
@@ -4006,6 +4272,9 @@
             const likeCountDisplay = document.getElementById('likeCountDisplay');
             likeCountDisplay.textContent = '0';
             updateLikeButtonState();
+
+            // Set the quote in the player view
+            window.updateQuote(); // This will also update playerQuoteText and playerQuoteAuthor
 
             lessonsForPlayerBatchContainer.innerHTML = '';
             let selectedBatch = null;
@@ -4059,7 +4328,7 @@
                 if (embedUrl) {
                     videoPlayerContainer.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
                 } else {
-                    videoPlayerContainer.innerHTML = `<p style="color: var(--text-light); text-align: center; padding: 20px;">Unsupported video URL for embedding.</p>`;
+                    videoPlayerContainer.innerHTML = `<p style="color: var(--text-light); text-align: center; padding: 20px;">Unsupported video URL for embedding or video not accessible.</p>`;
                 }
             } else {
                 videoPlayerContainer.innerHTML = `<p style="color: var(--text-light); text-align: center; padding: 20px;">Invalid video URL format.</p>`;
@@ -4070,6 +4339,9 @@
             const likeCountDisplay = document.getElementById('likeCountDisplay');
             likeCountDisplay.textContent = '0';
             updateLikeButtonState();
+
+            // Set the quote in the player view
+            window.updateQuote(); // This will also update playerQuoteText and playerQuoteAuthor
 
             lessonsForPlayerBatchContainer.innerHTML = `<p style="text-align: center; color: var(--text-light); padding: 20px;">No additional lessons in this direct link content.</p>`;
             window.scrollTo(0, 0);
@@ -4351,10 +4623,10 @@
             const overlay = document.getElementById('fullscreenImageOverlay');
             const img = document.getElementById('fullscreenImage');
             img.src = imageUrl;
-            img.style.pointerEvents = 'auto'; // Re-enable pointer events for the image itself if needed
+            img.style.pointerEvents = 'auto'; 
             overlay.classList.add('active');
             overlay.onclick = (e) => {
-                if (e.target === overlay || e.target === img) { // Close if backdrop or image itself is clicked
+                if (e.target === overlay || e.target === img) { 
                     window.closeFullscreenImage();
                 }
             };
@@ -4540,7 +4812,7 @@
 
         // NEW: Request Courses View Functions
         window.showRequestCoursesView = function() {
-            hideAllViews();
+            hideAllViews(); 
             document.getElementById('request-courses-view').style.display = 'block';
             currentView = 'request-courses-view';
             window.highlightBottomNav('home-nav'); // Highlight Home nav, as requests nav is removed
@@ -4664,6 +4936,199 @@
             } catch (error) {
                 console.error("Error toggling request reaction:", error);
                 alert("Failed to update reaction: " + error.message);
+            }
+        }
+
+        // NEW: Notifications Functions
+        window.openNotificationsPopup = function() {
+            const overlay = document.getElementById('notificationsPopupOverlay');
+            overlay.style.display = 'flex';
+            document.getElementById('notificationIcon').classList.add('active'); // Add active class for blue glow
+            document.getElementById('notificationIcon').classList.remove('ringing'); // Stop ringing when opened
+
+            setTimeout(() => {
+                overlay.classList.add('active');
+            }, 10);
+            renderNotifications();
+            markAllNotificationsAsRead(); // Mark all as read when popup is opened
+        };
+
+        window.closeNotificationsPopup = function() {
+            const overlay = document.getElementById('notificationsPopupOverlay');
+            overlay.classList.remove('active');
+            document.getElementById('notificationIcon').classList.remove('active'); // Remove active class
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300);
+            updateNotificationBadge(); // Update badge when closing popup (will restart ringing if unread remain)
+        };
+
+        function listenForNewNotifications() {
+            onValue(notificationsRef, (snapshot) => {
+                const firebaseNotifications = snapshot.val() || {};
+                
+                let newAllNotifications = {};
+                let unreadCount = 0;
+                let hasNewUnseen = false;
+
+                // Process Firebase notifications
+                for (const id in firebaseNotifications) {
+                    const fbNotif = firebaseNotifications[id];
+                    if (!allNotifications[id]) { // Completely new from Firebase
+                        newAllNotifications[id] = { ...fbNotif, read: false, seen: false };
+                        hasNewUnseen = true;
+                    } else { // Existing Firebase notification
+                        newAllNotifications[id] = { ...fbNotif, read: allNotifications[id].read, seen: allNotifications[id].seen };
+                    }
+                }
+
+                // Add welcome notification if it exists and wasn't processed yet
+                if (allNotifications['welcome'] && !newAllNotifications['welcome']) {
+                    newAllNotifications['welcome'] = allNotifications['welcome'];
+                }
+
+                // Update allNotifications with merged data
+                allNotifications = newAllNotifications;
+                localStorage.setItem('allNotifications', JSON.stringify(allNotifications));
+
+                // Recalculate unread count
+                for (const id in allNotifications) {
+                    if (!allNotifications[id].read) {
+                        unreadCount++;
+                    }
+                }
+
+                updateNotificationBadge(unreadCount);
+
+                // Start ringing if there are unread notifications and the panel is not open
+                if (unreadCount > 0 && !document.getElementById('notificationsPopupOverlay').classList.contains('active')) {
+                    notificationIcon.classList.add('ringing');
+                } else {
+                    notificationIcon.classList.remove('ringing');
+                }
+
+                if (document.getElementById('notificationsPopupOverlay').classList.contains('active')) {
+                    renderNotifications(); // Re-render if panel is already open
+                }
+
+            }, (error) => {
+                console.error("Error listening for notifications:", error);
+            });
+        }
+
+        function updateNotificationBadge(count = null) {
+            const badge = document.getElementById('notificationBadge');
+            if (count === null) {
+                let calculatedUnreadCount = 0;
+                for (const id in allNotifications) {
+                    if (!allNotifications[id].read) {
+                        calculatedUnreadCount++;
+                    }
+                }
+                count = calculatedUnreadCount;
+            }
+
+            badge.textContent = count > 99 ? '99+' : count;
+            badge.style.display = count > 0 ? 'block' : 'none';
+        }
+
+        function renderNotifications() {
+            const listContainer = document.getElementById('notificationsList');
+            listContainer.innerHTML = ''; // Clear previous notifications
+
+            const sortedNotifications = Object.entries(allNotifications)
+                .sort(([, a], [, b]) => (b.timestamp || 0) - (a.timestamp || 0)); // Newest first
+
+            if (sortedNotifications.length === 0) {
+                listContainer.innerHTML = '<p class="no-notifications-message">No notifications yet.</p>';
+                return;
+            }
+
+            sortedNotifications.forEach(([id, notification]) => {
+                const isRead = notification.read;
+                const item = document.createElement('div');
+                item.className = `notification-item ${isRead ? 'read' : 'unread'}`;
+                item.dataset.id = id;
+
+                let timeString = '';
+                if (notification.timestamp) {
+                    const now = new Date();
+                    const notifDate = new Date(notification.timestamp);
+                    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+                    const yesterdayStart = todayStart - (24 * 60 * 60 * 1000);
+
+                    const timeOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
+                    const formattedTime = notifDate.toLocaleTimeString('en-US', timeOptions);
+
+                    if (notifDate.getTime() >= todayStart) {
+                        timeString = `Today, ${formattedTime}`;
+                    } else if (notifDate.getTime() >= yesterdayStart && notifDate.getTime() < todayStart) {
+                        timeString = `Yesterday, ${formattedTime}`;
+                    } else {
+                        const dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+                        timeString = `${notifDate.toLocaleDateString('en-US', dateOptions)}, ${formattedTime}`;
+                    }
+                } else {
+                    timeString = 'Just now';
+                }
+
+
+                let linkHtml = '';
+                if (notification.link) {
+                    linkHtml = `<a href="${notification.link}" target="_blank" class="notification-item-link" onclick="event.stopPropagation(); window.markNotificationAsRead('${id}', true)">View Details <i class="fas fa-external-link-alt"></i></a>`;
+                }
+
+                item.innerHTML = `
+                    <div class="notification-item-title">${notification.title}</div>
+                    <div class="notification-item-body">${notification.body}</div>
+                    ${linkHtml}
+                    <div class="notification-item-time">${timeString}</div>
+                `;
+                listContainer.appendChild(item);
+
+                item.addEventListener('click', (e) => {
+                    // Only mark as read if not clicking on the link directly
+                    if (e.target.tagName !== 'A') {
+                        window.markNotificationAsRead(id);
+                    }
+                });
+            });
+            updateNotificationBadge(); // Update badge after rendering
+        }
+
+        window.markNotificationAsRead = function(id) {
+            if (allNotifications[id] && !allNotifications[id].read) {
+                allNotifications[id].read = true;
+                localStorage.setItem('allNotifications', JSON.stringify(allNotifications)); // Update local storage
+                renderNotifications(); // Re-render to update classes and counts
+                updateNotificationBadge(); // Update badge
+            }
+        };
+
+        window.markAllNotificationsAsRead = function() {
+            for (const id in allNotifications) {
+                allNotifications[id].read = true;
+            }
+            localStorage.setItem('allNotifications', JSON.stringify(allNotifications)); // Save to local storage
+            updateNotificationBadge(); // Update badge
+            renderNotifications(); // Re-render to show all as read
+        };
+
+        function showWelcomeNotificationOnce() {
+            const welcomeNotifId = 'welcome';
+            // Check if welcome notification is already in allNotifications or marked as read
+            if (!allNotifications[welcomeNotifId]) {
+                const welcomeNotification = {
+                    title: "Welcome to SkillNeast! 👋",
+                    body: "We're excited to have you here! Explore our amazing courses and enhance your skills. Let's learn and grow together! 🚀",
+                    timestamp: new Date().getTime(), // Current timestamp
+                    link: "" // No link for welcome notification
+                };
+                allNotifications[welcomeNotifId] = { ...welcomeNotification, read: false }; // Add to local storage, unread
+                localStorage.setItem('allNotifications', JSON.stringify(allNotifications));
+
+                updateNotificationBadge(); // Update badge with the new unread welcome message
+                notificationIcon.classList.add('ringing'); // Make it ring for the new welcome message
             }
         }
     </script>
